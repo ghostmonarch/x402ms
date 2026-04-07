@@ -1,0 +1,14 @@
+{
+  "name": "monarch-shield",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Monarch Shield — Control layer for x402 payments",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.2.0"
+  }
+}

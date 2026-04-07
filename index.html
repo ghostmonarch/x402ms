@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monarch — Make x402 safe for businesses</title>
+  <meta name="description" content="Monarch Shield gives businesses rules, limits, and human approval for autonomous x402 agent payments." />
+  <link rel="icon" type="image/svg+xml" href="/logo/monarch-shield-logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script type="module" src="/src/main.js"></script>
+</head>
+<body>
+
+  <!-- 1 · HEADER -->
+  <header class="header dark">
+    <div class="header-inner">
+      <a href="/" class="logo" aria-label="Monarch home">
+        <svg class="logo-mark" viewBox="0 0 100 115" aria-hidden="true">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M31 0H69V20H100V75L50 115L0 75V20H31V0ZM18 37H82V68L50 98L18 68V37Z" fill="currentColor"/>
+        </svg>
+        <span class="logo-word">Monarch</span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="#product" class="nav-link">Product</a>
+        <a href="#how-it-works" class="nav-link">How It Works</a>
+        <a href="#docs" class="nav-link">Docs</a>
+        <a href="#request-access" class="btn btn-primary btn-nav">Request Access</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 2 · HERO -->
+  <section class="hero dark" id="product">
+    <div class="hero-container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <h1 class="hero-h1">Make x402 safe<br>for businesses</h1>
+          <p class="hero-sub">Control autonomous spend with rules, limits, and human approval.</p>
+          <p class="hero-support">Monarch Shield keeps agent payments moving at the speed of x402, inside the rules you set.</p>
+          <div class="hero-actions">
+            <a href="#request-access" class="btn btn-primary">Request Early Access</a>
+            <a href="#how-it-works" class="btn btn-ghost">See How It Works</a>
+          </div>
+          <p class="hero-micro">Hard rules for autonomous spend on x402.</p>
+        </div>
+        <div class="hero-card-wrap">
+          <div class="flow-card">
+            <div class="flow-header">Payment Flow</div>
+            <div class="flow-pipeline">
+              <div class="flow-stage"><div class="flow-dot"></div><span>Agent / App</span></div>
+              <div class="flow-line"></div>
+              <div class="flow-stage flow-stage-active"><div class="flow-dot"></div><span>Monarch Shield</span></div>
+              <div class="flow-line"></div>
+              <div class="flow-stage"><div class="flow-dot"></div><span>x402</span></div>
+              <div class="flow-line"></div>
+              <div class="flow-stage"><div class="flow-dot"></div><span>Vendor</span></div>
+            </div>
+            <div class="flow-rules">
+              <div class="flow-rule">
+                <span class="flow-rule-dot dot-green"></span>
+                <span class="flow-rule-cond">Under limit + approved vendor</span>
+                <span class="flow-rule-out">Approve</span>
+              </div>
+              <div class="flow-rule">
+                <span class="flow-rule-dot dot-amber"></span>
+                <span class="flow-rule-cond">Over threshold</span>
+                <span class="flow-rule-out">Human Review</span>
+              </div>
+              <div class="flow-rule">
+                <span class="flow-rule-dot dot-red"></span>
+                <span class="flow-rule-cond">Unknown or unapproved destination</span>
+                <span class="flow-rule-out">Block</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <svg class="hero-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0L13 10.5L24 12L13 13.5L12 24L11 13.5L0 12L11 10.5Z" fill="currentColor"/></svg>
+    </div>
+  </section>
+
+  <!-- 3 · EXPLAINER -->
+  <section class="explainer reveal" id="explainer">
+    <div class="container explainer-grid">
+      <div class="explainer-left">
+        <span class="label">What Monarch Shield Does</span>
+        <h2 class="h2">A control layer for<br>x402 payments</h2>
+      </div>
+      <div class="explainer-right">
+        <p class="body-lg">x402 lets AI agents pay each other. Monarch Shield gives businesses a way to control how that money moves, without slowing your business down.</p>
+        <p class="body-lg">Set spend limits, approved vendors, and human approval only where it matters. The rest flows automatically.</p>
+        <div class="chips">
+          <span class="chip chip-green">Approve</span>
+          <span class="chip chip-red">Block</span>
+          <span class="chip chip-amber">Human Review</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · RISK -->
+  <section class="risk reveal" id="risk">
+    <div class="container">
+      <span class="label">Where Autonomous Spend Breaks</span>
+      <div class="risk-grid">
+        <div class="risk-card">
+          <h3>Malicious actors</h3>
+          <p>Without clear payment rules, agents can be exposed to bad endpoints, unsafe requests, or payment destinations you never intended to trust.</p>
+        </div>
+        <div class="risk-card">
+          <h3>Overspending</h3>
+          <p>Autonomy without limits can turn a useful workflow into runaway spend you didn't plan for.</p>
+        </div>
+        <div class="risk-card">
+          <h3>Wrong purchases</h3>
+          <p>Agent errors or hallucinated decisions can send money to the wrong destination.</p>
+        </div>
+        <div class="risk-card">
+          <h3>Manual slowdown</h3>
+          <p>If every payment has to be reviewed by hand, you lose the speed advantage x402 creates.</p>
+        </div>
+      </div>
+      <p class="risk-closing">Monarch Shield gives businesses a layer between blind trust and manual overhead.</p>
+    </div>
+  </section>
+
+  <!-- 5 · HOW IT WORKS -->
+  <section class="works reveal" id="how-it-works">
+    <div class="container">
+      <span class="label">How Monarch Shield Works</span>
+      <div class="works-grid">
+        <div class="works-card">
+          <span class="works-num">01</span>
+          <h3>Quick setup for rules</h3>
+          <p>Set spend limits, approved vendors, and when human approval is required.</p>
+        </div>
+        <div class="works-card">
+          <span class="works-num">02</span>
+          <h3>Payments flow at the speed of x402</h3>
+          <p>Your business keeps the speed of x402 without opening the door to uncontrolled spend.</p>
+        </div>
+        <div class="works-card">
+          <span class="works-num">03</span>
+          <h3>Monarch adds intelligence</h3>
+          <p>Monarch makes sure your money flows only where you want it to go.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · CONTROLS -->
+  <section class="controls reveal" id="controls">
+    <div class="container">
+      <span class="label">Built for Real Payment Controls</span>
+      <div class="controls-list">
+        <div class="control-row">
+          <h3>Spend limits</h3>
+          <p>Set daily, per-payment, or workflow-based limits.</p>
+        </div>
+        <div class="control-row">
+          <h3>Approved vendors</h3>
+          <p>Restrict payments to services and businesses you trust.</p>
+        </div>
+        <div class="control-row">
+          <h3>Human approval</h3>
+          <p>Route higher-risk or higher-value payments only when needed.</p>
+        </div>
+        <div class="control-row">
+          <h3>Escalation rules</h3>
+          <p>Create clear review paths for anything outside normal behavior.</p>
+        </div>
+        <div class="control-row">
+          <h3>Audit trail</h3>
+          <p>See what was attempted, what passed, and what got stopped.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · POSITIONING -->
+  <section class="thesis dark reveal" id="positioning">
+    <div class="container thesis-grid">
+      <div class="thesis-left">
+        <span class="label">Why Monarch Exists</span>
+        <h2 class="h2">x402 makes agent payments possible. Monarch makes them safe to use at scale.</h2>
+      </div>
+      <div class="thesis-right">
+        <p class="body-lg">Agent-to-agent payments create speed. Monarch adds the rules, limits, and intelligence businesses need to use that speed responsibly.</p>
+        <p class="body-lg">Monarch Shield was built for x402 so businesses can adopt autonomous payments and stay in control of where money flows.</p>
+      </div>
+    </div>
+    <div class="container">
+      <div class="thesis-rail">
+        <span>x402 moves money</span>
+        <span class="rail-line"></span>
+        <span>Monarch controls how it flows</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · CTA -->
+  <section class="cta dark" id="request-access">
+    <div class="container cta-inner">
+      <span class="label">Deploy Monarch Shield</span>
+      <h2 class="cta-h2">Prepare your business for agent-to-agent payments where intelligence meets speed</h2>
+      <p class="cta-body">If your business is moving money on x402, Monarch Shield gives you the rules and approval settings to protect that flow without slowing it down.</p>
+      <a href="mailto:access@x402ms.ai" class="btn btn-primary btn-lg">Request Early Access</a>
+    </div>
+  </section>
+
+  <!-- 9 · FOOTER -->
+  <footer class="footer dark">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <svg class="footer-mark" viewBox="0 0 100 115" aria-hidden="true">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M31 0H69V20H100V75L50 115L0 75V20H31V0ZM18 37H82V68L50 98L18 68V37Z" fill="currentColor"/>
+        </svg>
+        <span>&copy; 2026 Monarch Shield</span>
+      </div>
+      <nav class="footer-nav">
+        <a href="#product">Product</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#docs">Docs</a>
+      </nav>
+      <svg class="footer-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0L13 10.5L24 12L13 13.5L12 24L11 13.5L0 12L11 10.5Z" fill="currentColor"/></svg>
+    </div>
+  </footer>
+
+</body>
+</html>
