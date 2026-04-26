@@ -1,0 +1,68 @@
+{
+  "name": "@monarch-shield/x402",
+  "version": "0.1.0",
+  "description": "Local-first agent payment safety kit for x402 and paid MCP flows.",
+  "type": "module",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://x402ms.ai",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghostmonarch/x402ms.git",
+    "directory": "packages/x402"
+  },
+  "bugs": {
+    "url": "https://github.com/ghostmonarch/x402ms/issues"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    }
+  },
+  "bin": {
+    "monarch": "./src/cli.js",
+    "x402": "./src/cli.js"
+  },
+  "files": [
+    "src",
+    "fixtures",
+    "templates",
+    "examples",
+    "agent-skill",
+    "test",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "doctor": "node src/cli.js doctor",
+    "doctor:ci": "node src/cli.js doctor --ci --strict",
+    "check": "node src/cli.js check --resource-url https://api.example.com/x402/search --pay-to 0x123 --amount 0.02 --asset USDC --network base --intent \"research agent buying search results\"",
+    "scan": "node src/cli.js scan",
+    "sandbox": "node src/cli.js sandbox",
+    "preprod": "node src/cli.js preprod",
+    "test": "node --test test/*.test.js"
+  },
+  "keywords": [
+    "x402",
+    "x402-safety",
+    "x402-sandbox",
+    "x402-preflight",
+    "ai-agents",
+    "agent-payments",
+    "agent-payment-safety",
+    "paid-mcp",
+    "mcp",
+    "payto-wallet",
+    "base",
+    "stablecoins",
+    "payment-safety"
+  ],
+  "license": "MIT"
+}

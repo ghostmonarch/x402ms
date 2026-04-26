@@ -1,0 +1,38 @@
+[
+  {
+    "id": "missing-prepayment-check",
+    "title": "Payment flow has no pre-payment trust check",
+    "decision": "block",
+    "reason": "The project can move money, but Monarch is not called before payment."
+  },
+  {
+    "id": "verified-low-risk",
+    "title": "Verified endpoint, low risk",
+    "decision": "allow",
+    "reason": "Endpoint ownership, pay-to wallet, and delivery reliability are verified."
+  },
+  {
+    "id": "unknown-wrapper",
+    "title": "Unknown wrapper",
+    "decision": "caution",
+    "reason": "Endpoint appears reachable, but provider authorization is not visible."
+  },
+  {
+    "id": "changed-pay-to-wallet",
+    "title": "Changed pay-to wallet",
+    "decision": "block",
+    "reason": "The endpoint recently changed its payment destination."
+  },
+  {
+    "id": "failed-delivery",
+    "title": "Endpoint accepts payment but fails delivery",
+    "decision": "caution",
+    "reason": "Recent paid calls did not consistently return usable responses."
+  },
+  {
+    "id": "verified-alternative",
+    "title": "Risky endpoint with verified alternative",
+    "decision": "route",
+    "reason": "A lower-risk verified alternative can satisfy the same intent."
+  }
+]

@@ -2,13 +2,59 @@
   "name": "monarch-shield",
   "version": "1.0.0",
   "private": true,
-  "description": "Monarch Shield — Control layer for x402 payments",
+  "type": "module",
+  "description": "Monarch Shield — local-first safety kit for x402 agent payments",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "test": "npm test --workspace @monarch-shield/x402",
+    "qa": "npm test && npm run monarch:doctor && node packages/x402/src/cli.js doctor --ci --strict && npm audit --audit-level=moderate && npm pack --workspace @monarch-shield/x402 --dry-run && npm run build",
+    "release:check": "npm run qa",
+    "pack:x402": "npm pack --workspace @monarch-shield/x402",
+    "preview": "vite preview",
+    "monarch:doctor": "node packages/x402/src/cli.js doctor",
+    "monarch:scan": "node packages/x402/src/cli.js scan",
+    "monarch:sandbox": "node packages/x402/src/cli.js sandbox",
+    "monarch:preprod": "node packages/x402/src/cli.js preprod"
   },
   "devDependencies": {
     "vite": "^6.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghostmonarch/x402ms.git"
+  },
+  "keywords": [
+    "x402",
+    "x402-safety",
+    "agent-payments",
+    "paid-mcp",
+    "base",
+    "monarch-doctor"
+  ],
+  "author": "Monarch Shield",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ghostmonarch/x402ms/issues"
+  },
+  "homepage": "https://x402ms.ai",
+  "main": "vite.config.js",
+  "directories": {
+    "example": "examples"
+  },
+  "dependencies": {
+    "esbuild": "^0.25.12",
+    "fdir": "^6.5.0",
+    "fsevents": "^2.3.3",
+    "nanoid": "^3.3.11",
+    "picocolors": "^1.1.1",
+    "picomatch": "^4.0.4",
+    "postcss": "^8.5.12",
+    "rollup": "^4.60.1",
+    "source-map-js": "^1.2.1",
+    "tinyglobby": "^0.2.15"
   }
 }

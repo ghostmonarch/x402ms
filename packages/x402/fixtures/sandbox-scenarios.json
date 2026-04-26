@@ -1,0 +1,87 @@
+[
+  {
+    "id": "missing-prepayment-check",
+    "title": "Payment flow has no pre-payment trust check",
+    "expectedDecision": "block",
+    "input": {
+      "mode": "preprod",
+      "resourceUrl": "https://api.example.com/x402/search",
+      "payTo": "0x123",
+      "amount": "0.02",
+      "asset": "USDC",
+      "network": "base",
+      "intent": "research agent buying search results",
+      "hasPrepaymentCheck": false
+    }
+  },
+  {
+    "id": "verified-low-risk",
+    "title": "Verified endpoint, low risk",
+    "expectedDecision": "allow",
+    "input": {
+      "resourceUrl": "https://api.verified.example/x402/search",
+      "payTo": "0x123",
+      "amount": "0.02",
+      "asset": "USDC",
+      "network": "base",
+      "intent": "research agent buying search results",
+      "providerStatus": "verified"
+    }
+  },
+  {
+    "id": "unknown-wrapper",
+    "title": "Unknown wrapper",
+    "expectedDecision": "caution",
+    "input": {
+      "resourceUrl": "https://wrapper.example/x402/search",
+      "payTo": "0x456",
+      "amount": "0.02",
+      "asset": "USDC",
+      "network": "base",
+      "intent": "research agent buying search results",
+      "providerStatus": "unknown_wrapper"
+    }
+  },
+  {
+    "id": "changed-pay-to-wallet",
+    "title": "Changed pay-to wallet",
+    "expectedDecision": "block",
+    "input": {
+      "resourceUrl": "https://api.example.com/x402/search",
+      "payTo": "0x789",
+      "amount": "0.02",
+      "asset": "USDC",
+      "network": "base",
+      "intent": "research agent buying search results",
+      "payToWalletChanged": true
+    }
+  },
+  {
+    "id": "failed-delivery",
+    "title": "Endpoint accepts payment but fails delivery",
+    "expectedDecision": "caution",
+    "input": {
+      "resourceUrl": "https://flaky.example/x402/search",
+      "payTo": "0x123",
+      "amount": "0.02",
+      "asset": "USDC",
+      "network": "base",
+      "intent": "research agent buying search results",
+      "deliveryReliability": "failing"
+    }
+  },
+  {
+    "id": "verified-alternative",
+    "title": "Risky endpoint with verified alternative",
+    "expectedDecision": "route",
+    "input": {
+      "resourceUrl": "https://risky.example/x402/search",
+      "payTo": "0x123",
+      "amount": "0.02",
+      "asset": "USDC",
+      "network": "base",
+      "intent": "research agent buying search results",
+      "verifiedAlternative": "https://api.verified.example/x402/search"
+    }
+  }
+]

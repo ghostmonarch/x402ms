@@ -1,0 +1,109 @@
+openapi: 3.1.0
+info:
+  title: Monarch Shield API
+  version: 0.1.0
+  description: Sandbox and pre-payment trust checks for x402 and agent payments.
+servers:
+  - url: https://api.x402ms.ai
+paths:
+  /check-payment:
+    post:
+      summary: Check an x402 endpoint before payment
+      description: Returns allow, caution, block, or route before an agent pays. Use after sandbox/preflight checks pass.
+      operationId: checkPayment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CheckPaymentRequest"
+      responses:
+        "200":
+          description: Payment trust decision
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CheckPaymentResponse"
+components:
+  schemas:
+    CheckPaymentRequest:
+      type: object
+      required:
+        - resourceUrl
+        - payTo
+        - amount
+        - asset
+        - network
+        - intent
+      properties:
+        resourceUrl:
+          type: string
+          format: uri
+        payTo:
+          type: string
+        amount:
+          type: string
+        asset:
+          type: string
+          examples: ["USDC"]
+        network:
+          type: string
+          examples: ["base"]
+        intent:
+          type: string
+        agentId:
+          type: string
+        userId:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
+    CheckPaymentResponse:
+      type: object
+      required:
+        - decision
+        - risk
+        - status
+        - reason
+        - suggestedAction
+        - userMessage
+        - checks
+      properties:
+        decision:
+          $ref: "#/components/schemas/Decision"
+        risk:
+          $ref: "#/components/schemas/RiskLevel"
+        status:
+          type: string
+        reason:
+          type: string
+        suggestedAction:
+          type: string
+        userMessage:
+          type: string
+        verifiedAlternative:
+          type: string
+          format: uri
+        checks:
+          $ref: "#/components/schemas/TrustChecks"
+    Decision:
+      type: string
+      enum: [allow, caution, block, route]
+    RiskLevel:
+      type: string
+      enum: [low, medium, high, unknown]
+    TrustChecks:
+      type: object
+      properties:
+        domainOwnership:
+          type: string
+        payToWallet:
+          type: string
+        payToWalletChanged:
+          type: boolean
+        deliveryReliability:
+          type: string
+        provenance:
+          type: string
+        priceSanity:
+          type: string

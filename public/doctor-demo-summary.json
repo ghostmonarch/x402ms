@@ -1,0 +1,12 @@
+{
+  "demo": "monarch-doctor-x402-preflight",
+  "status": "passed",
+  "recordingPath": "public/doctor-demo-recording.txt",
+  "proves": [
+    "Doctor fails money-moving code with no Monarch check",
+    "init installs the x402-client safety harness",
+    "Doctor catches that the original payment file still needs patching",
+    "Doctor passes after the original payment path calls Monarch before payment",
+    "sandbox scenarios cover allow/caution/block/route branches"
+  ]
+}

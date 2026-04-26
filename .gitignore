@@ -2,3 +2,9 @@ node_modules/
 dist/
 .DS_Store
 *.local
+artifacts/
+*.tgz
+.env
+.env.*
+!.env.example
+npm-debug.log*

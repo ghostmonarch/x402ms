@@ -517,20 +517,74 @@ button { font-family: inherit; }
 
 
 /* ================================================
-   6 · CONTROLS
+   6 · AGENT KIT
    ================================================ */
 
-.controls {
+.agent-docs {
   padding: 104px 0;
 }
 
-.controls > .container > .label { margin-bottom: 48px; }
+.agent-docs > .container > .label { margin-bottom: 48px; }
 
-.controls-list {
+.agent-docs-list {
   border-top: 1px solid var(--border-light);
 }
 
-.control-row {
+.agent-kit {
+  margin: 32px 0 56px;
+  padding: 32px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  background: rgba(8, 8, 8, 0.03);
+}
+
+.agent-kit .h2 {
+  margin-bottom: 20px;
+}
+
+.agent-kit pre {
+  overflow-x: auto;
+  margin-bottom: 18px;
+  padding: 22px;
+  border-radius: var(--radius);
+  background: var(--dark);
+  color: var(--cream);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.agent-kit code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.agent-kit p {
+  max-width: 680px;
+  color: var(--muted);
+}
+
+.agent-kit-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.agent-kit-links a {
+  display: inline-flex;
+  padding: 10px 14px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+}
+
+.agent-kit-links a:hover {
+  background: var(--dark);
+  color: var(--cream);
+}
+
+.agent-docs-row {
   display: grid;
   grid-template-columns: 220px 1fr;
   gap: 40px;
@@ -539,12 +593,12 @@ button { font-family: inherit; }
   border-bottom: 1px solid var(--border-light);
 }
 
-.control-row h3 {
+.agent-docs-row h3 {
   font-size: 1.0625rem;
   font-weight: 600;
 }
 
-.control-row p {
+.agent-docs-row p {
   font-size: 1rem;
   line-height: 1.6;
   color: var(--muted);
@@ -704,7 +758,7 @@ button { font-family: inherit; }
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .controls-list { max-width: 720px; }
+  .agent-docs-list { max-width: 720px; }
 }
 
 @media (max-width: 768px) {
@@ -760,8 +814,8 @@ button { font-family: inherit; }
   .works { padding: 72px 0; }
   .works-grid { grid-template-columns: 1fr; gap: 1px; }
 
-  .controls { padding: 72px 0; }
-  .control-row {
+  .agent-docs { padding: 72px 0; }
+  .agent-docs-row {
     grid-template-columns: 1fr;
     gap: 8px;
   }

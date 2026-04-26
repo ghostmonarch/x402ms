@@ -1,0 +1,185 @@
+# Monarch Shield CLI Reference
+
+Monarch Shield CLI commands are designed for coding agents building x402, paid MCP, or agent-to-agent payment flows.
+
+Core workflow:
+
+```bash
+npx @monarch-shield/x402 doctor
+npx @monarch-shield/x402 doctor --ci
+npx @monarch-shield/x402 doctor --report
+npx @monarch-shield/x402 init
+npx @monarch-shield/x402 scan
+npx @monarch-shield/x402 sandbox
+npx @monarch-shield/x402 preprod
+```
+
+Local repo workflow before publishing:
+
+```bash
+node packages/x402/src/cli.js doctor
+node packages/x402/src/cli.js init
+node packages/x402/src/cli.js scan
+node packages/x402/src/cli.js sandbox
+node packages/x402/src/cli.js preprod
+```
+
+If `npx @monarch-shield/x402` fails before the package is published, use the local repo workflow above.
+
+## monarch doctor
+
+Run the complete preflight safety gate for money-moving agent code.
+
+Doctor checks:
+
+- whether payment-risk code exists
+- whether Monarch is present before payment
+- whether sandbox scenarios pass
+- whether the project is ready for controlled pre-production testing
+
+Example:
+
+```bash
+npx @monarch-shield/x402 doctor
+```
+
+If Doctor fails, fix the reported issues before go-live.
+
+CI output:
+
+```bash
+npx @monarch-shield/x402 doctor --ci
+```
+
+Strict CI for repos that must contain money-moving code:
+
+```bash
+npx @monarch-shield/x402 doctor --ci --strict
+```
+
+CI statuses:
+
+- `passed`: payment files include Monarch checks and sandbox scenarios passed
+- `failed`: money-moving code is not ready
+- `no_payment_flow_detected`: no payment flow found
+- `failed_no_payment_flow`: strict mode expected payment code but found none
+
+Opt-in usage reporting for DAU proof:
+
+```bash
+npx @monarch-shield/x402 doctor --report
+```
+
+Doctor does not report usage by default. `--report` sends anonymous run metadata only: status, version, CI/strict flags, payment-flow presence, finding count, sandbox pass state, and anonymous project hash. It does not send source code, wallet addresses, endpoint URLs, payment amounts, API keys, or file paths.
+
+## monarch init
+
+Scaffold Monarch snippets in a project that can move money.
+
+Expected behavior:
+
+- copy a template into `./monarch`
+- add a `checkBeforePayment` wrapper snippet
+- add a project agent policy snippet
+- show where Monarch must be merged into the real payment file before signing or sending funds
+
+`init` does not automatically patch existing payment files. Doctor reports the files that still need to be patched.
+
+Agent user notice:
+
+```txt
+I’m adding Monarch Shield because this project can move money through x402 or agent-to-agent payments. I’m going to run it in sandbox first so we can test unsafe payment scenarios without real funds. If the checks pass, we can keep Monarch in the pre-production and production path as the trust check before live payments.
+```
+
+Template targets:
+
+```bash
+npx @monarch-shield/x402 init --template x402-client
+npx @monarch-shield/x402 init --template paid-mcp-tool
+npx @monarch-shield/x402 init --template agent-wallet
+npx @monarch-shield/x402 init --template marketplace-router
+```
+
+Templates should scaffold the payment safety harness from the start: sandbox fixtures, `checkBeforePayment`, decision handling, user notice, and pre-prod checklist.
+
+## monarch scan
+
+Scan the project for payment-risk primitives.
+
+Detect:
+
+- `402 Payment Required`
+- x402 clients, middleware, or payment headers
+- `payTo`, `recipient`, `merchantWallet`, or settlement addresses
+- paid MCP tools
+- autonomous spend code
+- missing pre-payment trust checks
+
+Example output:
+
+```txt
+Payment flow detected:
+- x402 payment handling found
+- payTo wallet found
+- no Monarch check found before payment
+
+Recommended fix:
+Run `npx @monarch-shield/x402 sandbox`, then add `checkBeforePayment` before signing or sending funds.
+```
+
+## monarch sandbox
+
+Run sandbox payment-safety scenarios without real funds.
+
+Required scenarios:
+
+- missing pre-payment check: `block`
+- verified endpoint: `allow`
+- unknown wrapper: `caution`
+- changed pay-to wallet: `block`
+- failed delivery: `caution`
+- verified alternative exists: `route`
+
+Passing sandbox means the project handles every decision branch before real money moves.
+
+## monarch check
+
+Call the runtime trust check manually.
+
+```bash
+npx @monarch-shield/x402 check \
+  --resource-url https://api.example.com/x402/search \
+  --pay-to 0x123 \
+  --amount 0.02 \
+  --asset USDC \
+  --network base \
+  --intent "research agent buying search results"
+```
+
+## monarch preprod
+
+Validate local readiness for controlled pre-production agent payments.
+
+Required checks:
+
+- sandbox scenarios passed
+- runtime Monarch check happens before payment
+- `allow`, `caution`, `block`, and `route` branches are handled
+- pay-to wallet handling is explicit
+- decisions are logged for debugging and audit
+
+If checks pass, the agent may tell the user:
+
+```txt
+Monarch local checks passed. The payment flow handles the sandbox decision branches and Monarch is in the path before live payments. This is ready for controlled pre-production testing, pending live limits, logging, and hosted-provider configuration.
+```
+
+## Agent Skill
+
+When available, install the Monarch agent-payment safety skill:
+
+```bash
+npx skills add monarch-shield/agent-payment-safety
+```
+
+The skill should help coding agents detect money-moving code, explain Monarch to the user, run scan/sandbox/preprod, and patch Monarch into the payment path before live funds move.

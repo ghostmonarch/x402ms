@@ -1,0 +1,21 @@
+name: Monarch Doctor
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  doctor:
+    name: Money-moving code safety gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npm test
+      - run: node packages/x402/src/cli.js doctor --ci --strict

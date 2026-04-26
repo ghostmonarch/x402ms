@@ -1,0 +1,86 @@
+# Monarch Doctor Demo
+# Scenario: an agent is asked to build an x402 payment flow.
+# Doctor should fail unsafe code, then pass after Monarch is installed.
+
+## 1. Agent detects money-moving code and runs Doctor
+$ node /Users/elijahpaul/x402ms/packages/x402/src/cli.js doctor
+Monarch Doctor
+Preflight safety check for money-moving agent code.
+
+Status: FAILED
+
+Detected:
+- pay.js: x402 payment handling found
+- pay.js: pay-to wallet handling found
+
+Issues:
+- FAIL monarch_before_payment: One or more payment files lack a Monarch check before payment.
+
+Required fix:
+- Add `checkBeforePayment` before signing or sending funds.
+- Patch pay.js so Monarch runs before payment execution.
+
+Suggested command:
+npx @monarch-shield/x402 init --template x402-client
+
+## 2. Agent installs the Monarch x402 client template
+$ node /Users/elijahpaul/x402ms/packages/x402/src/cli.js init --template x402-client
+Monarch template installed: x402-client
+Created: monarch
+Next: npx @monarch-shield/x402 scan && npx @monarch-shield/x402 sandbox && npx @monarch-shield/x402 preprod
+
+## 3. Agent reruns Doctor and sees the original payment file still needs patching
+$ node /Users/elijahpaul/x402ms/packages/x402/src/cli.js doctor
+Monarch Doctor
+Preflight safety check for money-moving agent code.
+
+Status: FAILED
+
+Detected:
+- monarch/check-before-payment.js: x402 payment handling found
+- monarch/check-before-payment.js: pay-to wallet handling found
+- monarch/check-before-payment.js: Monarch pre-payment check reference found
+- pay.js: x402 payment handling found
+- pay.js: pay-to wallet handling found
+
+Issues:
+- FAIL monarch_before_payment: One or more payment files lack a Monarch check before payment.
+
+Required fix:
+- Patch pay.js so Monarch runs before payment execution.
+
+Suggested command:
+npx @monarch-shield/x402 init --template x402-client
+
+## 4. Agent patches the original payment path and reruns Doctor
+$ node /Users/elijahpaul/x402ms/packages/x402/src/cli.js doctor
+Monarch Doctor
+Preflight safety check for money-moving agent code.
+
+Status: PASSED
+
+Detected:
+- monarch/check-before-payment.js: x402 payment handling found
+- monarch/check-before-payment.js: pay-to wallet handling found
+- monarch/check-before-payment.js: Monarch pre-payment check reference found
+- pay.js: x402 payment handling found
+- pay.js: pay-to wallet handling found
+- pay.js: Monarch pre-payment check reference found
+
+Checks:
+- PASS payment_flow_scanned: Payment flow detected.
+- PASS monarch_before_payment: Monarch check reference detected in payment files.
+- PASS sandbox_passed: Sandbox scenarios passed.
+
+Result: Ready for controlled pre-production testing, pending live limits, logging, and hosted-provider configuration.
+
+## 5. Agent runs sandbox directly to show unsafe branches are covered
+$ node /Users/elijahpaul/x402ms/packages/x402/src/cli.js sandbox
+Monarch sandbox
+- PASS missing-prepayment-check: expected block, got block
+- PASS verified-low-risk: expected allow, got allow
+- PASS unknown-wrapper: expected caution, got caution
+- PASS changed-pay-to-wallet: expected block, got block
+- PASS failed-delivery: expected caution, got caution
+- PASS verified-alternative: expected route, got route
+

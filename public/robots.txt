@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Agent-readable product index:
+# https://x402ms.ai/llms.txt

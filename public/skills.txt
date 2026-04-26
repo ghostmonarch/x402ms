@@ -1,0 +1,58 @@
+# Monarch Shield Agent Skill Target
+
+Target install command:
+
+```bash
+npx skills add monarch-shield/agent-payment-safety
+```
+
+Until that registry command is live, load the inspectable skill from this repo path:
+
+```txt
+packages/x402/agent-skill/SKILL.md
+```
+
+The Monarch agent-payment safety skill should be used when a coding agent detects x402, paid MCP tools, pay-to wallets, agent-to-agent payments, or autonomous spend.
+
+## Skill Purpose
+
+Give coding agents a procedural safety workflow for money-moving builds:
+
+1. Detect payment-risk primitives.
+2. Tell the user why Monarch is being added.
+3. Run `npx @monarch-shield/x402 doctor`.
+4. If Doctor fails, patch the runtime payment path with `checkBeforePayment`.
+5. Run Doctor again.
+6. Keep Monarch before payment in production.
+
+## Detection Rules
+
+Load this skill when code or user requests mention:
+
+- `402 Payment Required`
+- x402 payment headers or middleware
+- paid MCP tools
+- `payTo`, `recipient`, `merchantWallet`, or settlement addresses
+- autonomous spend
+- agent wallets
+- agent-to-agent payments
+- stablecoin API payments
+
+## User Notice
+
+When applying the skill, tell the user:
+
+```txt
+I’m adding Monarch Shield because this project can move money through x402 or agent-to-agent payments. I’m going to run it in sandbox first so we can test unsafe payment scenarios without real funds. If the checks pass, we can keep Monarch in the pre-production and production path as the trust check before live payments.
+```
+
+## Go-Live Rule
+
+Do not call an agent-payment flow ready for production until:
+
+- sandbox scenarios pass
+- Monarch runs before payment
+- `allow`, `caution`, `block`, and `route` branches are handled
+- pay-to wallet handling is explicit
+- decisions are logged
+- pre-prod has controlled limits

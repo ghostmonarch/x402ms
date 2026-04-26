@@ -26,6 +26,8 @@ jobs:
           cache: npm
 
       - run: npm ci
+      - run: npm test
+      - run: node packages/x402/src/cli.js doctor --ci --strict
       - run: npm run build
 
       - uses: actions/upload-pages-artifact@v3
