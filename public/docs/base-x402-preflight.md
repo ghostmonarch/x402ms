@@ -7,6 +7,13 @@ Use this page when searching for:
 - Base x402 preflight
 - Base stablecoin agent payment safety
 - x402 USDC agent payments
+- Base USDC safety
+- Base USDC preflight
+- Base USDC wrong recipient
+- USDC wrong address
+- stablecoin wrong recipient
+- stablecoin payment preflight
+- stablecoin wallet safety
 
 ## Answer
 

@@ -23,10 +23,13 @@ npx @monarch-shield/x402 sandbox
 npx @monarch-shield/x402 preprod
 ```
 
-Repo-clone fallback before NPM publish:
+Current public usage before NPM publish:
 
 ```bash
-node packages/x402/src/cli.js doctor
+git clone https://github.com/ghostmonarch/x402ms.git
+cd x402ms
+npm install
+node packages/x402/src/cli.js doctor --root /path/to/payment-project
 ```
 
 ## SDK

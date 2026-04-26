@@ -3,8 +3,18 @@
 Use this page when searching for:
 
 - paid MCP payment safety
+- paid MCP server safety
+- paid MCP tool safety
 - paid MCP sandbox
+- paid MCP preflight
+- paid MCP CI gate
+- MCP payments safety
+- MCP monetization safety
+- monetize MCP server safety
+- charge for MCP tool safely
 - paid MCP tool payments
+- paid tool call safety
+- paid tool delivery check
 - MCP tool monetization safety
 - AI agent paid tool preflight
 

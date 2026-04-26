@@ -3,11 +3,22 @@
 Use this page when searching for:
 
 - agent payment safety
+- AI agent payment safety
+- agentic payment safety
+- agentic commerce safety
+- agent commerce payment safety
 - agent-to-agent payment safety
+- machine-to-machine payment safety
+- payment rails for AI agents safety
+- software payment safety
+- software pays API safety
 - autonomous agent spend check
 - autonomous payment preflight
 - agent commerce payment safety
 - preflight check for agent payments
+- payment go-live checklist
+- payment preprod checklist
+- payment CI gate
 - AI agent payment sandbox
 
 ## Answer

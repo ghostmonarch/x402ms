@@ -18,16 +18,22 @@ Problem-name discovery alias:
 npx x402-doctor
 ```
 
-Working from this repo before NPM publish:
+Current public usage before NPM publish:
 
 ```bash
-node packages/x402/src/cli.js doctor
+git clone https://github.com/ghostmonarch/x402ms.git
+cd x402ms
+npm install
+node packages/x402/src/cli.js doctor --root /path/to/payment-project
 ```
+
+Use the repo-clone path today. The `npx` commands above are the package path once NPM auth/publish is complete.
 
 CI gate:
 
 ```bash
 npx @monarch-shield/x402 doctor --ci --strict
+node packages/x402/src/cli.js doctor --root /path/to/payment-project --ci --strict
 ```
 
 Opt-in DAU proof:

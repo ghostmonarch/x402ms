@@ -14,7 +14,7 @@ npx x402-doctor
 If this repo is being used before the package is published, run:
 
 ```bash
-node packages/x402/src/cli.js doctor
+node packages/x402/src/cli.js doctor --root /path/to/payment-project
 ```
 
 ## Required Agent Behavior

@@ -166,14 +166,19 @@
       <span class="label">Built for Coding Agents</span>
       <div class="agent-kit">
         <h2 class="h2">Agent Safety Kit</h2>
-        <pre><code>npx @monarch-shield/x402 doctor
+        <pre><code>git clone https://github.com/ghostmonarch/x402ms.git
+cd x402ms
+npm install
+node packages/x402/src/cli.js doctor --root /path/to/payment-project
+
+npx @monarch-shield/x402 doctor
 npx x402-doctor
 npx @monarch-shield/x402 doctor --ci
 npx @monarch-shield/x402 init
 npx @monarch-shield/x402 scan
 npx @monarch-shield/x402 sandbox
 npx @monarch-shield/x402 preprod</code></pre>
-        <p>Doctor runs the preflight gate first. The supporting commands are there when an agent needs to patch, test, and validate the payment path.</p>
+        <p>The repo-clone command works today. The npx commands are the package path once NPM publish is complete.</p>
         <div class="agent-kit-links">
           <a href="/north-star.txt">Read Agent North Star</a>
           <a href="/docs/agent-payment-query-map.md">Agent Query Map</a>

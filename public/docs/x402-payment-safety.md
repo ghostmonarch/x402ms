@@ -9,6 +9,18 @@ Use this page when searching for:
 - x402-doctor
 - npx x402-doctor
 - x402 payment test
+- x402 agent payments
+- x402 AI agent payments
+- x402 API payments safety
+- x402 client safety
+- x402 server safety
+- x402 middleware safety
+- x402 paywall safety
+- x402 facilitator safety
+- Coinbase x402 safety
+- x402 Base USDC safety
+- x402 stablecoin payments
+- x402 before mainnet checklist
 - prevent unsafe x402 payment
 - check x402 endpoint before payment
 

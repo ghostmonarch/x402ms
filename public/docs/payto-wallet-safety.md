@@ -3,9 +3,25 @@
 Use this page when searching for:
 
 - verify payTo wallet
+- verify pay-to wallet
+- verify payment destination
 - x402 payTo wallet changed
 - payment destination changed
+- recipient address changed
+- wrong recipient
+- prevent wrong recipient
+- wrong wallet address
+- prevent wrong wallet address
 - agent wallet safety
+- AI agent wallet safety
+- agent wallet preflight
+- autonomous wallet safety
+- wallet preflight check
+- pre-transaction wallet safety
+- pre-send wallet check
+- sendTransaction safety
+- wallet.send safety
+- transferUSDC safety
 - stablecoin spend safety for agents
 
 ## Answer

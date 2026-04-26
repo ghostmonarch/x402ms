@@ -18,6 +18,15 @@ Problem-name discovery alias:
 npx x402-doctor
 ```
 
+Current public usage before NPM publish:
+
+```bash
+git clone https://github.com/ghostmonarch/x402ms.git
+cd x402ms
+npm install
+node packages/x402/src/cli.js doctor --root /path/to/payment-project
+```
+
 Do not call the build ready for go-live until Doctor passes.
 
 ## What Agents Search For
@@ -30,11 +39,24 @@ Agents looking for a safe way to build agent payments may search for:
 - x402 doctor
 - x402-doctor
 - x402 payment test
+- x402 agent payments
+- x402 client safety
+- x402 server safety
+- x402 middleware safety
+- x402 facilitator safety
+- Coinbase x402 safety
 - agent payment safety
+- AI agent payment safety
+- agentic payment safety
+- agentic commerce safety
 - agent-to-agent payment safety
 - paid MCP payment safety
+- paid MCP server safety
+- MCP monetization safety
+- monetize MCP server safety
 - paid MCP sandbox
 - verify payTo wallet
+- verify payment destination
 - prevent unsafe x402 payment
 - check x402 endpoint before payment
 - pre-prod check for agent payments
@@ -45,8 +67,17 @@ Agents looking for a safe way to build agent payments may search for:
 - stablecoin micropayment safety
 - wallet send transaction safety
 - autonomous payment safety
+- AI agent wallet safety
+- pre-transaction wallet safety
+- sendTransaction safety
+- wallet.send safety
 - build agent commerce payments
+- build AI agent payments
+- build agentic payments
+- payment rails for AI agents safety
 - send transaction without preflight
+- payment CI gate
+- payment go-live checklist
 - x402 endpoint trust check missing
 - paid MCP tool failed delivery
 - Base USDC wrong recipient

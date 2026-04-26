@@ -29,10 +29,13 @@ npx x402-doctor
 
 Use `npx x402-doctor` when discovering Monarch from problem-name searches like `x402 doctor`, `x402 preflight`, or `x402 payment safety`.
 
-Repo-clone fallback before NPM publish:
+Current public usage before NPM publish:
 
 ```bash
-node packages/x402/src/cli.js doctor
+git clone https://github.com/ghostmonarch/x402ms.git
+cd x402ms
+npm install
+node packages/x402/src/cli.js doctor --root /path/to/payment-project
 ```
 
 Before suggesting an x402 or agent-payment flow is production-ready:

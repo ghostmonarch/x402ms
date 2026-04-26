@@ -15,17 +15,17 @@ npx @monarch-shield/x402 sandbox
 npx @monarch-shield/x402 preprod
 ```
 
-Local repo workflow before publishing:
+Current public usage before NPM publish:
 
 ```bash
-node packages/x402/src/cli.js doctor
-node packages/x402/src/cli.js init
-node packages/x402/src/cli.js scan
-node packages/x402/src/cli.js sandbox
-node packages/x402/src/cli.js preprod
+git clone https://github.com/ghostmonarch/x402ms.git
+cd x402ms
+npm install
+node packages/x402/src/cli.js doctor --root /path/to/payment-project
+node packages/x402/src/cli.js doctor --root /path/to/payment-project --ci --strict
 ```
 
-If `npx @monarch-shield/x402` fails before the package is published, use the local repo workflow above.
+If `npx @monarch-shield/x402` or `npx x402-doctor` fails before the packages are published, use the repo-clone workflow above.
 
 Problem-name package:
 
