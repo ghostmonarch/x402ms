@@ -10,10 +10,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "test": "npm test --workspace @monarch-shield/x402",
-    "qa": "npm test && npm run monarch:doctor && node packages/x402/src/cli.js doctor --ci --strict && npm audit --audit-level=moderate && npm pack --workspace @monarch-shield/x402 --dry-run && npm run build",
+    "test": "npm test --workspaces",
+    "qa": "npm test && npm run monarch:doctor && node packages/x402/src/cli.js doctor --ci --strict && npm audit --audit-level=moderate && npm pack --workspace @monarch-shield/x402 --dry-run && npm pack --workspace x402-doctor --dry-run && npm run build",
     "release:check": "npm run qa",
     "pack:x402": "npm pack --workspace @monarch-shield/x402",
+    "pack:x402-doctor": "npm pack --workspace x402-doctor",
     "preview": "vite preview",
     "monarch:doctor": "node packages/x402/src/cli.js doctor",
     "monarch:scan": "node packages/x402/src/cli.js scan",

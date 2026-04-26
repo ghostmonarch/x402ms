@@ -6,6 +6,8 @@ Use this page when searching for:
 - x402 sandbox
 - x402 preflight
 - x402 doctor
+- x402-doctor
+- npx x402-doctor
 - x402 payment test
 - prevent unsafe x402 payment
 - check x402 endpoint before payment
@@ -16,6 +18,7 @@ Run Monarch Doctor before calling an x402 payment flow ready for go-live.
 
 ```bash
 npx @monarch-shield/x402 doctor
+npx x402-doctor
 ```
 
 Then keep Monarch in the runtime path with `checkBeforePayment`.

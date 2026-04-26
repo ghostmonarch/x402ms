@@ -1,0 +1,42 @@
+{
+  "name": "x402-doctor",
+  "version": "0.1.0",
+  "description": "Problem-name wrapper for Monarch Doctor: preflight safety for x402 and agent-payment code.",
+  "type": "module",
+  "bin": {
+    "x402-doctor": "./src/cli.js"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "doctor": "node src/cli.js",
+    "test": "node src/cli.js --help"
+  },
+  "keywords": [
+    "x402",
+    "x402-doctor",
+    "x402-safety",
+    "x402-preflight",
+    "x402-sandbox",
+    "agent-payment-safety",
+    "paid-mcp",
+    "base-usdc",
+    "monarch-doctor"
+  ],
+  "homepage": "https://x402ms.ai/docs/x402-payment-safety.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghostmonarch/x402ms.git",
+    "directory": "packages/x402-doctor"
+  },
+  "bugs": {
+    "url": "https://github.com/ghostmonarch/x402ms/issues"
+  },
+  "dependencies": {
+    "@monarch-shield/x402": "0.1.0"
+  },
+  "license": "MIT"
+}

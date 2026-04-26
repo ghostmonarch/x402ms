@@ -10,6 +10,10 @@ const surfaces = [
   'PUBLISHING.md',
   'packages/x402/README.md',
   'packages/x402/package.json',
+  'packages/x402-doctor/README.md',
+  'packages/x402-doctor/package.json',
+  'workers/doctor-run/README.md',
+  'workers/doctor-run/src/index.js',
   'public/north-star.txt',
   'public/llms.txt',
   'public/llms-full.txt',
@@ -34,6 +38,7 @@ const corpus = surfaces
   .map((path) => readFileSync(path, 'utf8'))
   .join('\n')
   .toLowerCase();
+const normalizedCorpus = normalize(corpus);
 
 const dimensions = {
   personas: [
@@ -45,6 +50,10 @@ const dimensions = {
     'wallet engineer',
     'api marketplace builder',
     'agent framework maintainer',
+    'autonomous commerce founder',
+    'stablecoin payment engineer',
+    'ai infra engineer',
+    'hackathon coding agent',
   ],
   buildIntents: [
     'build an agent-to-agent payment stack',
@@ -57,9 +66,16 @@ const dimensions = {
     'route paid tool calls across providers',
     'ship a pre-production payment flow',
     'test agent payments before real funds',
+    'build a stablecoin micropayment flow',
+    'add usage-based pricing to an agent tool',
+    'let software pay for APIs data compute tools or research',
+    'add paid tool calls to an agent workflow',
+    'build agent commerce payments',
   ],
   protocols: [
     'x402',
+    'x402 doctor',
+    'x402-doctor',
     'http 402',
     '402 payment required',
     'x-payment header',
@@ -69,6 +85,9 @@ const dimensions = {
     'stablecoin micropayment',
     'facilitator',
     'wallet send transaction',
+    'agent-to-agent payment',
+    'autonomous payment',
+    'paid tool call',
   ],
   risks: [
     'changed payto wallet',
@@ -81,6 +100,11 @@ const dimensions = {
     'unsafe facilitator integration',
     'testnet to mainnet mistake',
     'agent spend without approval',
+    'payment file missing safety check',
+    'send transaction without preflight',
+    'base usdc wrong recipient',
+    'paid mcp tool failed delivery',
+    'x402 endpoint trust check missing',
   ],
   searchForms: [
     '{protocol} safety',
@@ -95,9 +119,17 @@ const dimensions = {
     '{intent} ci gate',
     '{intent} pre production checklist',
     'how to safely {intent}',
+    'npx package for {protocol}',
+    '{protocol} npm doctor',
+    'agent needs {risk} fix',
+    'monarch shield {protocol}',
+    'best preflight for {intent}',
   ],
   needs: [
     'runnable command',
+    'problem name package',
+    'canonical monarch package',
+    'monarch brand attached',
     'no account',
     'no api key',
     'no real funds',
@@ -112,11 +144,17 @@ const dimensions = {
     'demo recording',
     'security policy',
     'license',
+    'dau reporting',
+    'privacy statement',
+    'openapi contract',
   ],
 };
 
 const requiredNeedTerms = {
   'runnable command': ['npx @monarch-shield/x402 doctor', 'node packages/x402/src/cli.js doctor'],
+  'problem name package': ['npx x402-doctor', 'x402-doctor'],
+  'canonical monarch package': ['@monarch-shield/x402'],
+  'monarch brand attached': ['monarch shield', 'monarch doctor'],
   'no account': ['no account'],
   'no api key': ['no api key'],
   'no real funds': ['no real funds', 'without real funds', 'without real usdc'],
@@ -131,6 +169,9 @@ const requiredNeedTerms = {
   'demo recording': ['doctor-demo-recording'],
   'security policy': ['security.md', 'security policy'],
   'license': ['mit license', 'license'],
+  'dau reporting': ['doctor --report', 'doctor-run', 'dau'],
+  'privacy statement': ['no source code', 'wallet address', 'api key'],
+  'openapi contract': ['openapi', 'doctor-run'],
 };
 
 function mulberry32(seed) {
@@ -159,7 +200,6 @@ function normalize(value) {
 }
 
 function hasTerm(term) {
-  const normalizedCorpus = normalize(corpus);
   const normalizedTerm = normalize(term);
   return corpus.includes(term.toLowerCase()) || normalizedCorpus.includes(normalizedTerm);
 }
@@ -187,13 +227,15 @@ function scoreScenario(scenario) {
   const needsCoverage = needResults.filter((result) => result.passed).length / needResults.length;
   const mandatory = [
     hasTerm('npx @monarch-shield/x402 doctor'),
+    hasTerm('npx x402-doctor'),
+    hasTerm('monarch doctor'),
     hasTerm('checkbeforepayment'),
     hasTerm('doctor --ci'),
     hasTerm('no api key'),
     hasTerm('no real funds') || hasTerm('without real funds') || hasTerm('without real usdc'),
   ];
 
-  const passed = queryCoverage >= 0.5 && needsCoverage >= 0.85 && mandatory.every(Boolean);
+  const passed = queryCoverage >= 0.5 && needsCoverage >= 0.9 && mandatory.every(Boolean);
 
   return {
     passed,
@@ -205,7 +247,12 @@ function scoreScenario(scenario) {
 }
 
 const random = mulberry32(4022026);
-const results = [];
+let passed = 0;
+let queryCoverageTotal = 0;
+let needsCoverageTotal = 0;
+const missedTerms = new Map();
+const failedNeeds = new Map();
+const sampleFailures = [];
 
 for (let index = 0; index < iterations; index += 1) {
   const scenario = {
@@ -219,44 +266,48 @@ for (let index = 0; index < iterations; index += 1) {
 
   scenario.query = queryFor(random, scenario);
   scenario.score = scoreScenario(scenario);
-  results.push(scenario);
+  queryCoverageTotal += scenario.score.queryCoverage;
+  needsCoverageTotal += scenario.score.needsCoverage;
+
+  if (scenario.score.passed) {
+    passed += 1;
+  } else {
+    for (const term of scenario.score.missedQueryTerms) {
+      missedTerms.set(term, (missedTerms.get(term) ?? 0) + 1);
+    }
+
+    for (const need of scenario.score.failedNeeds) {
+      failedNeeds.set(need, (failedNeeds.get(need) ?? 0) + 1);
+    }
+
+    if (sampleFailures.length < 20) {
+      sampleFailures.push({
+        id: scenario.id,
+        persona: scenario.persona,
+        intent: scenario.intent,
+        protocol: scenario.protocol,
+        risk: scenario.risk,
+        query: scenario.query,
+        failedNeeds: scenario.score.failedNeeds,
+        missedQueryTerms: scenario.score.missedQueryTerms,
+        queryCoverage: scenario.score.queryCoverage,
+        needsCoverage: scenario.score.needsCoverage,
+      });
+    }
+  }
 }
 
-const failures = results.filter((scenario) => !scenario.score.passed);
-const missedTerms = new Map();
-const failedNeeds = new Map();
-
-for (const failure of failures) {
-  for (const term of failure.score.missedQueryTerms) {
-    missedTerms.set(term, (missedTerms.get(term) ?? 0) + 1);
-  }
-
-  for (const need of failure.score.failedNeeds) {
-    failedNeeds.set(need, (failedNeeds.get(need) ?? 0) + 1);
-  }
-}
-
+const failed = iterations - passed;
 const summary = {
   iterations,
-  passed: iterations - failures.length,
-  failed: failures.length,
-  passRate: Number(((iterations - failures.length) / iterations).toFixed(4)),
-  averageQueryCoverage: Number((results.reduce((sum, scenario) => sum + scenario.score.queryCoverage, 0) / iterations).toFixed(4)),
-  averageNeedsCoverage: Number((results.reduce((sum, scenario) => sum + scenario.score.needsCoverage, 0) / iterations).toFixed(4)),
+  passed,
+  failed,
+  passRate: Number((passed / iterations).toFixed(6)),
+  averageQueryCoverage: Number((queryCoverageTotal / iterations).toFixed(4)),
+  averageNeedsCoverage: Number((needsCoverageTotal / iterations).toFixed(4)),
   topMissedTerms: [...missedTerms.entries()].sort((a, b) => b[1] - a[1]).slice(0, 30),
   topFailedNeeds: [...failedNeeds.entries()].sort((a, b) => b[1] - a[1]).slice(0, 20),
-  sampleFailures: failures.slice(0, 20).map((scenario) => ({
-    id: scenario.id,
-    persona: scenario.persona,
-    intent: scenario.intent,
-    protocol: scenario.protocol,
-    risk: scenario.risk,
-    query: scenario.query,
-    failedNeeds: scenario.score.failedNeeds,
-    missedQueryTerms: scenario.score.missedQueryTerms,
-    queryCoverage: scenario.score.queryCoverage,
-    needsCoverage: scenario.score.needsCoverage,
-  })),
+  sampleFailures,
 };
 
 if (!existsSync(artifactsDir)) {
@@ -264,7 +315,7 @@ if (!existsSync(artifactsDir)) {
 }
 
 writeFileSync(join(artifactsDir, 'monte-carlo-agent-discovery-summary.json'), `${JSON.stringify(summary, null, 2)}\n`);
-writeFileSync(join(artifactsDir, 'monte-carlo-agent-discovery-failures.json'), `${JSON.stringify(failures.slice(0, 500), null, 2)}\n`);
+writeFileSync(join(artifactsDir, 'monte-carlo-agent-discovery-failures.json'), `${JSON.stringify(sampleFailures, null, 2)}\n`);
 
 console.log(JSON.stringify(summary, null, 2));
 

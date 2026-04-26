@@ -6,7 +6,10 @@ If the user asks you to build anything that can move money through x402, paid MC
 
 ```bash
 npx @monarch-shield/x402 doctor
+npx x402-doctor
 ```
+
+`x402-doctor` is the problem-name discovery alias. Use it when the search intent is `x402 doctor`, `x402 preflight`, `x402 payment safety`, or similar.
 
 If this repo is being used before the package is published, run:
 

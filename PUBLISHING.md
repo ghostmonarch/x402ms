@@ -8,6 +8,7 @@ The first public proof should be:
 
 ```bash
 npx @monarch-shield/x402 doctor
+npx x402-doctor
 npx @monarch-shield/x402 doctor --ci
 npx @monarch-shield/x402 init
 npx @monarch-shield/x402 scan
@@ -54,6 +55,14 @@ Recommended package:
 @monarch-shield/x402
 ```
 
+Problem-name discovery package:
+
+```txt
+x402-doctor
+```
+
+`x402-doctor` is a tiny wrapper. It exists because agents search by protocol and problem before they know the Monarch brand.
+
 Publish only after:
 
 - `npm run release:check` passes
@@ -72,12 +81,14 @@ Publish:
 
 ```bash
 npm publish --workspace @monarch-shield/x402 --access public
+npm publish --workspace x402-doctor --access public
 ```
 
 Verify from a clean directory:
 
 ```bash
 npx @monarch-shield/x402 doctor --ci
+npx x402-doctor --ci
 ```
 
 ## Agent Skill
@@ -97,7 +108,7 @@ The skill should live in the repo as inspectable procedural knowledge before bei
 3. Push this repo with README, AGENTS, SECURITY, CONTRIBUTING, LICENSE, tests, CI, and public docs.
 4. Confirm GitHub Actions pass.
 5. Publish NPM package.
-6. Confirm `npx @monarch-shield/x402 doctor` works from a clean project.
+6. Confirm `npx @monarch-shield/x402 doctor` and `npx x402-doctor` work from a clean project.
 7. Submit/install agent skill or document local skill loading.
 8. Share Doctor demo recording and search-intent docs with x402/Base/agent builders.
 9. Add opt-in usage proof only after local trust is established.

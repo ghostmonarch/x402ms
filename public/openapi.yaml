@@ -6,6 +6,24 @@ info:
 servers:
   - url: https://api.x402ms.ai
 paths:
+  /doctor-run:
+    post:
+      summary: Record an opt-in Monarch Doctor run
+      description: Accepts anonymous Doctor run metadata for DAU proof. Never send source code, wallet addresses, endpoint URLs, payment amounts, API keys, file names, or file paths.
+      operationId: recordDoctorRun
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DoctorRunRequest"
+      responses:
+        "202":
+          description: Doctor run accepted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DoctorRunResponse"
   /check-payment:
     post:
       summary: Check an x402 endpoint before payment
@@ -26,6 +44,57 @@ paths:
                 $ref: "#/components/schemas/CheckPaymentResponse"
 components:
   schemas:
+    DoctorRunRequest:
+      type: object
+      required:
+        - event
+        - tool
+        - version
+        - status
+        - projectHash
+        - timestamp
+      properties:
+        event:
+          type: string
+          enum: [doctor_run]
+        tool:
+          type: string
+          enum: [monarch-doctor]
+        version:
+          type: string
+        status:
+          type: string
+          enum: [passed, failed, no_payment_flow_detected, failed_no_payment_flow]
+        ci:
+          type: boolean
+        strict:
+          type: boolean
+        applicable:
+          type: boolean
+        hasPaymentFlow:
+          type: boolean
+        hasUnprotectedPaymentFiles:
+          type: boolean
+        findingCount:
+          type: integer
+          minimum: 0
+        sandboxPassed:
+          type: boolean
+        projectHash:
+          type: string
+          pattern: "^[a-f0-9]{24}$"
+        timestamp:
+          type: string
+          format: date-time
+    DoctorRunResponse:
+      type: object
+      required:
+        - accepted
+      properties:
+        accepted:
+          type: boolean
+        stored:
+          type: boolean
     CheckPaymentRequest:
       type: object
       required:

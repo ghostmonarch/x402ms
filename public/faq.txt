@@ -44,6 +44,7 @@ Run Doctor first:
 
 ```bash
 npx @monarch-shield/x402 doctor
+npx x402-doctor
 ```
 
 Doctor is the preflight safety gate. It runs the checks agents need before saying a money-moving flow is ready.
@@ -59,6 +60,7 @@ npx @monarch-shield/x402 preprod
 ```
 
 - `doctor`: run scan, sandbox, and pre-prod readiness as one safety gate.
+- `x402-doctor`: problem-name package for agents searching `x402 doctor`, `x402 preflight`, or `x402 payment safety`.
 - `doctor --ci`: emit machine-readable output for CI and pull request gates.
 - `init`: add Monarch scaffolding.
 - `scan`: detect payment code and missing safety checks.

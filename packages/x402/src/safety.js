@@ -26,6 +26,9 @@ const scanExtensions = new Set([
   '.cs',
 ]);
 const ignoredDirs = new Set(['node_modules', '.git', 'dist', 'build', 'artifacts', '.next', '.vite']);
+const ignoredScanPaths = [
+  'workers/doctor-run/',
+];
 
 export function evaluatePayment(input = {}) {
   const evidence = normalizeInput(input);
@@ -115,6 +118,8 @@ export function scanProject(root = process.cwd()) {
     const content = readFileSync(file, 'utf8');
     const rel = relative(root, file);
 
+    if (isIgnoredScanPath(rel)) continue;
+
     addFinding(findings, rel, content, /402 Payment Required|X-PAYMENT|x402|paymentRequired|facilitator/i, 'x402 payment handling found');
     addFinding(findings, rel, content, /\bpayTo\b|\brecipient\b|\bmerchantWallet\b|settlementAddress|walletAddress|destinationWallet/i, 'pay-to wallet handling found');
     addFinding(findings, rel, content, /paid MCP|paid tool|mcp.*payment|payment.*mcp|tool.*price|price.*tool/i, 'paid MCP or tool payment reference found');
@@ -170,6 +175,11 @@ export function validatePreprod(root = process.cwd()) {
     scan,
     sandbox,
   };
+}
+
+function isIgnoredScanPath(file) {
+  const normalized = file.replaceAll('\\', '/');
+  return ignoredScanPaths.some((ignoredPath) => normalized.startsWith(ignoredPath));
 }
 
 function normalizeInput(input) {

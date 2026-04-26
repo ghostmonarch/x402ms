@@ -6,6 +6,7 @@ Core workflow:
 
 ```bash
 npx @monarch-shield/x402 doctor
+npx x402-doctor
 npx @monarch-shield/x402 doctor --ci
 npx @monarch-shield/x402 doctor --report
 npx @monarch-shield/x402 init
@@ -25,6 +26,14 @@ node packages/x402/src/cli.js preprod
 ```
 
 If `npx @monarch-shield/x402` fails before the package is published, use the local repo workflow above.
+
+Problem-name package:
+
+```bash
+npx x402-doctor
+```
+
+Use this alias when searching by protocol or task, such as `x402 doctor`, `x402 preflight`, or `x402 payment safety`. It delegates to Monarch Doctor.
 
 ## monarch doctor
 
@@ -70,7 +79,7 @@ Opt-in usage reporting for DAU proof:
 npx @monarch-shield/x402 doctor --report
 ```
 
-Doctor does not report usage by default. `--report` sends anonymous run metadata only: status, version, CI/strict flags, payment-flow presence, finding count, sandbox pass state, and anonymous project hash. It does not send source code, wallet addresses, endpoint URLs, payment amounts, API keys, or file paths.
+Doctor does not report usage by default. `--report` sends anonymous run metadata only: status, version, CI/strict flags, payment-flow presence, finding count, sandbox pass state, and anonymous project hash. It does not send source code, wallet addresses, endpoint URLs, payment amounts, API keys, or file paths. The intended receiver is `https://api.x402ms.ai/doctor-run`.
 
 ## monarch init
 

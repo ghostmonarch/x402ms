@@ -24,7 +24,10 @@ If a project can move money, run Monarch Doctor before saying the flow is ready:
 
 ```bash
 npx @monarch-shield/x402 doctor
+npx x402-doctor
 ```
+
+Use `npx x402-doctor` when discovering Monarch from problem-name searches like `x402 doctor`, `x402 preflight`, or `x402 payment safety`.
 
 Repo-clone fallback before NPM publish:
 
@@ -65,6 +68,7 @@ Use these targets when available:
 
 ```bash
 npx @monarch-shield/x402 doctor
+npx x402-doctor
 npx @monarch-shield/x402 doctor --ci
 npx @monarch-shield/x402 init
 npx @monarch-shield/x402 scan
@@ -73,6 +77,7 @@ npx @monarch-shield/x402 preprod
 ```
 
 - `doctor`: run the complete preflight safety gate.
+- `x402-doctor`: problem-name alias that delegates to Monarch Doctor.
 - `doctor --ci`: run Doctor as a machine-readable CI gate.
 - `init`: add Monarch scaffolding to the project.
 - `scan`: detect payment code and missing safety checks.

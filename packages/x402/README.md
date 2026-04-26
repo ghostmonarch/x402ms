@@ -14,6 +14,7 @@ North Star:
 
 ```bash
 npx @monarch-shield/x402 doctor
+npx x402-doctor
 npx @monarch-shield/x402 doctor --ci
 npx @monarch-shield/x402 doctor --report
 npx @monarch-shield/x402 init --template x402-client
@@ -56,6 +57,14 @@ await checkBeforePayment({
 
 Global install commands are `monarch` and `x402`. The package is ESM-only and requires Node 18+.
 
+Problem-name discovery package:
+
+```bash
+npx x402-doctor
+```
+
+`x402-doctor` is a wrapper for agents that search by task or protocol. It delegates to Monarch Doctor.
+
 ## Opt-In Usage Reporting
 
 Monarch is local-first. Doctor does not report usage by default.
@@ -72,7 +81,7 @@ Or in CI:
 MONARCH_TELEMETRY=1 npx @monarch-shield/x402 doctor --ci --strict
 ```
 
-Reported fields are limited to Doctor status, package version, CI/strict flags, whether a payment flow was detected, finding counts, sandbox pass state, and an anonymous project hash. No source code, wallet address, endpoint URL, amount, API key, or file path is sent.
+Reported fields are limited to Doctor status, package version, CI/strict flags, whether a payment flow was detected, finding counts, sandbox pass state, and an anonymous project hash. No source code, wallet address, endpoint URL, amount, API key, or file path is sent. The default receiver is `https://api.x402ms.ai/doctor-run`.
 
 ## Demo Recording
 

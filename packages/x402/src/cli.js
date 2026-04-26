@@ -357,7 +357,7 @@ function reportMode(options) {
 async function reportDoctorRun(result, options) {
   if (!options.reportMode) return;
 
-  const endpoint = process.env.MONARCH_TELEMETRY_URL ?? 'https://x402ms.ai/api/doctor-run';
+  const endpoint = process.env.MONARCH_TELEMETRY_URL ?? 'https://api.x402ms.ai/doctor-run';
   const payload = {
     event: 'doctor_run',
     tool: 'monarch-doctor',

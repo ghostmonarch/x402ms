@@ -1,4 +1,4 @@
-import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -11,6 +11,7 @@ function withTempProject(files, assertion) {
 
   try {
     for (const [file, content] of Object.entries(files)) {
+      mkdirSync(join(root, file, '..'), { recursive: true });
       writeFileSync(join(root, file), content);
     }
 
@@ -78,6 +79,20 @@ test('scan detects non-JavaScript payment code', () => {
 test('no payment flow is not applicable and ready by default', () => {
   withTempProject({
     'index.js': 'export const hello = "world";',
+  }, (root) => {
+    const result = validatePreprod(root);
+
+    assert.equal(result.applicable, false);
+    assert.equal(result.ready, true);
+  });
+});
+
+test('scan ignores telemetry receiver validation fields', () => {
+  withTempProject({
+    'workers/doctor-run/src/index.js': `
+      const SENSITIVE_KEYS = ['payTo', 'resourceUrl', 'amount', 'wallet', 'endpoint'];
+      export default { fetch() { return Response.json({ accepted: true }); } };
+    `,
   }, (root) => {
     const result = validatePreprod(root);
 

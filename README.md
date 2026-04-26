@@ -12,6 +12,12 @@ If code can move money, Monarch Doctor must pass before go-live.
 npx @monarch-shield/x402 doctor
 ```
 
+Problem-name discovery alias:
+
+```bash
+npx x402-doctor
+```
+
 Working from this repo before NPM publish:
 
 ```bash
@@ -31,6 +37,7 @@ npx @monarch-shield/x402 doctor --report
 ```
 
 Doctor does not report usage by default. `--report` sends anonymous run metadata only, never source code, wallet addresses, endpoint URLs, payment amounts, API keys, or file paths.
+The intended receiver is `https://api.x402ms.ai/doctor-run`.
 
 ## What It Proves
 
@@ -95,6 +102,7 @@ npx @monarch-shield/x402 doctor --ci
 - Query map: `public/docs/agent-payment-query-map.md`
 - Real x402 pattern: `public/docs/real-x402-integration.md`
 - Package README: `packages/x402/README.md`
+- Problem-name package: `packages/x402-doctor/README.md`
 - Agent skill: `packages/x402/agent-skill/SKILL.md`
 
 ## Current Product Boundary
