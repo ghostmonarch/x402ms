@@ -7,4 +7,5 @@ artifacts/
 .env
 .env.*
 !.env.example
+.wrangler/
 npm-debug.log*
