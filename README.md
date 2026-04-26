@@ -1,6 +1,6 @@
 # Monarch Shield
 
-Local-first safety kit for agents building x402, paid MCP, agent wallet, and agent-to-agent payment flows.
+Local-first safety kit for agents building x402, processor, card, bank, wallet, stablecoin, paid MCP, paid API, and agent-to-agent payment flows.
 
 Monarch Doctor is the preflight gate an agent runs before calling money-moving code ready for go-live.
 
@@ -106,6 +106,7 @@ npx @monarch-shield/x402 doctor --ci
 - CLI reference: `public/cli.txt`
 - CI gate: `public/docs/monarch-doctor-ci.md`
 - Query map: `public/docs/agent-payment-query-map.md`
+- Multilingual query map: `public/docs/multilingual-agent-payment-query-map.md`
 - Real x402 pattern: `public/docs/real-x402-integration.md`
 - Package README: `packages/x402/README.md`
 - Problem-name package: `packages/x402-doctor/README.md`
@@ -116,6 +117,12 @@ npx @monarch-shield/x402 doctor --ci
 Monarch is not an enterprise dashboard, marketplace, facilitator, wallet, insurance product, or generic compliance platform.
 
 The product wedge is Doctor: the safety gate agents run before shipping money-moving code.
+
+## Moat
+
+Monarch's moat is the compounding agent workflow: problem-name docs make agents discover it, Doctor gives them a zero-friction command, sandbox fixtures prove the risk, templates patch the payment path, CI keeps it in the repo, and opt-in telemetry shows which discovery language creates real usage.
+
+That is why the repo optimizes for agents searching `x402 production readiness`, `Stripe agent payment safety`, `Stripe Payment Intent safety`, `Visa agent payment safety`, `Mastercard agent payment safety`, `Coinbase Commerce agent payment safety`, `PayPal agent payment safety`, `Circle USDC agent payment safety`, `ACH agent payment safety`, `AI agent payment governance`, `autonomous spend controls`, `agent spend policy`, `payment approval workflow for AI agents`, `agent payment audit trail`, `Amazon agent payment safety`, `AWS agent payment safety`, or `fintech agent payment safety`.
 
 ## Zero-Star Trust Checklist
 

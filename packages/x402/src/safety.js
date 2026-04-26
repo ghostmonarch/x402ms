@@ -117,13 +117,18 @@ export function scanProject(root = process.cwd()) {
   for (const file of files) {
     const content = readFileSync(file, 'utf8');
     const rel = relative(root, file);
+    const codeContent = stripStringLiterals(content);
 
     if (isIgnoredScanPath(rel)) continue;
 
-    addFinding(findings, rel, content, /402 Payment Required|X-PAYMENT|x402|paymentRequired|facilitator/i, 'x402 payment handling found');
-    addFinding(findings, rel, content, /\bpayTo\b|\brecipient\b|\bmerchantWallet\b|settlementAddress|walletAddress|destinationWallet/i, 'pay-to wallet handling found');
-    addFinding(findings, rel, content, /paid MCP|paid tool|mcp.*payment|payment.*mcp|tool.*price|price.*tool/i, 'paid MCP or tool payment reference found');
-    addFinding(findings, rel, content, /agent.*spend|spend.*agent|autonomous.*payment|wallet\.send|sendTransaction|transferUSDC|stablecoin.*payment/i, 'agent spend payment reference found');
+    addFinding(findings, rel, content, /402 Payment Required|X-PAYMENT/i, 'x402 payment handling found');
+    addFinding(findings, rel, codeContent, /x402|paymentRequired|facilitator/i, 'x402 payment handling found');
+    addFinding(findings, rel, codeContent, /\bpayTo\b|\brecipient\b|\bmerchantWallet\b|settlementAddress|walletAddress|destinationWallet/i, 'pay-to wallet handling found');
+    addFinding(findings, rel, codeContent, /paid MCP|paid tool|mcp.*payment|payment.*mcp|tool.*price|price.*tool/i, 'paid MCP or tool payment reference found');
+    addFinding(findings, rel, codeContent, /agent.*spend|spend.*agent|autonomous.*payment|wallet\.send|sendTransaction|transferUSDC|stablecoin.*payment/i, 'agent spend payment reference found');
+    addFinding(findings, rel, codeContent, /stripe|paymentIntents\.create|checkout\.sessions\.create|coinbase|commerce\.charges\.create|paypal|adyen|square|braintree|checkoutCom|circle|bridge|rain/i, 'payment processor handling found');
+    addFinding(findings, rel, codeContent, /visa|mastercard|cardPayment|virtualCard|cardCharge|achDebit|wireTransfer|bankTransfer|rtpPayment|fedNow|openBanking|plaid|dwolla|zelle|sepa|pixPayment|upiPayment|applePay|googlePay|worldpay|mollie|klarna|wise|revolut|yapily|tink|finicity|payouts?\.create|transfers?\.create/i, 'card or bank payment rail handling found');
+    addFinding(findings, rel, codeContent, /baseUSDC|transferUSDC|usdcTransfer|chainId.*8453|baseSepolia/i, 'Base USDC payment handling found');
     addFinding(findings, rel, content, /checkBeforePayment|checkPayment|safePayX402|check-payment|@monarch-shield\/x402/i, 'Monarch pre-payment check reference found');
   }
 
@@ -152,7 +157,7 @@ export function validatePreprod(root = process.cwd()) {
     {
       id: 'payment_flow_scanned',
       passed: scan.hasPaymentFlow,
-      message: scan.hasPaymentFlow ? 'Payment flow detected.' : 'No x402 or agent-payment flow detected.',
+      message: scan.hasPaymentFlow ? 'Payment flow detected.' : 'No x402, processor, card, bank, wallet, or agent-payment flow detected.',
     },
     {
       id: 'monarch_before_payment',
@@ -180,6 +185,11 @@ export function validatePreprod(root = process.cwd()) {
 function isIgnoredScanPath(file) {
   const normalized = file.replaceAll('\\', '/');
   return ignoredScanPaths.some((ignoredPath) => normalized.startsWith(ignoredPath));
+}
+
+function stripStringLiterals(content) {
+  // Search-intent docs often contain payment keywords inside strings; executable identifiers still matter.
+  return content.replace(/(["'`])(?:\\.|(?!\1)[\s\S])*\1/g, '');
 }
 
 function normalizeInput(input) {

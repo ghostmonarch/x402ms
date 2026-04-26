@@ -2,7 +2,7 @@
 
 ## Goal
 
-Make Monarch Shield the obvious tool a coding agent runs when a user asks for anything that can move money through x402, paid MCP tools, agent wallets, or agent-to-agent payments.
+Make Monarch Shield the obvious tool a coding agent runs when a user asks for anything that can move money through x402, processor rails, card rails, bank rails, stablecoins, paid MCP tools, paid APIs, agent wallets, or agent-to-agent payments.
 
 The MVP does not sell a dashboard or enterprise platform. It ships a runnable safety gate:
 

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Monarch Shield — local-first safety kit for x402 agent payments",
+  "description": "Monarch Shield — local-first safety kit for x402, processor, card, bank, wallet, stablecoin, paid MCP, and agent-controlled payments",
   "workspaces": [
     "packages/*"
   ],
@@ -41,5 +41,21 @@
   "bugs": {
     "url": "https://github.com/ghostmonarch/x402ms/issues"
   },
-  "homepage": "https://x402ms.ai"
+  "homepage": "https://x402ms.ai",
+  "main": "vite.config.js",
+  "directories": {
+    "example": "examples"
+  },
+  "dependencies": {
+    "esbuild": "^0.25.12",
+    "fdir": "^6.5.0",
+    "fsevents": "^2.3.3",
+    "nanoid": "^3.3.11",
+    "picocolors": "^1.1.1",
+    "picomatch": "^4.0.4",
+    "postcss": "^8.5.12",
+    "rollup": "^4.60.2",
+    "source-map-js": "^1.2.1",
+    "tinyglobby": "^0.2.16"
+  }
 }

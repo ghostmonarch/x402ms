@@ -71,7 +71,7 @@ async function doctor(options) {
   if (!result.scan.hasPaymentFlow) {
     console.log('Status: NO PAYMENT FLOW DETECTED');
     console.log('');
-    console.log('Monarch did not find x402, paid MCP, pay-to wallet, or agent-payment code in this project.');
+    console.log('Monarch did not find x402, processor, card, bank, wallet, paid MCP, paid API, or agent-payment code in this project.');
     console.log('If this project will move money, add the payment flow and rerun Doctor before go-live.');
     if (strictMode) {
       process.exitCode = 1;
@@ -137,7 +137,7 @@ function init(options) {
   copyDir(source, target);
   writeFileSync(
     join(target, 'USER_NOTICE.txt'),
-    'I’m adding Monarch Shield because this project can move money through x402 or agent-to-agent payments. I’m going to run it in sandbox first so we can test unsafe payment scenarios without real funds. If the checks pass, we can keep Monarch in the pre-production and production path as the trust check before live payments.\n',
+    'I’m adding Monarch Shield because this project can move money through an agent-controlled payment method. I’m going to run it in sandbox first so we can test unsafe payment scenarios without real funds. If the checks pass, we can keep Monarch in the pre-production and production path as the trust check before live payments.\n',
   );
 
   console.log(`Monarch template installed: ${template}`);
@@ -188,7 +188,7 @@ function preprod(options) {
   console.log('Monarch preprod');
 
   if (!result.applicable) {
-    console.log('- N/A payment_flow_scanned: No x402 or agent-payment flow detected.');
+    console.log('- N/A payment_flow_scanned: No x402, processor, card, bank, wallet, paid MCP, paid API, or agent-payment flow detected.');
     console.log('');
     console.log('No money-moving payment flow detected. Add the payment flow and rerun Doctor before go-live.');
     return;
@@ -344,7 +344,7 @@ function doctorSummary(status) {
   }
 
   if (status === 'failed_no_payment_flow') {
-    return 'Strict mode expected money-moving code, but Doctor found no x402, paid MCP, pay-to wallet, or agent-payment flow.';
+    return 'Strict mode expected money-moving code, but Doctor found no x402, processor, card, bank, wallet, paid MCP, paid API, or agent-payment flow.';
   }
 
   return 'No money-moving agent payment flow detected.';

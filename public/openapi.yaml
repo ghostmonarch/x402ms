@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: Monarch Shield API
   version: 0.1.0
-  description: Sandbox and pre-payment trust checks for x402 and agent payments.
+  description: Sandbox and pre-payment trust checks for x402, processor, card, bank, wallet, stablecoin, paid MCP, paid API, and agent-controlled payments.
 servers:
   - url: https://api.x402ms.ai
 paths:
@@ -24,10 +24,28 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DoctorRunResponse"
+  /discovery-event:
+    post:
+      summary: Record an anonymous discovery event
+      description: Accepts privacy-preserving page-view or CTA-click metadata for A/B testing discovery language. Never send raw URLs, raw search strings, source code, wallet addresses, endpoint URLs, payment amounts, API keys, file names, file paths, emails, tokens, or secrets.
+      operationId: recordDiscoveryEvent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DiscoveryEventRequest"
+      responses:
+        "202":
+          description: Discovery event accepted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DoctorRunResponse"
   /check-payment:
     post:
-      summary: Check an x402 endpoint before payment
-      description: Returns allow, caution, block, or route before an agent pays. Use after sandbox/preflight checks pass.
+      summary: Check an agent-controlled payment before money moves
+      description: Returns allow, caution, block, or route before an agent pays through x402, processor, card, bank, wallet, stablecoin, paid MCP, paid API, or agent-to-agent payment rails. Use after sandbox/preflight checks pass.
       operationId: checkPayment
       requestBody:
         required: true
@@ -95,6 +113,53 @@ components:
           type: boolean
         stored:
           type: boolean
+    DiscoveryEventRequest:
+      type: object
+      required:
+        - event
+        - eventName
+        - surface
+        - variant
+        - language
+        - timestamp
+      properties:
+        event:
+          type: string
+          enum: [discovery_event]
+        eventName:
+          type: string
+          enum: [page_view, cta_click]
+        surface:
+          type: string
+          examples: [homepage, hero-primary, docs-query-map]
+        variant:
+          type: string
+          enum: [a, b]
+        language:
+          type: string
+          examples: [en-US, es-ES, pt-BR]
+        languages:
+          type: array
+          items:
+            type: string
+        referrerHost:
+          type: string
+          description: Hostname only, never full referrer URL.
+        landing:
+          type: string
+          description: Site path only, never full URL or query string.
+        intent:
+          type: string
+          description: Sanitized intent bucket from landing path or UTM content.
+        utmSource:
+          type: string
+        utmMedium:
+          type: string
+        utmCampaign:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
     CheckPaymentRequest:
       type: object
       required:

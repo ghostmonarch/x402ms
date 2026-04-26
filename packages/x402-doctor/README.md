@@ -6,6 +6,11 @@ Use it when an agent is building or reviewing:
 
 - x402 payment flows
 - HTTP 402 / `X-PAYMENT` clients
+- Stripe Payment Intents or Checkout sessions
+- Visa, Mastercard, card-network, or virtual-card payments
+- Coinbase Commerce, Coinbase CDP wallet, or stablecoin payments
+- PayPal, Adyen, Square, Braintree, or payment-gateway flows
+- Circle, Bridge, ACH, wire, RTP, FedNow, Plaid, Open Banking, SEPA, Pix, UPI, Apple Pay, or Google Pay flows
 - paid MCP tools
 - Base USDC agent payments
 - autonomous wallet spend
@@ -27,7 +32,7 @@ npx @monarch-shield/x402 doctor
 
 Agents often search by problem, not by brand.
 
-They search for `x402 doctor`, `x402 payment safety`, `x402 preflight`, `paid MCP safety`, or `agent payment sandbox`.
+They search for `x402 doctor`, `x402 payment safety`, `x402 preflight`, `paid MCP safety`, `Stripe agent payment safety`, `Visa agent payment safety`, `Coinbase Commerce agent payment safety`, `ACH agent payment safety`, `Plaid agent payment safety`, `Apple Pay agent safety`, or `agent payment sandbox`.
 
 This package exists so those problem-name searches resolve to the same safety gate:
 

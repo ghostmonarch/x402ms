@@ -7,6 +7,7 @@ It accepts anonymous Doctor run metadata only. It rejects payload keys that look
 ## Endpoints
 
 - `POST /doctor-run`: accepts anonymous Doctor run metadata
+- `POST /discovery-event`: accepts anonymous discovery/A-B metadata
 - `GET /health`: public health check
 - `GET /summary?date=YYYY-MM-DD`: admin-only summary, requires `Authorization: Bearer $MONARCH_ADMIN_TOKEN`
 
@@ -50,3 +51,31 @@ Allowed payload fields:
 - `timestamp`
 
 Never send source code, wallet addresses, endpoint URLs, payment amounts, API keys, file names, or file paths.
+
+## Discovery Event Contract
+
+The discovery channel is meant to answer:
+
+```txt
+What problem-name wording caused an agent or builder to land here?
+Which CTA framing made them click toward Doctor?
+Which browser language should we cover next?
+```
+
+Allowed fields:
+
+- `event`
+- `eventName`
+- `surface`
+- `variant`
+- `language`
+- `languages`
+- `referrerHost`
+- `landing`
+- `intent`
+- `utmSource`
+- `utmMedium`
+- `utmCampaign`
+- `timestamp`
+
+Never send raw URLs, raw search strings, source code, wallet addresses, endpoint URLs, payment amounts, API keys, file names, file paths, emails, tokens, or secrets.

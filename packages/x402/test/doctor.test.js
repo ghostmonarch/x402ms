@@ -101,6 +101,117 @@ test('scan ignores telemetry receiver validation fields', () => {
   });
 });
 
+test('scan ignores discovery intent strings without payment execution', () => {
+  withTempProject({
+    'src/main.js': `
+      const intentMap = {
+        '/docs/x402-payment-safety.md': 'x402-payment-safety',
+        '/docs/payto-wallet-safety.md': 'payto-wallet-safety',
+        '/docs/paid-mcp-payment-safety.md': 'paid-mcp-safety'
+      };
+
+      fetch('https://api.x402ms.ai/discovery-event', {
+        method: 'POST',
+        body: JSON.stringify({ event: 'discovery_event', intent: intentMap.location })
+      });
+    `,
+  }, (root) => {
+    const result = validatePreprod(root);
+
+    assert.equal(result.applicable, false);
+    assert.equal(result.ready, true);
+  });
+});
+
+test('scan still detects x402 header strings in payment code', () => {
+  withTempProject({
+    'pay.js': `
+      export async function pay(resourceUrl, payment) {
+        return fetch(resourceUrl, { headers: { 'X-PAYMENT': payment } });
+      }
+    `,
+  }, (root) => {
+    const result = validatePreprod(root);
+
+    assert.equal(result.applicable, true);
+    assert.equal(result.ready, false);
+  });
+});
+
+test('scan detects Stripe payment code without Monarch checks', () => {
+  withTempProject({
+    'stripe-pay.js': `
+      import Stripe from 'stripe';
+      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+      export async function chargeAgent(request) {
+        return stripe.paymentIntents.create({
+          amount: request.amount,
+          currency: 'usd',
+          customer: request.customer
+        });
+      }
+    `,
+  }, (root) => {
+    const result = validatePreprod(root);
+
+    assert.equal(result.applicable, true);
+    assert.equal(result.ready, false);
+    assert.deepEqual(result.scan.unprotectedPaymentFiles, ['stripe-pay.js']);
+  });
+});
+
+test('scan detects card and bank rail payment code without Monarch checks', () => {
+  withTempProject({
+    'rails.ts': `
+      export async function payWithRails(client, request) {
+        await client.visa.cardPayment.create(request.cardPayment);
+        await client.bankTransfer.create(request.bankTransfer);
+      }
+    `,
+  }, (root) => {
+    const result = validatePreprod(root);
+
+    assert.equal(result.applicable, true);
+    assert.equal(result.ready, false);
+    assert.deepEqual(result.scan.unprotectedPaymentFiles, ['rails.ts']);
+  });
+});
+
+test('scan detects global and mobile payment rails without Monarch checks', () => {
+  withTempProject({
+    'global-rails.ts': `
+      export async function payGlobally(client, request) {
+        await client.plaid.transfers.create(request.transfer);
+        await client.applePay.charge(request.checkout);
+        await client.pixPayment.send(request.pix);
+      }
+    `,
+  }, (root) => {
+    const result = validatePreprod(root);
+
+    assert.equal(result.applicable, true);
+    assert.equal(result.ready, false);
+    assert.deepEqual(result.scan.unprotectedPaymentFiles, ['global-rails.ts']);
+  });
+});
+
+test('scan detects Base USDC payment identifiers without Monarch checks', () => {
+  withTempProject({
+    'base-usdc.ts': `
+      export async function payBaseUSDC(client, request) {
+        return client.baseUSDC.transfer({ chainId: 8453, to: request.recipient });
+      }
+    `,
+  }, (root) => {
+    const result = validatePreprod(root);
+
+    assert.equal(result.applicable, true);
+    assert.equal(result.ready, false);
+    assert.deepEqual(result.scan.unprotectedPaymentFiles, ['base-usdc.ts']);
+  });
+});
+
 test('Doctor report mode is non-blocking when telemetry endpoint is unavailable', () => {
   withTempProject({
     'pay.js': `

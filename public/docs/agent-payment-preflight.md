@@ -30,7 +30,7 @@ npx @monarch-shield/x402 doctor
 npx x402-doctor
 ```
 
-Doctor scans for x402, paid MCP tools, pay-to wallets, and agent-payment code. It fails when payment files do not include a Monarch check before funds can move.
+Doctor scans for x402, processor rails, card rails, bank rails, wallets, stablecoins, paid MCP tools, paid APIs, pay-to wallets, and agent-payment code. It fails when payment files do not include a Monarch check before funds can move.
 
 ## Why This Is Non-Negotiable
 

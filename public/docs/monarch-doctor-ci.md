@@ -12,7 +12,7 @@ npx @monarch-shield/x402 doctor --ci
 
 `--ci` prints JSON so coding agents, GitHub Actions, and other automation can parse the result.
 
-Use `--strict` when the repository is expected to contain x402, paid MCP, pay-to wallet, or agent-payment code:
+Use `--strict` when the repository is expected to contain x402, processor, card, bank, wallet, paid MCP, paid API, pay-to wallet, or agent-payment code:
 
 ```bash
 npx @monarch-shield/x402 doctor --ci --strict
@@ -54,7 +54,7 @@ jobs:
 
 - `passed`: payment files include Monarch checks and sandbox scenarios passed
 - `failed`: money-moving code is not ready for go-live
-- `no_payment_flow_detected`: no x402, paid MCP, pay-to wallet, or agent-payment flow found
+- `no_payment_flow_detected`: no x402, processor, card, bank, wallet, paid MCP, paid API, pay-to wallet, or agent-payment flow found
 - `failed_no_payment_flow`: strict mode expected payment code but found none
 
 ## Agent Message

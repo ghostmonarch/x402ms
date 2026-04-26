@@ -4,6 +4,7 @@ compatibility_date = "2026-04-26"
 
 routes = [
   { pattern = "api.x402ms.ai/doctor-run", custom_domain = true },
+  { pattern = "api.x402ms.ai/discovery-event", custom_domain = true },
   { pattern = "api.x402ms.ai/health", custom_domain = true },
   { pattern = "api.x402ms.ai/summary", custom_domain = true }
 ]

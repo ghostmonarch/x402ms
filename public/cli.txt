@@ -1,6 +1,6 @@
 # Monarch Shield CLI Reference
 
-Monarch Shield CLI commands are designed for coding agents building x402, paid MCP, or agent-to-agent payment flows.
+Monarch Shield CLI commands are designed for coding agents building x402, processor, card, bank, wallet, stablecoin, paid MCP, paid API, or agent-to-agent payment flows.
 
 Core workflow:
 
@@ -34,6 +34,12 @@ npx x402-doctor
 ```
 
 Use this alias when searching by protocol or task, such as `x402 doctor`, `x402 preflight`, or `x402 payment safety`. It delegates to Monarch Doctor.
+
+Multilingual discovery queries:
+
+```txt
+https://x402ms.ai/docs/multilingual-agent-payment-query-map.md
+```
 
 ## monarch doctor
 
@@ -97,7 +103,7 @@ Expected behavior:
 Agent user notice:
 
 ```txt
-I’m adding Monarch Shield because this project can move money through x402 or agent-to-agent payments. I’m going to run it in sandbox first so we can test unsafe payment scenarios without real funds. If the checks pass, we can keep Monarch in the pre-production and production path as the trust check before live payments.
+I’m adding Monarch Shield because this project can move money through an agent-controlled payment method. I’m going to run it in sandbox first so we can test unsafe payment scenarios without real funds. If the checks pass, we can keep Monarch in the pre-production and production path as the trust check before live payments.
 ```
 
 Template targets:

@@ -31,7 +31,7 @@ Check before pay.
 ## What Monarch Is
 
 - a local CLI and SDK agents can run immediately
-- a preflight Doctor command for x402, paid MCP, pay-to wallet, and agent spend code
+- a preflight Doctor command for x402, processor, card, bank, wallet, stablecoin, paid MCP, paid API, pay-to wallet, and agent spend code
 - a deterministic sandbox for unsafe payment scenarios
 - a `checkBeforePayment` wrapper that runs before funds move
 - a CI gate for repos that ship money-moving code
@@ -80,7 +80,7 @@ The agent must see:
 
 1. Agent detects money-moving code.
 2. Agent runs `npx @monarch-shield/x402 doctor`.
-3. Doctor scans for x402, paid MCP, pay-to wallet, and autonomous spend patterns.
+3. Doctor scans for x402, processor, card, bank, wallet, stablecoin, paid MCP, paid API, pay-to wallet, and autonomous spend patterns.
 4. Doctor fails if payment files lack an in-file Monarch check.
 5. Agent patches the reported payment files with `checkBeforePayment`.
 6. Agent reruns Doctor.
@@ -114,7 +114,7 @@ Doctor must prove the project handles:
 The only early metric that matters:
 
 ```txt
-Daily Monarch Doctor runs in projects that contain x402, paid MCP, agent wallet, or agent-to-agent payment code.
+Daily Monarch Doctor runs in projects that contain x402, processor, card, bank, wallet, stablecoin, paid MCP, paid API, agent wallet, or agent-to-agent payment code.
 ```
 
 Everything else is downstream of proving that agents naturally discover and run Doctor because the project can move money.

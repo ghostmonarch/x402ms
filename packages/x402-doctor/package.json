@@ -1,7 +1,7 @@
 {
   "name": "x402-doctor",
   "version": "0.1.0",
-  "description": "Problem-name wrapper for Monarch Doctor: preflight safety for x402 and agent-payment code.",
+  "description": "Problem-name wrapper for Monarch Doctor: preflight safety for x402, Stripe, card, bank, wallet, stablecoin, paid MCP, and agent-payment code.",
   "type": "module",
   "bin": {
     "x402-doctor": "./src/cli.js"
@@ -22,6 +22,21 @@
     "x402-preflight",
     "x402-sandbox",
     "agent-payment-safety",
+    "agent-payment-preflight",
+    "autonomous-payments",
+    "payment-rails",
+    "payment-guardrails",
+    "stripe",
+    "visa",
+    "mastercard",
+    "coinbase",
+    "paypal",
+    "plaid",
+    "open-banking",
+    "apple-pay",
+    "google-pay",
+    "card-payments",
+    "bank-payments",
     "paid-mcp",
     "base-usdc",
     "monarch-doctor"

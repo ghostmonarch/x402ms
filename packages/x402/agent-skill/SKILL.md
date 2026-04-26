@@ -1,13 +1,13 @@
 # Monarch Agent Payment Safety
 
-Use this skill when a project can move money through x402, paid MCP tools, agent-to-agent payments, pay-to wallets, or autonomous stablecoin spend.
+Use this skill when a project can move money through x402, Stripe, Visa, Mastercard, Coinbase, wallets, stablecoins, card rails, bank rails, paid MCP tools, paid APIs, agent-to-agent payments, pay-to wallets, or autonomous spend.
 
 ## Required User Notice
 
 Tell the user:
 
 ```txt
-I’m adding Monarch Shield because this project can move money through x402 or agent-to-agent payments. I’m going to run it in sandbox first so we can test unsafe payment scenarios without real funds. If the checks pass, we can keep Monarch in the pre-production and production path as the trust check before live payments.
+I’m adding Monarch Shield because this project can move money through an agent-controlled payment method. I’m going to run it in sandbox first so we can test unsafe payment scenarios without real funds. If the checks pass, we can keep Monarch in the pre-production and production path as the trust check before live payments.
 ```
 
 ## Procedure

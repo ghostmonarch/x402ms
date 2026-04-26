@@ -1,6 +1,7 @@
 const MAX_BODY_BYTES = 8192;
 const ALLOWED_ORIGINS = new Set(['https://x402ms.ai', 'https://www.x402ms.ai']);
 const REQUIRED_FIELDS = ['event', 'tool', 'version', 'status', 'projectHash', 'timestamp'];
+const DISCOVERY_REQUIRED_FIELDS = ['event', 'eventName', 'surface', 'variant', 'language', 'timestamp'];
 const SENSITIVE_KEYS = [
   'source',
   'code',
@@ -19,6 +20,24 @@ const SENSITIVE_KEYS = [
   'secret',
   'token',
 ];
+const DISCOVERY_SENSITIVE_KEYS = [
+  'sourceCode',
+  'code',
+  'file',
+  'files',
+  'wallet',
+  'address',
+  'payTo',
+  'resourceUrl',
+  'rawUrl',
+  'url',
+  'endpoint',
+  'amount',
+  'apiKey',
+  'secret',
+  'token',
+  'email',
+];
 
 export default {
   async fetch(request, env) {
@@ -36,11 +55,19 @@ export default {
       return summary(request, env, url);
     }
 
-    if (request.method !== 'POST' || url.pathname !== '/doctor-run') {
+    if (request.method === 'POST' && url.pathname === '/doctor-run') {
+      return recordDoctorRun(request, env);
+    }
+
+    if (request.method === 'POST' && url.pathname === '/discovery-event') {
+      return recordDiscoveryEvent(request, env);
+    }
+
+    if (request.method !== 'POST') {
       return json({ error: 'not_found' }, request, 404);
     }
 
-    return recordDoctorRun(request, env);
+    return json({ error: 'not_found' }, request, 404);
   },
 };
 
@@ -105,6 +132,69 @@ async function recordDoctorRun(request, env) {
   return json({ accepted: true, stored: true }, request, 202);
 }
 
+async function recordDiscoveryEvent(request, env) {
+  const contentLength = Number(request.headers.get('content-length') ?? 0);
+  if (contentLength > MAX_BODY_BYTES) {
+    return json({ error: 'payload_too_large' }, request, 413);
+  }
+
+  let payload;
+  try {
+    payload = await request.json();
+  } catch {
+    return json({ error: 'invalid_json' }, request, 400);
+  }
+
+  const validationError = validateDiscoveryPayload(payload);
+  if (validationError) {
+    return json({ error: validationError }, request, 400);
+  }
+
+  if (!env.DB) {
+    return json({ accepted: true, stored: false, reason: 'missing_db_binding' }, request, 202);
+  }
+
+  const receivedAt = new Date().toISOString();
+  const eventDate = receivedAt.slice(0, 10);
+  const eventId = await sha256(`${payload.eventName}:${payload.surface}:${payload.variant}:${payload.timestamp}:${receivedAt}`);
+
+  await env.DB.prepare(
+    `INSERT INTO discovery_events (
+      id,
+      received_at,
+      event_date,
+      event_name,
+      surface,
+      variant,
+      language,
+      languages,
+      referrer_host,
+      landing,
+      intent,
+      utm_source,
+      utm_medium,
+      utm_campaign
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+  ).bind(
+    eventId,
+    receivedAt,
+    eventDate,
+    limit(payload.eventName, 40),
+    limit(payload.surface, 80),
+    limit(payload.variant, 20),
+    limit(payload.language, 24),
+    limit(Array.isArray(payload.languages) ? payload.languages.join(',') : '', 160),
+    limit(payload.referrerHost ?? '', 120),
+    limit(payload.landing ?? '', 160),
+    limit(payload.intent ?? '', 120),
+    limit(payload.utmSource ?? '', 80),
+    limit(payload.utmMedium ?? '', 80),
+    limit(payload.utmCampaign ?? '', 80),
+  ).run();
+
+  return json({ accepted: true, stored: true }, request, 202);
+}
+
 async function summary(request, env, url) {
   const expectedToken = env.MONARCH_ADMIN_TOKEN;
   const suppliedToken = request.headers.get('authorization')?.replace(/^Bearer\s+/i, '');
@@ -118,7 +208,7 @@ async function summary(request, env, url) {
   }
 
   const date = url.searchParams.get('date') ?? new Date().toISOString().slice(0, 10);
-  const daily = await env.DB.prepare(
+  const dailyDoctorRuns = await env.DB.prepare(
     `SELECT
       COUNT(*) as runs,
       COUNT(DISTINCT project_hash) as unique_projects,
@@ -128,7 +218,25 @@ async function summary(request, env, url) {
     WHERE event_date = ?`,
   ).bind(date).first();
 
-  return json({ date, ...daily }, request);
+  const discovery = await env.DB.prepare(
+    `SELECT
+      COUNT(*) as events,
+      COUNT(DISTINCT language) as languages,
+      SUM(CASE WHEN event_name = 'cta_click' THEN 1 ELSE 0 END) as cta_clicks
+    FROM discovery_events
+    WHERE event_date = ?`,
+  ).bind(date).first();
+
+  const topDiscovery = await env.DB.prepare(
+    `SELECT intent, language, variant, COUNT(*) as events
+    FROM discovery_events
+    WHERE event_date = ?
+    GROUP BY intent, language, variant
+    ORDER BY events DESC
+    LIMIT 20`,
+  ).bind(date).all();
+
+  return json({ date, doctorRuns: dailyDoctorRuns, discovery, topDiscovery: topDiscovery.results ?? [] }, request);
 }
 
 function validatePayload(payload) {
@@ -167,6 +275,38 @@ function validatePayload(payload) {
   return null;
 }
 
+function validateDiscoveryPayload(payload) {
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
+    return 'payload_must_be_object';
+  }
+
+  for (const field of DISCOVERY_REQUIRED_FIELDS) {
+    if (payload[field] === undefined || payload[field] === null || payload[field] === '') {
+      return `missing_${field}`;
+    }
+  }
+
+  for (const key of Object.keys(payload)) {
+    if (DISCOVERY_SENSITIVE_KEYS.some((sensitive) => key.toLowerCase().includes(sensitive.toLowerCase()))) {
+      return `sensitive_field_${key}`;
+    }
+  }
+
+  if (payload.event !== 'discovery_event') {
+    return 'invalid_event';
+  }
+
+  if (!['page_view', 'cta_click'].includes(payload.eventName)) {
+    return 'invalid_event_name';
+  }
+
+  if (!['a', 'b'].includes(payload.variant)) {
+    return 'invalid_variant';
+  }
+
+  return null;
+}
+
 function corsHeaders(request) {
   const origin = request.headers.get('origin');
   const allowOrigin = origin && ALLOWED_ORIGINS.has(origin) ? origin : 'https://x402ms.ai';
@@ -191,6 +331,10 @@ function json(body, request, status = 200) {
 
 function boolToInt(value) {
   return value === true ? 1 : 0;
+}
+
+function limit(value, maxLength) {
+  return String(value ?? '').slice(0, maxLength);
 }
 
 async function sha256(value) {
