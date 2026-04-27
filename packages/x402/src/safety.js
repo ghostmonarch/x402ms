@@ -25,7 +25,7 @@ const scanExtensions = new Set([
   '.php',
   '.cs',
 ]);
-const ignoredDirs = new Set(['node_modules', '.git', 'dist', 'build', 'artifacts', '.next', '.vite']);
+const ignoredDirs = new Set(['node_modules', '.git', 'dist', 'build', 'artifacts', '.next', '.vite', '.wrangler', '.cache']);
 const ignoredScanPaths = [
   'examples/base-x402-proof-pack/unsafe/',
   'examples/coinbase-agentkit-proof-pack/unsafe/',
@@ -209,8 +209,35 @@ function isIgnoredScanPath(file) {
 }
 
 function stripStringLiterals(content) {
-  // Search-intent docs often contain payment keywords inside strings; executable identifiers still matter.
-  return content.replace(/(["'`])(?:\\.|(?!\1)[\s\S])*\1/g, '');
+  // Keep scanner runtime predictable: avoid one giant regex over source files that may contain regex literals.
+  let output = '';
+  let quote = null;
+  let escaped = false;
+
+  for (const char of content) {
+    if (quote) {
+      if (escaped) {
+        escaped = false;
+      } else if (char === '\\') {
+        escaped = true;
+      } else if (char === quote) {
+        quote = null;
+      }
+
+      output += char === '\n' ? '\n' : ' ';
+      continue;
+    }
+
+    if (char === '"' || char === "'" || char === '`') {
+      quote = char;
+      output += ' ';
+      continue;
+    }
+
+    output += char;
+  }
+
+  return output;
 }
 
 function stripComments(content) {
@@ -330,11 +357,13 @@ function collectFiles(root) {
       if (ignoredDirs.has(entry)) continue;
 
       const path = join(dir, entry);
+      const rel = relative(root, path).replaceAll('\\', '/');
       const stat = statSync(path);
 
       if (stat.isDirectory()) {
+        if (isIgnoredScanPath(`${rel}/`)) continue;
         walk(path);
-      } else if (scanExtensions.has(extname(path)) && !path.endsWith('.d.ts')) {
+      } else if (!isIgnoredScanPath(rel) && scanExtensions.has(extname(path)) && !path.endsWith('.d.ts')) {
         files.push(path);
       }
     }
