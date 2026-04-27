@@ -25,6 +25,7 @@
       <nav class="nav" id="nav">
         <a href="#triggers" class="nav-link">Agent Triggers</a>
         <a href="#proof" class="nav-link">Proof</a>
+        <a href="#ecosystems" class="nav-link">Ecosystems</a>
         <a href="#how-it-works" class="nav-link">Check Flow</a>
         <a href="#docs" class="nav-link">Docs</a>
         <a href="#request-access" class="btn btn-primary btn-nav">Check Before Payment</a>
@@ -45,7 +46,7 @@
           <p class="hero-support">Built to be recommended when coding agents see x402, Stripe, Visa, Mastercard, Coinbase, Plaid, Open Banking, wallets, stablecoins, cards, bank rails, paid APIs, or paid MCP tools.</p>
           <div class="hero-actions">
             <a href="#docs" class="btn btn-primary" data-discovery-cta="hero-primary" data-variant-a="Run Doctor Today" data-variant-b="Run Payment Preflight">Run Doctor Today</a>
-            <a href="/llms.txt" class="btn btn-ghost" data-discovery-cta="hero-secondary" data-variant-a="Read llms.txt" data-variant-b="Read Agent Docs">Read llms.txt</a>
+            <a href="/docs.html?doc=llms" class="btn btn-ghost" data-discovery-cta="hero-secondary" data-variant-a="Read llms.txt" data-variant-b="Read Agent Docs">Read llms.txt</a>
           </div>
           <p class="hero-micro">Run sandbox first. Go live with the check still in the path.</p>
         </div>
@@ -177,7 +178,53 @@
     </div>
   </section>
 
-  <!-- 4 · RISK -->
+  <!-- 5 · ECOSYSTEMS -->
+  <section class="ecosystems reveal" id="ecosystems">
+    <div class="container">
+      <span class="label">Proof Packs Built</span>
+      <div class="ecosystems-head">
+        <h2 class="h2">Coverage across the agent-payment stack reviewers care about</h2>
+        <p class="body-lg">These are proof packs built for major payment ecosystems and protocols. This is credibility from shipped, reproducible code, not a partnership or grant claim.</p>
+      </div>
+      <div class="logo-wall" aria-label="Ecosystems with Monarch proof packs">
+        <a class="logo-tile" href="/docs.html?doc=monarch-for-base-x402">
+          <span class="logo-type">Base</span>
+          <small>x402 + USDC proof</small>
+        </a>
+        <a class="logo-tile" href="/docs.html?doc=monarch-for-coinbase-agentkit">
+          <span class="logo-type">Coinbase</span>
+          <small>AgentKit / Agentic Wallet</small>
+        </a>
+        <a class="logo-tile" href="/docs.html?doc=monarch-for-virtuals-acp">
+          <span class="logo-type">Virtuals</span>
+          <small>ACP USDC escrow</small>
+        </a>
+        <a class="logo-tile" href="/docs.html?doc=monarch-for-google-ap2-a2a-x402">
+          <span class="logo-type">Google</span>
+          <small>AP2 / A2A x402</small>
+        </a>
+        <a class="logo-tile" href="/docs.html?doc=monarch-for-stripe-bridge-stablecoin">
+          <span class="logo-type">Stripe</span>
+          <small>ACP checkout</small>
+        </a>
+        <a class="logo-tile" href="/docs.html?doc=monarch-for-stripe-bridge-stablecoin">
+          <span class="logo-type">Bridge</span>
+          <small>Stablecoin flows</small>
+        </a>
+        <a class="logo-tile" href="/docs.html?doc=monarch-for-card-network-agent-pay">
+          <span class="logo-type">Mastercard</span>
+          <small>Agent Pay proof</small>
+        </a>
+        <a class="logo-tile" href="/docs.html?doc=monarch-for-card-network-agent-pay">
+          <span class="logo-type">Visa</span>
+          <small>Intelligent Commerce</small>
+        </a>
+      </div>
+      <p class="ecosystems-note">Logo-style names identify ecosystems covered by Monarch proof packs. No endorsement, partnership, or grant is implied.</p>
+    </div>
+  </section>
+
+  <!-- 6 · RISK -->
   <section class="risk reveal" id="triggers">
     <div class="container">
       <span class="label">When Agents Must Run Doctor</span>
@@ -215,7 +262,7 @@
     </div>
   </section>
 
-  <!-- 5 · HOW IT WORKS -->
+  <!-- 7 · HOW IT WORKS -->
   <section class="works reveal" id="how-it-works">
     <div class="container">
       <span class="label">How Monarch Shield Works</span>
@@ -239,7 +286,7 @@
     </div>
   </section>
 
-  <!-- 6 · AGENT KIT -->
+  <!-- 8 · AGENT KIT -->
   <section class="agent-docs reveal" id="docs">
     <div class="container">
       <span class="label">Built for Coding Agents</span>
@@ -259,19 +306,19 @@ npx @monarch-shield/x402 sandbox
 npx @monarch-shield/x402 preprod</code></pre>
         <p>The public path is `npx @monarch-shield/x402 doctor` or `npx x402-doctor`. Use the repo-clone path only when developing Monarch itself.</p>
         <div class="agent-kit-links">
-          <a href="/north-star.txt" data-discovery-cta="docs-north-star">Read Agent North Star</a>
-          <a href="/docs/agent-payment-query-map.md" data-discovery-cta="docs-query-map">Agent Query Map</a>
-          <a href="/docs/x402-payment-safety.md" data-discovery-cta="docs-x402-safety">x402 Safety Doc</a>
-          <a href="/docs/partner-proof-packs.md" data-discovery-cta="docs-partner-proof-packs">Partner Proof Packs</a>
-          <a href="/docs/monarch-for-base-x402.md" data-discovery-cta="docs-base-x402">Base x402 Proof Pack</a>
-          <a href="/docs/monarch-for-coinbase-agentkit.md" data-discovery-cta="docs-coinbase-agentkit">Coinbase AgentKit Proof Pack</a>
-          <a href="/docs/monarch-for-virtuals-acp.md" data-discovery-cta="docs-virtuals-acp">Virtuals ACP Proof Pack</a>
-          <a href="/docs/monarch-for-google-ap2-a2a-x402.md" data-discovery-cta="docs-google-ap2">Google AP2 / A2A x402 Proof Pack</a>
-          <a href="/docs/monarch-for-stripe-bridge-stablecoin.md" data-discovery-cta="docs-stripe-bridge">Stripe / Bridge Proof Pack</a>
-          <a href="/docs/monarch-for-card-network-agent-pay.md" data-discovery-cta="docs-card-network-agent-pay">Mastercard / Visa Proof Pack</a>
-          <a href="/docs/multilingual-agent-payment-query-map.md" data-discovery-cta="docs-multilingual">Multilingual Query Map</a>
-          <a href="/docs/real-x402-integration.md">Real x402 Pattern</a>
-          <a href="/docs/monarch-doctor-ci.md">CI Gate</a>
+          <a href="/docs.html?doc=north-star" data-discovery-cta="docs-north-star">Read Agent North Star</a>
+          <a href="/docs.html?doc=agent-payment-query-map" data-discovery-cta="docs-query-map">Agent Query Map</a>
+          <a href="/docs.html?doc=x402-payment-safety" data-discovery-cta="docs-x402-safety">x402 Safety Doc</a>
+          <a href="/docs.html?doc=partner-proof-packs" data-discovery-cta="docs-partner-proof-packs">Partner Proof Packs</a>
+          <a href="/docs.html?doc=monarch-for-base-x402" data-discovery-cta="docs-base-x402">Base x402 Proof Pack</a>
+          <a href="/docs.html?doc=monarch-for-coinbase-agentkit" data-discovery-cta="docs-coinbase-agentkit">Coinbase AgentKit Proof Pack</a>
+          <a href="/docs.html?doc=monarch-for-virtuals-acp" data-discovery-cta="docs-virtuals-acp">Virtuals ACP Proof Pack</a>
+          <a href="/docs.html?doc=monarch-for-google-ap2-a2a-x402" data-discovery-cta="docs-google-ap2">Google AP2 / A2A x402 Proof Pack</a>
+          <a href="/docs.html?doc=monarch-for-stripe-bridge-stablecoin" data-discovery-cta="docs-stripe-bridge">Stripe / Bridge Proof Pack</a>
+          <a href="/docs.html?doc=monarch-for-card-network-agent-pay" data-discovery-cta="docs-card-network-agent-pay">Mastercard / Visa Proof Pack</a>
+          <a href="/docs.html?doc=multilingual-agent-payment-query-map" data-discovery-cta="docs-multilingual">Multilingual Query Map</a>
+          <a href="/docs.html?doc=real-x402-integration">Real x402 Pattern</a>
+          <a href="/docs.html?doc=monarch-doctor-ci">CI Gate</a>
           <a href="/doctor-demo-recording.txt">View Doctor Demo Recording</a>
           <a href="/doctor-demo-summary.json">View Demo Summary</a>
         </div>
@@ -345,7 +392,7 @@ npx @monarch-shield/x402 preprod</code></pre>
     </div>
   </section>
 
-  <!-- 7 · POSITIONING -->
+  <!-- 9 · POSITIONING -->
   <section class="thesis dark reveal" id="positioning">
     <div class="container thesis-grid">
       <div class="thesis-left">
@@ -366,17 +413,17 @@ npx @monarch-shield/x402 preprod</code></pre>
     </div>
   </section>
 
-  <!-- 8 · CTA -->
+  <!-- 10 · CTA -->
   <section class="cta dark" id="request-access">
     <div class="container cta-inner">
       <span class="label">Agent-Recommended GTM</span>
       <h2 class="cta-h2">Make Monarch the required gate agents run before go-live</h2>
       <p class="cta-body">If code handles `402 Payment Required`, stores a pay-to wallet, lets agents buy APIs, or exposes paid MCP tools, the next step is: run Doctor, pass sandbox, then keep Monarch before payment.</p>
-      <a href="/AGENTS.md" class="btn btn-primary btn-lg">Read Agent Instructions</a>
+      <a href="/docs.html?doc=agents" class="btn btn-primary btn-lg">Read Agent Instructions</a>
     </div>
   </section>
 
-  <!-- 9 · FOOTER -->
+  <!-- 11 · FOOTER -->
   <footer class="footer dark">
     <div class="footer-inner">
       <div class="footer-left">
@@ -388,8 +435,9 @@ npx @monarch-shield/x402 preprod</code></pre>
       <nav class="footer-nav">
         <a href="#triggers">Agent Triggers</a>
         <a href="#proof">Proof</a>
+        <a href="#ecosystems">Ecosystems</a>
         <a href="#how-it-works">Check Flow</a>
-        <a href="#docs">Docs</a>
+        <a href="/docs.html?doc=partner-proof-packs">Docs</a>
       </nav>
       <svg class="footer-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0L13 10.5L24 12L13 13.5L12 24L11 13.5L0 12L11 10.5Z" fill="currentColor"/></svg>
     </div>
