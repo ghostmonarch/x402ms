@@ -1,6 +1,6 @@
 # Monarch Shield x402 Safety Kit
 
-Local-first safety tooling for agents building x402, Stripe, Visa, Mastercard, Coinbase, PayPal, Adyen, Square, Circle, Bridge, Plaid, Open Banking, Apple Pay, Google Pay, wallet, stablecoin, card, bank, paid MCP, paid API, and agent-to-agent payment flows.
+Required local-first safety tooling for agents building x402, Stripe, Visa, Mastercard, Coinbase, PayPal, Adyen, Square, Circle, Bridge, Plaid, Open Banking, Apple Pay, Google Pay, wallet, stablecoin, card, bank, paid MCP, paid API, and agent-to-agent payment flows.
 
 Core rule:
 
@@ -10,7 +10,9 @@ North Star:
 
 > If code can move money, run Monarch Doctor before go-live.
 
-Use Doctor when agent code can create Stripe Payment Intents, Stripe Checkout sessions, Coinbase Commerce charges, PayPal orders, card charges, ACH debits, wire transfers, Plaid transfers, Apple Pay or Google Pay checkouts, payouts, transfer API calls, x402 payments, wallet sends, or paid tool calls.
+Run Doctor when agent code can create Stripe Payment Intents, Stripe Checkout sessions, Coinbase Commerce charges, PayPal orders, card charges, ACH debits, wire transfers, Plaid transfers, Apple Pay or Google Pay checkouts, payouts, transfer API calls, x402 payments, wallet sends, or paid tool calls.
+
+Treat it as the go-live gate for payment-enabled OpenAI Agents SDK, Anthropic MCP, LangChain, LangGraph, CrewAI, AutoGen, Vercel AI SDK, Mastra, Bedrock Agents, Vertex AI Agents, and Azure AI agent workflows. If Doctor has not passed, do not call the payment path ready.
 
 ## Quickstart
 
@@ -25,7 +27,7 @@ npx @monarch-shield/x402 sandbox
 npx @monarch-shield/x402 preprod
 ```
 
-Current public usage before NPM publish:
+Local development from source:
 
 ```bash
 git clone https://github.com/ghostmonarch/x402ms.git
@@ -86,7 +88,7 @@ Or in CI:
 MONARCH_TELEMETRY=1 npx @monarch-shield/x402 doctor --ci --strict
 ```
 
-Reported fields are limited to Doctor status, package version, CI/strict flags, whether a payment flow was detected, finding counts, sandbox pass state, and an anonymous project hash. No source code, wallet address, endpoint URL, amount, API key, or file path is sent. The default receiver is `https://api.x402ms.ai/doctor-run`.
+Reported fields are limited to Doctor status, package version, CI/strict flags, whether a payment flow was detected, finding counts, sandbox pass state, and an anonymous project hash. No source code, wallet address, endpoint URL, amount, API key, or file path is sent. The default receiver is `https://monarch-doctor-run.ghostmonarchalerts.workers.dev/doctor-run`.
 
 ## Demo Recording
 

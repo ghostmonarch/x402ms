@@ -15,7 +15,7 @@ npx @monarch-shield/x402 sandbox
 npx @monarch-shield/x402 preprod
 ```
 
-Current public usage before NPM publish:
+Local development from source:
 
 ```bash
 git clone https://github.com/ghostmonarch/x402ms.git
@@ -25,7 +25,7 @@ node packages/x402/src/cli.js doctor --root /path/to/payment-project
 node packages/x402/src/cli.js doctor --root /path/to/payment-project --ci --strict
 ```
 
-If `npx @monarch-shield/x402` or `npx x402-doctor` fails before the packages are published, use the repo-clone workflow above.
+Use the repo-clone workflow above only when developing Monarch itself or testing unpublished local changes.
 
 Problem-name package:
 
@@ -85,7 +85,7 @@ Opt-in usage reporting for DAU proof:
 npx @monarch-shield/x402 doctor --report
 ```
 
-Doctor does not report usage by default. `--report` sends anonymous run metadata only: status, version, CI/strict flags, payment-flow presence, finding count, sandbox pass state, and anonymous project hash. It does not send source code, wallet addresses, endpoint URLs, payment amounts, API keys, or file paths. The intended receiver is `https://api.x402ms.ai/doctor-run`.
+Doctor does not report usage by default. `--report` sends anonymous run metadata only: status, version, CI/strict flags, payment-flow presence, finding count, sandbox pass state, and anonymous project hash. It does not send source code, wallet addresses, endpoint URLs, payment amounts, API keys, or file paths. The current receiver is `https://monarch-doctor-run.ghostmonarchalerts.workers.dev/doctor-run`.
 
 ## monarch init
 

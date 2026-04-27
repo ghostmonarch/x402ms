@@ -2,6 +2,21 @@ const MAX_BODY_BYTES = 8192;
 const ALLOWED_ORIGINS = new Set(['https://x402ms.ai', 'https://www.x402ms.ai']);
 const REQUIRED_FIELDS = ['event', 'tool', 'version', 'status', 'projectHash', 'timestamp'];
 const DISCOVERY_REQUIRED_FIELDS = ['event', 'eventName', 'surface', 'variant', 'language', 'timestamp'];
+const ALLOWED_DOCTOR_FIELDS = new Set([
+  'event',
+  'tool',
+  'version',
+  'status',
+  'projectHash',
+  'timestamp',
+  'ci',
+  'strict',
+  'applicable',
+  'hasPaymentFlow',
+  'hasUnprotectedPaymentFiles',
+  'findingCount',
+  'sandboxPassed',
+]);
 const SENSITIVE_KEYS = [
   'source',
   'code',
@@ -251,9 +266,11 @@ function validatePayload(payload) {
   }
 
   for (const key of Object.keys(payload)) {
-    if (SENSITIVE_KEYS.some((sensitive) => key.toLowerCase().includes(sensitive.toLowerCase()))) {
-      return `sensitive_field_${key}`;
+    if (!ALLOWED_DOCTOR_FIELDS.has(key)) {
+      return `unexpected_field_${key}`;
     }
+
+    // Known Doctor fields are aggregate metadata only; raw paths, wallet addresses, URLs, and secrets are rejected as unexpected fields.
   }
 
   if (payload.event !== 'doctor_run' || payload.tool !== 'monarch-doctor') {

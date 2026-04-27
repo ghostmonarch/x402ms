@@ -29,7 +29,7 @@ npx wrangler deploy
 The intended public endpoint is:
 
 ```txt
-https://api.x402ms.ai/doctor-run
+https://monarch-doctor-run.ghostmonarchalerts.workers.dev/doctor-run
 ```
 
 ## Payload Contract

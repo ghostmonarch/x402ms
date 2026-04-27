@@ -84,8 +84,8 @@ To verify domain ownership in GitHub (recommended for security):
 
 After DNS propagation (can take up to 48 hours, usually much faster):
 
-- https://x402ms.ai should serve the site
-- https://www.x402ms.ai should redirect to the apex domain
+- [https://x402ms.ai](https://x402ms.ai) should serve the site
+- [https://www.x402ms.ai](https://www.x402ms.ai) should redirect to the apex domain
 - The GitHub Actions tab should show a green deployment
 
 ## One-Time Repository Settings
@@ -104,7 +104,7 @@ After DNS propagation (can take up to 48 hours, usually much faster):
 
 ## File Structure
 
-```
+```txt
 x402ms/
 ├── .github/workflows/deploy-pages.yml   # CI/CD pipeline
 ├── public/

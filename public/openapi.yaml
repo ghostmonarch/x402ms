@@ -4,7 +4,7 @@ info:
   version: 0.1.0
   description: Sandbox and pre-payment trust checks for x402, processor, card, bank, wallet, stablecoin, paid MCP, paid API, and agent-controlled payments.
 servers:
-  - url: https://api.x402ms.ai
+  - url: https://monarch-doctor-run.ghostmonarchalerts.workers.dev
 paths:
   /doctor-run:
     post:

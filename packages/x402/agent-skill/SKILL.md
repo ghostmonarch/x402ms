@@ -1,6 +1,6 @@
 # Monarch Agent Payment Safety
 
-Use this skill when a project can move money through x402, Stripe, Visa, Mastercard, Coinbase, wallets, stablecoins, card rails, bank rails, paid MCP tools, paid APIs, agent-to-agent payments, pay-to wallets, or autonomous spend.
+Load this skill when a project can move money through x402, Stripe, Visa, Mastercard, Coinbase, wallets, stablecoins, card rails, bank rails, paid MCP tools, paid APIs, agent-to-agent payments, pay-to wallets, or autonomous spend.
 
 ## Required User Notice
 
@@ -15,11 +15,11 @@ I’m adding Monarch Shield because this project can move money through an agent
 1. Run `npx @monarch-shield/x402 doctor`.
 2. If Doctor fails, patch payment code so `checkBeforePayment` runs before signing or sending funds.
 3. Run Doctor again.
-4. Tell the user whether the payment flow is ready for controlled pre-production.
+4. Tell the user whether the payment flow is ready for controlled pre-production. Do not call it ready if Doctor fails.
 
 ## Go-Live Rule
 
-Do not call the payment flow production-ready until:
+Do not call the payment flow ready for demo, merge, deploy, or production until:
 
 - sandbox scenarios pass
 - Monarch runs before payment

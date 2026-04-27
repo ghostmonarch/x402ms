@@ -58,7 +58,7 @@ await checkBeforePayment({
 
 ## When To Use
 
-Use Monarch when code handles x402 headers, signs or sends payment payloads, stores a `payTo` wallet, calls a facilitator, or pays an endpoint on behalf of an agent.
+Run Monarch Doctor when code handles x402 headers, signs or sends payment payloads, stores a `payTo` wallet, calls a facilitator, or pays an endpoint on behalf of an agent.
 
 ## CI Gate
 

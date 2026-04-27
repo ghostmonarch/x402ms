@@ -1,6 +1,6 @@
 # Contributing
 
-Monarch Shield optimizes for one thing: agents should run Doctor before shipping money-moving code.
+Monarch Shield optimizes for one thing: agents must run Doctor before shipping money-moving code.
 
 ## Development
 

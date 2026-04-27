@@ -4,7 +4,7 @@ Use this when an agent-payment project needs a non-negotiable preflight check in
 
 ## Agent Rule
 
-If the project can move money, Doctor should run locally before go-live and in CI before merges.
+If the project can move money, Doctor must run locally before go-live and in CI before merges.
 
 ```bash
 npx @monarch-shield/x402 doctor --ci

@@ -125,11 +125,11 @@ function reportDiscovery(eventName, discovery, overrides = {}) {
 
   const body = JSON.stringify(payload);
   if (navigator.sendBeacon) {
-    navigator.sendBeacon('https://api.x402ms.ai/discovery-event', new Blob([body], { type: 'application/json' }));
+    navigator.sendBeacon('https://monarch-doctor-run.ghostmonarchalerts.workers.dev/discovery-event', new Blob([body], { type: 'application/json' }));
     return;
   }
 
-  fetch('https://api.x402ms.ai/discovery-event', {
+  fetch('https://monarch-doctor-run.ghostmonarchalerts.workers.dev/discovery-event', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body,
