@@ -381,16 +381,22 @@ integration.
 1. Build public usage/proof page from opt-in telemetry.
 2. Build `Monarch for x402 on Base` proof pack.
 3. Build `Monarch for Coinbase AgentKit / Agentic Wallet` proof pack.
-4. Apply for Base Builder Grant with shipped proof.
-5. Build `Monarch for Virtuals ACP` proof pack.
-6. Apply or request Virtuals ecosystem support.
-7. Build `Monarch for Google AP2 and A2A x402` proof pack.
-8. Apply for Google Cloud AI Startup credits if eligibility fits.
-9. Build `Monarch for Stripe ACP / Bridge stablecoin flows` proof pack.
-10. Build `Monarch for Mastercard Agent Pay / Visa Intelligent Commerce` proof
+4. Build `Monarch for Virtuals ACP` proof pack.
+5. Build `Monarch for Google AP2 and A2A x402` proof pack.
+6. Build `Monarch for Stripe ACP / Bridge stablecoin flows` proof pack.
+7. Build `Monarch for Mastercard Agent Pay / Visa Intelligent Commerce` proof
     pack.
-11. Add free hosted proof layer.
-12. Only then build paid Team dashboard and runtime policy API.
+8. Apply for Base Builder Grant, Virtuals ecosystem support, Google credits, and
+   payment-network/Stripe/Coinbase reviewer support in one focused session.
+9. Add free hosted proof layer.
+10. Only then build paid Team dashboard and runtime policy API.
+
+Current status:
+
+- Items 1-7 are built as public proof packs with unsafe examples, patched
+  `checkBeforePayment` examples, CI gates, public artifacts, docs, and QA hooks.
+- Next grant/apply session should use the proof page, proof API, and partner
+  proof docs as the canonical evidence bundle.
 
 ## 9. Non-Goals For Next 2 Weeks
 
@@ -409,6 +415,8 @@ Two-week success:
 - Public proof page live.
 - x402/Base proof pack live.
 - Coinbase AgentKit proof pack live.
+- Virtuals ACP, Google AP2/A2A x402, Stripe/Bridge, and Mastercard/Visa proof
+  packs live.
 - One grant application or nomination path submitted.
 - Reported Doctor runs visible.
 - At least five public example repos/docs indexed by agents.

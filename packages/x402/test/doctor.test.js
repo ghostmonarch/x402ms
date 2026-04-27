@@ -380,40 +380,70 @@ test('scan detects Base USDC payment identifiers without Monarch checks', () => 
   });
 });
 
-test('Base x402 proof pack fails unsafe project and passes patched project', () => {
-  const unsafeRoot = join(repoRoot, 'examples/base-x402-proof-pack/unsafe');
-  const patchedRoot = join(repoRoot, 'examples/base-x402-proof-pack/patched');
+function assertProofPack({ root, unsafeFile, rails }) {
+  const unsafeRoot = join(repoRoot, root, 'unsafe');
+  const patchedRoot = join(repoRoot, root, 'patched');
   const unsafe = validatePreprod(unsafeRoot);
   const patched = validatePreprod(patchedRoot);
   const patchedRails = new Set(patched.scan.findings.flatMap((finding) => finding.rails ?? []));
 
   assert.equal(unsafe.applicable, true);
   assert.equal(unsafe.ready, false);
-  assert.deepEqual(unsafe.scan.unprotectedPaymentFiles, ['pay-base-x402.js']);
+  assert.deepEqual(unsafe.scan.unprotectedPaymentFiles, [unsafeFile]);
 
   assert.equal(patched.applicable, true);
   assert.equal(patched.ready, true);
-  assert.equal(patchedRails.has('x402'), true);
-  assert.equal(patchedRails.has('stablecoin'), true);
-  assert.equal(patchedRails.has('wallet'), true);
+  for (const rail of rails) {
+    assert.equal(patchedRails.has(rail), true);
+  }
+}
+
+test('Base x402 proof pack fails unsafe project and passes patched project', () => {
+  assertProofPack({
+    root: 'examples/base-x402-proof-pack',
+    unsafeFile: 'pay-base-x402.js',
+    rails: ['x402', 'stablecoin', 'wallet'],
+  });
 });
 
 test('Coinbase AgentKit proof pack fails unsafe project and passes patched project', () => {
-  const unsafeRoot = join(repoRoot, 'examples/coinbase-agentkit-proof-pack/unsafe');
-  const patchedRoot = join(repoRoot, 'examples/coinbase-agentkit-proof-pack/patched');
-  const unsafe = validatePreprod(unsafeRoot);
-  const patched = validatePreprod(patchedRoot);
-  const patchedRails = new Set(patched.scan.findings.flatMap((finding) => finding.rails ?? []));
+  assertProofPack({
+    root: 'examples/coinbase-agentkit-proof-pack',
+    unsafeFile: 'agentic-wallet-spend.js',
+    rails: ['agentkit', 'wallet', 'stablecoin'],
+  });
+});
 
-  assert.equal(unsafe.applicable, true);
-  assert.equal(unsafe.ready, false);
-  assert.deepEqual(unsafe.scan.unprotectedPaymentFiles, ['agentic-wallet-spend.js']);
+test('Virtuals ACP proof pack fails unsafe project and passes patched project', () => {
+  assertProofPack({
+    root: 'examples/virtuals-acp-proof-pack',
+    unsafeFile: 'acp-job-escrow.js',
+    rails: ['stablecoin', 'wallet'],
+  });
+});
 
-  assert.equal(patched.applicable, true);
-  assert.equal(patched.ready, true);
-  assert.equal(patchedRails.has('agentkit'), true);
-  assert.equal(patchedRails.has('wallet'), true);
-  assert.equal(patchedRails.has('stablecoin'), true);
+test('Google AP2 / A2A x402 proof pack fails unsafe project and passes patched project', () => {
+  assertProofPack({
+    root: 'examples/google-ap2-a2a-x402-proof-pack',
+    unsafeFile: 'ap2-a2a-x402-payment.js',
+    rails: ['x402', 'paid_mcp', 'stablecoin'],
+  });
+});
+
+test('Stripe ACP / Bridge stablecoin proof pack fails unsafe project and passes patched project', () => {
+  assertProofPack({
+    root: 'examples/stripe-bridge-stablecoin-proof-pack',
+    unsafeFile: 'agentic-checkout-stablecoin.js',
+    rails: ['stripe', 'stablecoin', 'wallet'],
+  });
+});
+
+test('Mastercard Agent Pay / Visa Intelligent Commerce proof pack fails unsafe project and passes patched project', () => {
+  assertProofPack({
+    root: 'examples/card-network-agent-pay-proof-pack',
+    unsafeFile: 'card-network-agent-checkout.js',
+    rails: ['card'],
+  });
 });
 
 test('Doctor report mode is non-blocking when telemetry endpoint is unavailable', () => {

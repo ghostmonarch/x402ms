@@ -37,6 +37,21 @@ Run and record the Coinbase AgentKit / Agentic Wallet proof pack:
 npm run qa:coinbase-agentkit
 ```
 
+Run and record all partner proof packs:
+
+```bash
+npm run qa:proof-packs
+```
+
+Run individual partner proof packs:
+
+```bash
+npm run qa:virtuals-acp
+npm run qa:google-ap2-a2a-x402
+npm run qa:stripe-bridge
+npm run qa:card-network-agent-pay
+```
+
 Report the patched Base x402 example as a public example:
 
 ```bash
@@ -47,6 +62,15 @@ Report the patched Coinbase AgentKit / Agentic Wallet example as a public exampl
 
 ```bash
 npm run proof:coinbase-agentkit
+```
+
+Report the patched partner examples as public examples:
+
+```bash
+npm run proof:virtuals-acp
+npm run proof:google-ap2-a2a-x402
+npm run proof:stripe-bridge
+npm run proof:card-network-agent-pay
 ```
 
 Never send source code, file paths, wallet addresses, endpoint URLs, payment amounts, secrets, API keys, or raw payment payloads in proof reports.

@@ -1,0 +1,253 @@
+# Monarch for Google AP2 and A2A x402 Proof Pack
+# Scenario: AP2 embedded A2A x402 payment submission is blocked until Monarch runs before the payment payload.
+
+## Unsafe Google AP2 / A2A x402 project fails Doctor
+$ node packages/x402/src/cli.js doctor --root examples/google-ap2-a2a-x402-proof-pack/unsafe --ci --strict
+{
+  "tool": "monarch-doctor",
+  "status": "failed",
+  "ready": false,
+  "applicable": true,
+  "root": "examples/google-ap2-a2a-x402-proof-pack/unsafe",
+  "strict": true,
+  "summary": "Money-moving code is not ready. Patch the reported payment files before go-live.",
+  "checks": [
+    {
+      "id": "payment_flow_scanned",
+      "passed": true,
+      "message": "Payment flow detected."
+    },
+    {
+      "id": "monarch_before_payment",
+      "passed": false,
+      "message": "One or more payment files lack a Monarch check before payment."
+    },
+    {
+      "id": "sandbox_passed",
+      "passed": true,
+      "message": "Sandbox scenarios passed."
+    }
+  ],
+  "unprotectedPaymentFiles": [
+    "ap2-a2a-x402-payment.js"
+  ],
+  "findings": [
+    {
+      "kind": "payment_flow",
+      "file": "ap2-a2a-x402-payment.js",
+      "message": "x402 payment handling found",
+      "rails": [
+        "x402"
+      ]
+    },
+    {
+      "kind": "payment_flow",
+      "file": "ap2-a2a-x402-payment.js",
+      "message": "pay-to wallet handling found",
+      "rails": [
+        "wallet"
+      ]
+    },
+    {
+      "kind": "payment_flow",
+      "file": "ap2-a2a-x402-payment.js",
+      "message": "stablecoin payment handling found",
+      "rails": [
+        "stablecoin"
+      ]
+    },
+    {
+      "kind": "payment_flow",
+      "file": "ap2-a2a-x402-payment.js",
+      "message": "Google AP2 or A2A x402 payment handling found",
+      "rails": [
+        "x402",
+        "paid_mcp"
+      ]
+    }
+  ],
+  "sandbox": [
+    {
+      "id": "missing-prepayment-check",
+      "title": "Payment flow has no pre-payment trust check",
+      "expected": "block",
+      "actual": "block",
+      "passed": true,
+      "reason": "Monarch is not called before payment."
+    },
+    {
+      "id": "verified-low-risk",
+      "title": "Verified endpoint, low risk",
+      "expected": "allow",
+      "actual": "allow",
+      "passed": true,
+      "reason": "Endpoint ownership, pay-to wallet, and delivery reliability are acceptable for sandbox use."
+    },
+    {
+      "id": "unknown-wrapper",
+      "title": "Unknown wrapper",
+      "expected": "caution",
+      "actual": "caution",
+      "passed": true,
+      "reason": "The endpoint may be a wrapper and provider authorization is not visible."
+    },
+    {
+      "id": "changed-pay-to-wallet",
+      "title": "Changed pay-to wallet",
+      "expected": "block",
+      "actual": "block",
+      "passed": true,
+      "reason": "The endpoint recently changed its payment destination."
+    },
+    {
+      "id": "failed-delivery",
+      "title": "Endpoint accepts payment but fails delivery",
+      "expected": "caution",
+      "actual": "caution",
+      "passed": true,
+      "reason": "Recent paid calls did not consistently return usable responses."
+    },
+    {
+      "id": "verified-alternative",
+      "title": "Risky endpoint with verified alternative",
+      "expected": "route",
+      "actual": "route",
+      "passed": true,
+      "reason": "A lower-risk verified alternative can satisfy the same intent."
+    }
+  ],
+  "recommendation": "Run `npx @monarch-shield/x402 sandbox`, then add `checkBeforePayment` before signing or sending funds."
+}
+
+## Patched Google AP2 / A2A x402 project passes Doctor
+$ node packages/x402/src/cli.js doctor --root examples/google-ap2-a2a-x402-proof-pack/patched --ci --strict
+{
+  "tool": "monarch-doctor",
+  "status": "passed",
+  "ready": true,
+  "applicable": true,
+  "root": "examples/google-ap2-a2a-x402-proof-pack/patched",
+  "strict": true,
+  "summary": "Money-moving code has a Monarch check in payment files and sandbox scenarios passed.",
+  "checks": [
+    {
+      "id": "payment_flow_scanned",
+      "passed": true,
+      "message": "Payment flow detected."
+    },
+    {
+      "id": "monarch_before_payment",
+      "passed": true,
+      "message": "Monarch check reference detected in payment files."
+    },
+    {
+      "id": "sandbox_passed",
+      "passed": true,
+      "message": "Sandbox scenarios passed."
+    }
+  ],
+  "unprotectedPaymentFiles": [],
+  "findings": [
+    {
+      "kind": "payment_flow",
+      "file": "ap2-a2a-x402-payment.js",
+      "message": "x402 payment handling found",
+      "rails": [
+        "x402"
+      ]
+    },
+    {
+      "kind": "payment_flow",
+      "file": "ap2-a2a-x402-payment.js",
+      "message": "pay-to wallet handling found",
+      "rails": [
+        "wallet"
+      ]
+    },
+    {
+      "kind": "payment_flow",
+      "file": "ap2-a2a-x402-payment.js",
+      "message": "stablecoin payment handling found",
+      "rails": [
+        "stablecoin"
+      ]
+    },
+    {
+      "kind": "payment_flow",
+      "file": "ap2-a2a-x402-payment.js",
+      "message": "Google AP2 or A2A x402 payment handling found",
+      "rails": [
+        "x402",
+        "paid_mcp"
+      ]
+    },
+    {
+      "kind": "monarch_check",
+      "file": "ap2-a2a-x402-payment.js",
+      "message": "Monarch pre-payment check reference found",
+      "rails": []
+    }
+  ],
+  "sandbox": [
+    {
+      "id": "missing-prepayment-check",
+      "title": "Payment flow has no pre-payment trust check",
+      "expected": "block",
+      "actual": "block",
+      "passed": true,
+      "reason": "Monarch is not called before payment."
+    },
+    {
+      "id": "verified-low-risk",
+      "title": "Verified endpoint, low risk",
+      "expected": "allow",
+      "actual": "allow",
+      "passed": true,
+      "reason": "Endpoint ownership, pay-to wallet, and delivery reliability are acceptable for sandbox use."
+    },
+    {
+      "id": "unknown-wrapper",
+      "title": "Unknown wrapper",
+      "expected": "caution",
+      "actual": "caution",
+      "passed": true,
+      "reason": "The endpoint may be a wrapper and provider authorization is not visible."
+    },
+    {
+      "id": "changed-pay-to-wallet",
+      "title": "Changed pay-to wallet",
+      "expected": "block",
+      "actual": "block",
+      "passed": true,
+      "reason": "The endpoint recently changed its payment destination."
+    },
+    {
+      "id": "failed-delivery",
+      "title": "Endpoint accepts payment but fails delivery",
+      "expected": "caution",
+      "actual": "caution",
+      "passed": true,
+      "reason": "Recent paid calls did not consistently return usable responses."
+    },
+    {
+      "id": "verified-alternative",
+      "title": "Risky endpoint with verified alternative",
+      "expected": "route",
+      "actual": "route",
+      "passed": true,
+      "reason": "A lower-risk verified alternative can satisfy the same intent."
+    }
+  ],
+  "recommendation": "No missing Monarch pre-payment check detected."
+}
+
+## Sandbox proves unsafe payment branches
+$ node packages/x402/src/cli.js sandbox
+Monarch sandbox
+- PASS missing-prepayment-check: expected block, got block
+- PASS verified-low-risk: expected allow, got allow
+- PASS unknown-wrapper: expected caution, got caution
+- PASS changed-pay-to-wallet: expected block, got block
+- PASS failed-delivery: expected caution, got caution
+- PASS verified-alternative: expected route, got route
+

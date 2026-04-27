@@ -1,0 +1,31 @@
+{
+  "demo": "monarch-for-google-ap2-a2a-x402-proof-pack",
+  "status": "passed",
+  "publicProofUrl": "https://x402ms.ai/#proof",
+  "recordingPath": "public/google-ap2-a2a-x402-proof-pack-recording.txt",
+  "examples": {
+    "unsafe": "examples/google-ap2-a2a-x402-proof-pack/unsafe",
+    "patched": "examples/google-ap2-a2a-x402-proof-pack/patched"
+  },
+  "proves": [
+    "Doctor blocks AP2 / A2A x402 code without a Monarch pre-payment check",
+    "Doctor passes after checkBeforePayment wraps x402 payment payload submission",
+    "The patched example keeps Monarch before AP2 PaymentMandate execution",
+    "CI can enforce Doctor with --ci --strict",
+    "Sandbox covers allow/caution/block/route branches without real funds"
+  ],
+  "results": [
+    {
+      "label": "Unsafe Google AP2 / A2A x402 project fails Doctor",
+      "status": 1
+    },
+    {
+      "label": "Patched Google AP2 / A2A x402 project passes Doctor",
+      "status": 0
+    },
+    {
+      "label": "Sandbox proves unsafe payment branches",
+      "status": 0
+    }
+  ]
+}

@@ -67,7 +67,7 @@ test('public proof endpoint returns labeled empty counters without DB', async ()
 
   assert.equal(response.status, 200);
   assert.equal(payload.stored, false);
-  assert.equal(payload.counters.publicExampleRuns, 4);
+  assert.equal(payload.counters.publicExampleRuns, 8);
   assert.equal(payload.counters.internalDogfoodRuns, 0);
   assert.equal(payload.counters.externalReportedRuns, 0);
   assert.match(payload.interpretation.internalDogfood, /proof-of-function/);
@@ -110,7 +110,7 @@ test('public proof endpoint aggregates runs, sources, and rails', async () => {
   assert.equal(response.status, 200);
   assert.equal(payload.date, '2026-04-26');
   assert.equal(payload.counters.totalRuns, 4);
-  assert.equal(payload.counters.publicExampleRuns, 5);
+  assert.equal(payload.counters.publicExampleRuns, 9);
   assert.deepEqual(payload.byRail, [
     { rail: 'x402', runs: 2 },
     { rail: 'stripe', runs: 1 },

@@ -29,6 +29,10 @@ const ignoredDirs = new Set(['node_modules', '.git', 'dist', 'build', 'artifacts
 const ignoredScanPaths = [
   'examples/base-x402-proof-pack/unsafe/',
   'examples/coinbase-agentkit-proof-pack/unsafe/',
+  'examples/virtuals-acp-proof-pack/unsafe/',
+  'examples/google-ap2-a2a-x402-proof-pack/unsafe/',
+  'examples/stripe-bridge-stablecoin-proof-pack/unsafe/',
+  'examples/card-network-agent-pay-proof-pack/unsafe/',
   'workers/doctor-run/',
 ];
 
@@ -124,15 +128,18 @@ export function scanProject(root = process.cwd()) {
     if (isIgnoredScanPath(rel)) continue;
 
     addFinding(findings, rel, content, /402 Payment Required|X-PAYMENT/i, 'x402 payment handling found', ['x402']);
-    addFinding(findings, rel, codeContent, /x402|paymentRequired|facilitator/i, 'x402 payment handling found', ['x402']);
+    addFinding(findings, rel, codeContent, /x402|paymentRequired|facilitator|X_A2A_Extensions/i, 'x402 payment handling found', ['x402']);
     addFinding(findings, rel, codeContent, /\bpayTo\b|\brecipient\b|\bmerchantWallet\b|settlementAddress|walletAddress|destinationWallet/i, 'pay-to wallet handling found', ['wallet']);
     addFinding(findings, rel, codeContent, /paid MCP|paid tool|mcp.*payment|payment.*mcp|tool.*price|price.*tool/i, 'paid MCP or tool payment reference found', ['paid_mcp']);
     addFinding(findings, rel, codeContent, /agent.*spend|spend.*agent|autonomous.*payment|wallet\.send|sendTransaction/i, 'agent spend payment reference found', ['wallet']);
-    addFinding(findings, rel, codeContent, /stablecoin.*payment|circle|bridge|rain|baseUSDC|transferUSDC|usdcTransfer|chainId.*8453|baseSepolia/i, 'stablecoin payment handling found', ['stablecoin']);
-    addFinding(findings, rel, codeContent, /stripe|paymentIntents\.create|checkout\.sessions\.create/i, 'Stripe payment processor handling found', ['stripe']);
+    addFinding(findings, rel, codeContent, /stablecoin.*payment|circle|bridge|rain|baseUSDC|transferUSDC|usdcTransfer|AssetToken\.usdc|USDC|chainId.*8453|baseSepolia/i, 'stablecoin payment handling found', ['stablecoin']);
+    addFinding(findings, rel, codeContent, /stripe|paymentIntents\.create|checkout\.sessions\.create|shared_payment_granted_token|sharedPaymentGrantedToken|agentic checkout/i, 'Stripe payment processor handling found', ['stripe']);
     addFinding(findings, rel, codeContent, /coinbase|agentkit|agenticWallet|agentic wallet|commerce\.charges\.create/i, 'Coinbase AgentKit or Agentic Wallet payment handling found', ['agentkit', 'wallet']);
+    addFinding(findings, rel, codeContent, /virtuals|virtualsAcp|acpClient|createJobFromOffering|fundJobEscrow|Agent Commerce Protocol|job\.funded|job\.completed/i, 'Virtuals ACP payment handling found', ['stablecoin', 'wallet']);
+    addFinding(findings, rel, codeContent, /Agent Payments Protocol|AP2|CartMandate|PaymentMandate|A2A.*payment|payment.*A2A|x402\.payment|X_A2A_Extensions/i, 'Google AP2 or A2A x402 payment handling found', ['x402', 'paid_mcp']);
+    addFinding(findings, rel, codeContent, /Agentic Commerce Protocol|CompleteCheckoutRequest|PaymentData|payment_provider|agentic_checkout|BridgeClient|bridgeStablecoin/i, 'Agentic commerce or Bridge stablecoin payment handling found', ['stripe', 'stablecoin']);
     addFinding(findings, rel, codeContent, /paypal|adyen|square|braintree|checkoutCom|worldpay|mollie|klarna/i, 'payment processor handling found', ['card']);
-    addFinding(findings, rel, codeContent, /visa|mastercard|cardPayment|virtualCard|cardCharge|applePay|googlePay/i, 'card payment rail handling found', ['card']);
+    addFinding(findings, rel, codeContent, /visa|mastercard|cardPayment|virtualCard|cardCharge|applePay|googlePay|Agent Pay|agentPay|agentic token|MDES|DSRP|DTVC|Digital Commerce Solution|Intelligent Commerce|Visa Token Service|Visa Payment Passkey|tokenized payment credential|purchaseIntent/i, 'card payment rail handling found', ['card']);
     addFinding(findings, rel, codeContent, /achDebit|wireTransfer|bankTransfer|rtpPayment|fedNow|openBanking|plaid|dwolla|zelle|sepa|payouts?\.create|transfers?\.create|wise|revolut|yapily|tink|finicity/i, 'bank payment rail handling found', ['bank']);
     addFinding(findings, rel, codeContent, /pixPayment|upiPayment|qris|promptPay|payNow|duitNow|vietQR|spei|ideal|blik|m-pesa|mpesa/i, 'regional payment rail handling found', ['regional_rail', 'bank']);
     addFinding(findings, rel, content, /checkBeforePayment|checkPayment|safePayX402|check-payment|@monarch-shield\/x402/i, 'Monarch pre-payment check reference found');

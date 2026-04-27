@@ -1,0 +1,31 @@
+{
+  "demo": "monarch-for-mastercard-agent-pay-visa-intelligent-commerce-proof-pack",
+  "status": "passed",
+  "publicProofUrl": "https://x402ms.ai/#proof",
+  "recordingPath": "public/card-network-agent-pay-proof-pack-recording.txt",
+  "examples": {
+    "unsafe": "examples/card-network-agent-pay-proof-pack/unsafe",
+    "patched": "examples/card-network-agent-pay-proof-pack/patched"
+  },
+  "proves": [
+    "Doctor blocks tokenized card-agent checkout without a Monarch pre-payment check",
+    "Doctor passes after checkBeforePayment wraps Mastercard Agent Pay / Visa Intelligent Commerce checkout",
+    "The patched example keeps Monarch before tokenized payment credential execution",
+    "CI can enforce Doctor with --ci --strict",
+    "Sandbox covers allow/caution/block/route branches without real funds"
+  ],
+  "results": [
+    {
+      "label": "Unsafe Mastercard Agent Pay / Visa Intelligent Commerce project fails Doctor",
+      "status": 1
+    },
+    {
+      "label": "Patched Mastercard Agent Pay / Visa Intelligent Commerce project passes Doctor",
+      "status": 0
+    },
+    {
+      "label": "Sandbox proves unsafe payment branches",
+      "status": 0
+    }
+  ]
+}
