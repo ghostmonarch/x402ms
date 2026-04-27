@@ -60,12 +60,10 @@ function renderNav() {
 async function loadDoc(doc) {
   const content = document.querySelector('[data-doc-content]');
   const kicker = document.querySelector('[data-doc-kicker]');
-  const rawLink = document.querySelector('[data-raw-doc]');
 
   if (!doc || !content) return;
   document.title = `${doc.title} | Monarch Shield`;
   if (kicker) kicker.textContent = doc.title;
-  if (rawLink) rawLink.href = doc.path;
 
   try {
     const response = await fetch(doc.path, { headers: { accept: 'text/plain' } });

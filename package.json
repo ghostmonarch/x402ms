@@ -9,6 +9,7 @@
   ],
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/generate-doc-html.js",
     "build": "vite build",
     "test": "npm test --workspaces",
     "test:worker": "node --test workers/doctor-run/src/*.test.js",
