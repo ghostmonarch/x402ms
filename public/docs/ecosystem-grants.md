@@ -16,6 +16,12 @@ Open the public proof destination:
 https://x402ms.ai/proof/
 ```
 
+Open the grant evidence packet:
+
+```txt
+https://x402ms.ai/docs/grant-evidence.html
+```
+
 ## Grant Pages
 
 - [Base / Coinbase Grant Page](/docs/grant-base-coinbase.md)
@@ -28,3 +34,5 @@ https://x402ms.ai/proof/
 ## Review Rule
 
 Monarch should be evaluated as payment-supporting infrastructure, not as a payment processor. The shipped value is a reusable preflight and CI gate for agent-controlled payment code before real money moves.
+
+The grant evidence packet now includes hardened Doctor evidence, adversarial benchmark links, external smoke, SARIF, hosted proof, live proof-pack proof/badge endpoints, and copy-paste onboarding snippets.

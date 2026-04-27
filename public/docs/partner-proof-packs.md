@@ -57,8 +57,11 @@ The moat is not one partner example. The moat is a repeatable, agent-discoverabl
 ```txt
 https://x402ms.ai/proof/
 https://x402ms.ai/proof/proof.json
+https://x402ms.ai/docs/grant-evidence.html
 ```
+
+The grant evidence packet includes live token-backed hosted proof and badge links for the current Base, Coinbase, Virtuals, Google AP2/A2A, Stripe/Bridge, and Mastercard/Visa proof packs.
 
 ## Grant Rule
 
-Use these as shipped proof-of-function first. External proof-of-demand begins only when outside developers or agents report runs through opt-in telemetry.
+Use these as shipped proof-of-function first. Hosted proof shows reported Doctor runs for token-backed `projectHash` values. External proof-of-demand grows when outside developers or agents report their own runs through opt-in telemetry.

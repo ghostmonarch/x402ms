@@ -50,18 +50,31 @@
 npx @monarch-shield/x402 doctor --ci --strict
 
 </code></pre>
-<p>Monarch is a local-first preflight and CI gate for agent-controlled payment code. It is not a payment processor, wallet, marketplace, or fraud vendor; it checks payment intent, endpoint, pay-to wallet, amount, network, and rail before real funds move.</p>
+<p>Monarch Doctor is a local-first preflight and CI gate for agent-controlled payment code. Hosted proof is opt-in evidence that Doctor reported for a project. Monarch is not a payment processor, wallet, marketplace, fraud vendor, runtime policy layer, or signed attestation system.</p>
 <h2>What Is Shipped</h2>
 <ul>
 <li>CLI commands: <code>doctor</code>, <code>scan</code>, <code>sandbox</code>, <code>preprod</code>, <code>check</code>, and <code>init</code>.</li>
 <li>NPM packages: <code>@monarch-shield/x402</code> and <code>x402-doctor</code>.</li>
 <li>CI gate: <code>npx @monarch-shield/x402 doctor --ci --strict</code>.</li>
-<li>Runtime pattern: <code>checkBeforePayment(...)</code> before signing, charging, funding escrow, or submitting a payment payload.</li>
+<li>Payment-path pattern: <code>checkBeforePayment(...)</code> before signing, charging, funding escrow, or submitting a payment payload.</li>
+<li>SARIF output for GitHub code scanning: <code>--sarif-output monarch-doctor.sarif</code>.</li>
+<li>External packaged smoke: fresh temp project, packed install, unsafe fail, patched pass, <code>x402-doctor</code>, fake PATH binary, and hostile cases.</li>
+<li>Public adversarial benchmark: named corpus of unsafe, patched, and limitation cases.</li>
+<li>Hosted proof: token-backed <code>projectHash</code> proof endpoint and badge for reported Doctor runs.</li>
 <li>Public proof page: <code>https://x402ms.ai/proof/</code>.</li>
 <li>Static proof JSON: <code>https://x402ms.ai/proof/proof.json</code>.</li>
 <li>Official docs: <code>https://x402ms.ai/docs/</code>.</li>
 <li>Agent-readable sources: <code>https://x402ms.ai/llms.txt</code>, <code>https://x402ms.ai/AGENTS.md</code>, and <code>https://x402ms.ai/docs/manifest.json</code>.</li>
 </ul>
+<h2>Current Credibility Stack</h2>
+<p>| Layer | Evidence | Reviewer Action |</p>
+<p>| --- | --- | --- |</p>
+<p>| Hardened Doctor | Static scanner rejects unused imports, late guards, dead helpers, and unguarded payment files. | Run <code>npx @monarch-shield/x402 doctor --ci --strict</code>. |</p>
+<p>| Adversarial benchmark | Public corpus shows what Doctor catches and what it does not claim. | Open <code>https://x402ms.ai/docs/adversarial-benchmark.html</code>. |</p>
+<p>| External smoke | Packed install in a fresh temp project proves third-party install and hostile cases. | Run <code>npm run smoke:external-agent</code>. |</p>
+<p>| SARIF | Same Doctor findings can appear in GitHub code scanning. | Run <code>npx @monarch-shield/x402 doctor --ci --strict --sarif-output monarch-doctor.sarif</code>. |</p>
+<p>| Hosted proof | Token-backed reports produce public proof and badge endpoints for <code>projectHash</code>. | Open the live proof-pack links below. |</p>
+<p>| CI credibility gate | Remote GitHub workflow runs tests, coverage, benchmark, external smoke, reporting smoke, and strict Doctor. | Inspect the <code>Credibility Proof Loop</code> workflow. |</p>
 <h2>Ecosystem Reference Proof Packs</h2>
 <p>Each reference proof pack contains unsafe code, patched code, a CI gate, agent-facing docs, and a public recording. These are independent reproducible examples, not partnership or endorsement claims.</p>
 <ul>
@@ -72,6 +85,17 @@ npx @monarch-shield/x402 doctor --ci --strict
 <li>Stripe ACP / Bridge stablecoin flows: unsafe checkout and settlement to patched checkout preflight.</li>
 <li>Mastercard Agent Pay / Visa Intelligent Commerce: unsafe tokenized card-agent checkout to patched tokenized-payment preflight.</li>
 </ul>
+<h2>Live Hosted Proof-Pack Reports</h2>
+<p>These reports were sent with one-time high-entropy <code>MONARCH_PROJECT_TOKEN</code> values. Only public <code>projectHash</code> identifiers are published; raw tokens were not stored.</p>
+<p>| Proof Pack | projectHash | Proof | Badge |</p>
+<p>| --- | --- | --- | --- |</p>
+<p>| Base x402 | <code>6342686784092aa3b7186ea8</code> | <a href="https://monarch-doctor-run.ghostmonarchalerts.workers.dev/projects/6342686784092aa3b7186ea8/proof">proof</a> | <a href="https://monarch-doctor-run.ghostmonarchalerts.workers.dev/projects/6342686784092aa3b7186ea8/badge.svg">badge</a> |</p>
+<p>| Coinbase AgentKit / Agentic Wallet | <code>13f845e278459a4207cf6a5b</code> | <a href="https://monarch-doctor-run.ghostmonarchalerts.workers.dev/projects/13f845e278459a4207cf6a5b/proof">proof</a> | <a href="https://monarch-doctor-run.ghostmonarchalerts.workers.dev/projects/13f845e278459a4207cf6a5b/badge.svg">badge</a> |</p>
+<p>| Virtuals ACP | <code>da32a6e0e2c454eb48ef98e2</code> | <a href="https://monarch-doctor-run.ghostmonarchalerts.workers.dev/projects/da32a6e0e2c454eb48ef98e2/proof">proof</a> | <a href="https://monarch-doctor-run.ghostmonarchalerts.workers.dev/projects/da32a6e0e2c454eb48ef98e2/badge.svg">badge</a> |</p>
+<p>| Google AP2 / A2A x402 | <code>47440821cd00ab616c9cddb4</code> | <a href="https://monarch-doctor-run.ghostmonarchalerts.workers.dev/projects/47440821cd00ab616c9cddb4/proof">proof</a> | <a href="https://monarch-doctor-run.ghostmonarchalerts.workers.dev/projects/47440821cd00ab616c9cddb4/badge.svg">badge</a> |</p>
+<p>| Stripe / Bridge Stablecoin | <code>fb7a1f51859b40d7f8784fee</code> | <a href="https://monarch-doctor-run.ghostmonarchalerts.workers.dev/projects/fb7a1f51859b40d7f8784fee/proof">proof</a> | <a href="https://monarch-doctor-run.ghostmonarchalerts.workers.dev/projects/fb7a1f51859b40d7f8784fee/badge.svg">badge</a> |</p>
+<p>| Mastercard / Visa Agent Pay | <code>8bd54a8ad47660fcb52ceee4</code> | <a href="https://monarch-doctor-run.ghostmonarchalerts.workers.dev/projects/8bd54a8ad47660fcb52ceee4/proof">proof</a> | <a href="https://monarch-doctor-run.ghostmonarchalerts.workers.dev/projects/8bd54a8ad47660fcb52ceee4/badge.svg">badge</a> |</p>
+<p>Each project proof record exposes only received date/time, status, CI flag, strict flag, applicability, rails, finding count, sandbox pass state, and whether unprotected payment files were found.</p>
 <p>Run the proof suite:</p>
 <pre><code>
 npm run qa:proof-packs
@@ -82,6 +106,89 @@ npm run qa:proof-packs
 npm run qa
 
 </code></pre>
+<h2>Copy/Paste Onboarding</h2>
+<p>Add Monarch Doctor to CI:</p>
+<pre><code>
+name: Monarch Doctor
+
+
+
+on:
+
+  pull_request:
+
+  push:
+
+    branches: [main]
+
+
+
+jobs:
+
+  monarch-doctor:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - uses: ghostmonarch/x402ms@main
+
+        env:
+
+          MONARCH_PROJECT_TOKEN: ${{ secrets.MONARCH_PROJECT_TOKEN }}
+
+        with:
+
+          strict: &quot;true&quot;
+
+          report: &quot;true&quot;
+
+</code></pre>
+<p>Run it locally and in CI:</p>
+<pre><code>
+npx @monarch-shield/x402 doctor
+
+npx @monarch-shield/x402 doctor --ci --strict
+
+npx @monarch-shield/x402 doctor --ci --strict --sarif-output monarch-doctor.sarif
+
+MONARCH_PROJECT_TOKEN=... npx @monarch-shield/x402 doctor --ci --strict --report
+
+</code></pre>
+<p>Add a project proof badge after the first token-backed report:</p>
+<pre><code>
+[![Monarch proof](https://monarch-doctor-run.ghostmonarchalerts.workers.dev/projects/&lt;projectHash&gt;/badge.svg)](https://monarch-doctor-run.ghostmonarchalerts.workers.dev/projects/&lt;projectHash&gt;/proof)
+
+</code></pre>
+<p>Create a high-entropy random <code>MONARCH_PROJECT_TOKEN</code> value and store it as a secret. Monarch hashes it locally before reporting.</p>
+<h2>Grant-Ready Evidence Blocks</h2>
+<p>Base / Coinbase:</p>
+<pre><code>
+Monarch ships a local/CI preflight gate for Base x402 and Coinbase AgentKit payment paths. The proof packs show unsafe Base USDC and agent-wallet spend code failing Doctor, patched checkBeforePayment flows passing, SARIF output for PR review, and live token-backed hosted proof under public projectHash identifiers.
+
+</code></pre>
+<p>Virtuals:</p>
+<pre><code>
+Monarch ships a reproducible Virtuals ACP proof pack for USDC escrow job funding. It demonstrates unsafe escrow funding failing before merge, patched ACP funding passing after checkBeforePayment wraps the payment path, and hosted proof showing the latest reported Doctor result without wallet addresses, amounts, repo names, file paths, or raw project tokens.
+
+</code></pre>
+<p>Stripe / Bridge:</p>
+<pre><code>
+Monarch ships a Stripe / Bridge stablecoin proof pack for agentic checkout and settlement flows. It shows unsafe checkout and stablecoin movement failing Doctor, patched flows passing, code scanning output via SARIF, and a live hosted proof badge for reported build-time Doctor runs.
+
+</code></pre>
+<p>Google AP2 / A2A:</p>
+<pre><code>
+Monarch ships an AP2 / A2A x402 proof pack for payment payload submission. It demonstrates unsafe mandate/payment code failing, patched payment submission passing, and a public proof endpoint whose last-run fields are intentionally privacy-preserving.
+
+</code></pre>
+<p>Mastercard / Visa:</p>
+<pre><code>
+Monarch ships a card-network agent-pay proof pack for tokenized card-agent checkout. It shows unsafe checkout failing before merge, patched tokenized payment preflight passing, and a reusable CI gate for card-agent payment code.
+
+</code></pre>
 <h2>Why Developers Should Care</h2>
 <p>Monarch gives developers and coding agents a concrete payment definition of done:</p>
 <ul>
@@ -89,7 +196,7 @@ npm run qa
 <li>block unsafe examples before real money moves;</li>
 <li>patch the payment path with <code>checkBeforePayment(...)</code>;</li>
 <li>enforce the same rule in CI before merge;</li>
-<li>keep the runtime check before wallet sends, card charges, stablecoin transfers, paid APIs, and paid MCP tools.</li>
+<li>keep the pre-payment check before wallet sends, card charges, stablecoin transfers, paid APIs, and paid MCP tools.</li>
 </ul>
 <h2>Why Grants Should Care</h2>
 <p>Monarch creates direct ecosystem utility without replacing payment primitives:</p>
@@ -113,19 +220,21 @@ npm run qa
 <li>an X Money / creator commerce concept page, clearly labeled as illustrative only.</li>
 </ul>
 <h2>What This Proves Today</h2>
-<p>This proves function, coverage, and developer usability:</p>
+<p>This proves function, coverage, hosted reporting, and developer usability:</p>
 <ul>
 <li>unsafe payment examples are detected;</li>
 <li>patched examples pass;</li>
 <li>Doctor runs locally and in CI;</li>
 <li>the scanner detects multiple payment rails;</li>
 <li>public artifacts can be reproduced;</li>
-<li>the product is useful before any hosted account, API key, or dashboard exists.</li>
+<li>token-backed hosted proof and badges work without accounts, dashboards, raw tokens, source code, or repo-identifying fields;</li>
+<li>the product is useful before runtime policy or signed attestations exist.</li>
 </ul>
-<p>This does not claim external market traction yet. It is proof-of-function and grant-ready utility, with proof-of-demand measured through opt-in external Doctor reports.</p>
+<p>This does not claim broad external market traction yet. It is proof-of-function plus early proof-of-reported-use, with proof-of-demand measured through opt-in external Doctor reports.</p>
 <h2>Review Checklist</h2>
 <ul>
 <li>Open <code>https://x402ms.ai/docs/partner-proof-packs.html</code>.</li>
+<li>Open the live hosted proof-pack links above.</li>
 <li>Run <code>npm run qa:proof-packs</code>.</li>
 <li>Inspect unsafe and patched examples in <code>examples/*-proof-pack/</code>.</li>
 <li>Confirm CI gate snippets in each proof pack.</li>
