@@ -4,10 +4,11 @@ import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { runSandbox, scanProject, validatePreprod } from '../src/index.js';
+import { checkBeforePayment, checkPayment, evaluatePayment, runSandbox, scanProject, validatePreprod } from '../src/index.js';
 
 const packageRoot = join(import.meta.dirname, '..');
 const cliPath = join(packageRoot, 'src/cli.js');
+const repoRoot = join(packageRoot, '..', '..');
 
 function runCli(args, options = {}) {
   return spawnSync(process.execPath, [cliPath, ...args], {
@@ -37,6 +38,135 @@ function withTempProject(files, assertion) {
 
 test('sandbox scenarios match expected decisions', () => {
   assert.equal(runSandbox().every((scenario) => scenario.passed), true);
+});
+
+test('evaluatePayment covers local risk decisions outside the default sandbox', () => {
+  const knownBad = evaluatePayment({ knownBadEndpoint: true });
+  const priceHigh = evaluatePayment({ priceSanity: 'high' });
+
+  assert.equal(knownBad.decision, 'block');
+  assert.equal(knownBad.status, 'known_risky_endpoint');
+  assert.equal(priceHigh.decision, 'caution');
+  assert.equal(priceHigh.status, 'price_anomaly');
+});
+
+test('checkBeforePayment blocks, cautions, routes, and allows payment callbacks', async () => {
+  let blockedCallbackCalled = false;
+  let blockedError;
+
+  try {
+    await checkBeforePayment({ knownBadEndpoint: true }, async () => {
+      blockedCallbackCalled = true;
+    });
+  } catch (error) {
+    blockedError = error;
+  }
+
+  assert.equal(blockedCallbackCalled, false);
+  assert.match(blockedError.message, /Monarch blocked this payment/);
+  assert.equal(blockedError.monarch.decision, 'block');
+
+  const caution = await checkBeforePayment({ providerStatus: 'unknown_wrapper' }, async () => 'paid');
+  assert.equal(caution.requiresUserApproval, true);
+  assert.equal(caution.monarch.decision, 'caution');
+
+  const routed = await checkBeforePayment({
+    resourceUrl: 'https://risky.example/x402',
+    verifiedAlternative: 'https://safe.example/x402',
+  }, async (payment) => ({
+    resourceUrl: payment.resourceUrl,
+    decision: payment.monarch.decision,
+  }));
+  assert.deepEqual(routed, {
+    resourceUrl: 'https://safe.example/x402',
+    decision: 'route',
+  });
+
+  const allowed = await checkBeforePayment({ resourceUrl: 'https://safe.example/x402' }, async (payment) => ({
+    resourceUrl: payment.resourceUrl,
+    decision: payment.monarch.decision,
+  }));
+  assert.deepEqual(allowed, {
+    resourceUrl: 'https://safe.example/x402',
+    decision: 'allow',
+  });
+
+  const noCallback = await checkBeforePayment({ resourceUrl: 'https://safe.example/x402' });
+  assert.equal(noCallback.decision, 'allow');
+});
+
+test('checkPayment uses hosted policy API when configured', async () => {
+  const originalUrl = process.env.MONARCH_API_URL;
+  const originalKey = process.env.MONARCH_API_KEY;
+  const originalFetch = globalThis.fetch;
+  const calls = [];
+
+  process.env.MONARCH_API_URL = 'https://policy.example';
+  process.env.MONARCH_API_KEY = 'test-key';
+  globalThis.fetch = async (url, options) => {
+    calls.push({ url, options });
+    return {
+      ok: true,
+      async json() {
+        return { decision: 'allow', status: 'hosted_policy_passed' };
+      },
+    };
+  };
+
+  try {
+    const result = await checkPayment({ amount: '1.00', asset: 'USDC' });
+
+    assert.deepEqual(result, { decision: 'allow', status: 'hosted_policy_passed' });
+    assert.equal(calls[0].url, 'https://policy.example/check-payment');
+    assert.equal(calls[0].options.headers.authorization, 'Bearer test-key');
+    assert.equal(calls[0].options.headers['content-type'], 'application/json');
+    assert.deepEqual(JSON.parse(calls[0].options.body), { amount: '1.00', asset: 'USDC' });
+  } finally {
+    if (originalUrl === undefined) {
+      delete process.env.MONARCH_API_URL;
+    } else {
+      process.env.MONARCH_API_URL = originalUrl;
+    }
+
+    if (originalKey === undefined) {
+      delete process.env.MONARCH_API_KEY;
+    } else {
+      process.env.MONARCH_API_KEY = originalKey;
+    }
+
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('checkPayment surfaces hosted policy failures', async () => {
+  const originalUrl = process.env.MONARCH_API_URL;
+  const originalKey = process.env.MONARCH_API_KEY;
+  const originalFetch = globalThis.fetch;
+
+  process.env.MONARCH_API_URL = 'https://policy.example';
+  process.env.MONARCH_API_KEY = 'test-key';
+  globalThis.fetch = async () => ({ ok: false, status: 503 });
+
+  try {
+    await assert.rejects(
+      () => checkPayment({ amount: '1.00', asset: 'USDC' }),
+      /Monarch hosted check failed with 503/,
+    );
+  } finally {
+    if (originalUrl === undefined) {
+      delete process.env.MONARCH_API_URL;
+    } else {
+      process.env.MONARCH_API_URL = originalUrl;
+    }
+
+    if (originalKey === undefined) {
+      delete process.env.MONARCH_API_KEY;
+    } else {
+      process.env.MONARCH_API_KEY = originalKey;
+    }
+
+    globalThis.fetch = originalFetch;
+  }
 });
 
 test('Doctor fails payment files without Monarch checks', () => {
@@ -98,6 +228,30 @@ test('no payment flow is not applicable and ready by default', () => {
 
     assert.equal(result.applicable, false);
     assert.equal(result.ready, true);
+  });
+});
+
+test('scan handles missing roots and mixed protected payment files', () => {
+  const missing = scanProject(join(tmpdir(), 'missing-monarch-project'));
+
+  assert.equal(missing.hasPaymentFlow, false);
+  assert.deepEqual(missing.findings, []);
+
+  withTempProject({
+    'safe.js': `
+      import { checkBeforePayment } from '@monarch-shield/x402';
+      export const pay = (payment) => checkBeforePayment(payment, () => wallet.send(payment.payTo));
+    `,
+    'unsafe.js': 'export const charge = (stripe, request) => stripe.paymentIntents.create(request);',
+    'node_modules/pkg/pay.js': 'export const ignored = (wallet, payTo) => wallet.send(payTo);',
+  }, (root) => {
+    const result = scanProject(root);
+
+    assert.equal(result.hasPaymentFlow, true);
+    assert.equal(result.hasMonarchCheck, true);
+    assert.deepEqual(result.unprotectedPaymentFiles, ['unsafe.js']);
+    assert.match(result.recommendation, /unsafe\.js/);
+    assert.equal(result.findings.some((finding) => finding.file.includes('node_modules')), false);
   });
 });
 
@@ -226,6 +380,42 @@ test('scan detects Base USDC payment identifiers without Monarch checks', () => 
   });
 });
 
+test('Base x402 proof pack fails unsafe project and passes patched project', () => {
+  const unsafeRoot = join(repoRoot, 'examples/base-x402-proof-pack/unsafe');
+  const patchedRoot = join(repoRoot, 'examples/base-x402-proof-pack/patched');
+  const unsafe = validatePreprod(unsafeRoot);
+  const patched = validatePreprod(patchedRoot);
+  const patchedRails = new Set(patched.scan.findings.flatMap((finding) => finding.rails ?? []));
+
+  assert.equal(unsafe.applicable, true);
+  assert.equal(unsafe.ready, false);
+  assert.deepEqual(unsafe.scan.unprotectedPaymentFiles, ['pay-base-x402.js']);
+
+  assert.equal(patched.applicable, true);
+  assert.equal(patched.ready, true);
+  assert.equal(patchedRails.has('x402'), true);
+  assert.equal(patchedRails.has('stablecoin'), true);
+  assert.equal(patchedRails.has('wallet'), true);
+});
+
+test('Coinbase AgentKit proof pack fails unsafe project and passes patched project', () => {
+  const unsafeRoot = join(repoRoot, 'examples/coinbase-agentkit-proof-pack/unsafe');
+  const patchedRoot = join(repoRoot, 'examples/coinbase-agentkit-proof-pack/patched');
+  const unsafe = validatePreprod(unsafeRoot);
+  const patched = validatePreprod(patchedRoot);
+  const patchedRails = new Set(patched.scan.findings.flatMap((finding) => finding.rails ?? []));
+
+  assert.equal(unsafe.applicable, true);
+  assert.equal(unsafe.ready, false);
+  assert.deepEqual(unsafe.scan.unprotectedPaymentFiles, ['agentic-wallet-spend.js']);
+
+  assert.equal(patched.applicable, true);
+  assert.equal(patched.ready, true);
+  assert.equal(patchedRails.has('agentkit'), true);
+  assert.equal(patchedRails.has('wallet'), true);
+  assert.equal(patchedRails.has('stablecoin'), true);
+});
+
 test('Doctor report mode is non-blocking when telemetry endpoint is unavailable', () => {
   withTempProject({
     'pay.js': `
@@ -249,6 +439,7 @@ test('Doctor report mode is non-blocking when telemetry endpoint is unavailable'
       env: {
         ...process.env,
         MONARCH_TELEMETRY_URL: 'http://127.0.0.1:9/doctor-run',
+        MONARCH_PROOF_SOURCE: 'public-example',
       },
       encoding: 'utf8',
     });

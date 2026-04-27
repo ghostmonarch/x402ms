@@ -24,6 +24,7 @@
       </a>
       <nav class="nav" id="nav">
         <a href="#triggers" class="nav-link">Agent Triggers</a>
+        <a href="#proof" class="nav-link">Proof</a>
         <a href="#how-it-works" class="nav-link">Check Flow</a>
         <a href="#docs" class="nav-link">Docs</a>
         <a href="#request-access" class="btn btn-primary btn-nav">Check Before Payment</a>
@@ -107,6 +108,68 @@
           <span class="chip">Sandbox</span>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- 4 · PROOF -->
+  <section class="proof reveal" id="proof">
+    <div class="container">
+      <span class="label">Public Proof</span>
+      <div class="proof-head">
+        <div>
+          <h2 class="h2">Evidence without pretending dogfood is demand</h2>
+          <p class="body-lg">Monarch separates internal dogfood, public examples, and external opt-in reports so grants, partners, and investors can see what is reproducible today and what is true third-party usage.</p>
+        </div>
+        <a href="https://monarch-doctor-run.ghostmonarchalerts.workers.dev/proof" class="btn btn-ghost" data-discovery-cta="proof-api">View Proof API</a>
+      </div>
+      <div class="proof-grid" aria-live="polite">
+        <div class="proof-card">
+          <span class="proof-kicker">Internal dogfood runs</span>
+          <strong data-proof-counter="internalDogfoodRuns">0</strong>
+          <p>Our own local and CI Doctor runs. This is proof-of-function, not proof-of-demand.</p>
+        </div>
+        <div class="proof-card">
+          <span class="proof-kicker">Public example runs</span>
+          <strong data-proof-counter="publicExampleRuns">2</strong>
+          <p>Reproducible unsafe examples showing blocked -> patched -> passed behavior.</p>
+        </div>
+        <div class="proof-card">
+          <span class="proof-kicker">External reported runs</span>
+          <strong data-proof-counter="externalReportedRuns">0</strong>
+          <p>Opt-in reports from users and agents outside Monarch. This is the strongest adoption signal.</p>
+        </div>
+        <div class="proof-card">
+          <span class="proof-kicker">Unsafe paths blocked</span>
+          <strong data-proof-counter="unsafePathsBlocked">0</strong>
+          <p>Reported runs where Doctor found payment files missing a Monarch check.</p>
+        </div>
+      </div>
+      <div class="proof-split">
+        <div class="proof-panel">
+          <h3>Rails Detected</h3>
+          <div class="proof-rails" data-proof-rails>
+            <span>x402</span>
+            <span>paid MCP</span>
+            <span>AgentKit</span>
+            <span>Stripe</span>
+            <span>stablecoin</span>
+            <span>wallet</span>
+            <span>card</span>
+            <span>bank</span>
+            <span>regional rail</span>
+          </div>
+        </div>
+        <div class="proof-panel">
+          <h3>Public unsafe examples</h3>
+          <ul class="proof-examples" data-proof-examples>
+            <li><a href="/doctor-demo-recording.txt">x402 unsafe path: blocked -> patched -> passed</a></li>
+            <li><a href="/doctor-demo-summary.json">Sandbox branches: allow, caution, block, route</a></li>
+            <li><a href="/base-x402-proof-pack-recording.txt">Base x402 proof pack: unsafe -> patched -> CI-ready</a></li>
+            <li><a href="/coinbase-agentkit-proof-pack-recording.txt">Coinbase AgentKit proof pack: unsafe spend -> patched -> CI-ready</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="proof-note" data-proof-updated>Loading public proof counters...</p>
     </div>
   </section>
 
@@ -195,6 +258,8 @@ npx @monarch-shield/x402 preprod</code></pre>
           <a href="/north-star.txt" data-discovery-cta="docs-north-star">Read Agent North Star</a>
           <a href="/docs/agent-payment-query-map.md" data-discovery-cta="docs-query-map">Agent Query Map</a>
           <a href="/docs/x402-payment-safety.md" data-discovery-cta="docs-x402-safety">x402 Safety Doc</a>
+          <a href="/docs/monarch-for-base-x402.md" data-discovery-cta="docs-base-x402">Base x402 Proof Pack</a>
+          <a href="/docs/monarch-for-coinbase-agentkit.md" data-discovery-cta="docs-coinbase-agentkit">Coinbase AgentKit Proof Pack</a>
           <a href="/docs/multilingual-agent-payment-query-map.md" data-discovery-cta="docs-multilingual">Multilingual Query Map</a>
           <a href="/docs/real-x402-integration.md">Real x402 Pattern</a>
           <a href="/docs/monarch-doctor-ci.md">CI Gate</a>
@@ -313,6 +378,7 @@ npx @monarch-shield/x402 preprod</code></pre>
       </div>
       <nav class="footer-nav">
         <a href="#triggers">Agent Triggers</a>
+        <a href="#proof">Proof</a>
         <a href="#how-it-works">Check Flow</a>
         <a href="#docs">Docs</a>
       </nav>

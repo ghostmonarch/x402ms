@@ -15,8 +15,64 @@ const ALLOWED_DOCTOR_FIELDS = new Set([
   'hasPaymentFlow',
   'hasUnprotectedPaymentFiles',
   'findingCount',
+  'detectedRails',
   'sandboxPassed',
+  'proofSource',
 ]);
+const ALLOWED_RAILS = new Set([
+  'x402',
+  'paid_mcp',
+  'agentkit',
+  'stripe',
+  'stablecoin',
+  'wallet',
+  'card',
+  'bank',
+  'regional_rail',
+]);
+const ALLOWED_PROOF_SOURCES = new Set([
+  'internal-dogfood',
+  'public-example',
+  'external-reported',
+]);
+const PUBLIC_PROOF_EXAMPLES = [
+  {
+    id: 'x402-unsafe-to-passed',
+    source: 'public-example',
+    rail: 'x402',
+    status: 'passed',
+    title: 'x402 payment path blocked until checkBeforePayment was added',
+    summary: 'Doctor first failed an unprotected X-PAYMENT flow, then passed after the original payment path called Monarch before funds moved.',
+    href: 'https://x402ms.ai/doctor-demo-recording.txt',
+  },
+  {
+    id: 'sandbox-unsafe-branches',
+    source: 'public-example',
+    rail: 'sandbox',
+    status: 'passed',
+    title: 'Sandbox proves allow, caution, block, and route decisions',
+    summary: 'Local fixtures cover missing prepayment checks, unknown wrappers, changed pay-to wallets, failed delivery, and verified alternatives.',
+    href: 'https://x402ms.ai/doctor-demo-summary.json',
+  },
+  {
+    id: 'base-x402-proof-pack',
+    source: 'public-example',
+    rail: 'x402-base-usdc',
+    status: 'passed',
+    title: 'Base x402 proof pack blocks unsafe USDC payment code before passing the patched path',
+    summary: 'Doctor fails the unsafe Base x402 example, passes the patched checkBeforePayment path, and proves CI enforcement for Base USDC agent payments.',
+    href: 'https://x402ms.ai/base-x402-proof-pack-recording.txt',
+  },
+  {
+    id: 'coinbase-agentkit-proof-pack',
+    source: 'public-example',
+    rail: 'coinbase-agentkit-agentic-wallet',
+    status: 'passed',
+    title: 'Coinbase AgentKit / Agentic Wallet proof pack blocks unsafe autonomous spend',
+    summary: 'Doctor fails unsafe Coinbase agent-wallet spend, passes the patched checkBeforePayment path, and proves CI enforcement for AgentKit, Agentic Wallet, and Base USDC flows.',
+    href: 'https://x402ms.ai/coinbase-agentkit-proof-pack-recording.txt',
+  },
+];
 const SENSITIVE_KEYS = [
   'source',
   'code',
@@ -70,6 +126,10 @@ export default {
       return summary(request, env, url);
     }
 
+    if (request.method === 'GET' && url.pathname === '/proof') {
+      return proof(request, env, url);
+    }
+
     if (request.method === 'POST' && url.pathname === '/doctor-run') {
       return recordDoctorRun(request, env);
     }
@@ -112,8 +172,12 @@ async function recordDoctorRun(request, env) {
   const eventDate = receivedAt.slice(0, 10);
   const runId = await sha256(`${payload.projectHash}:${payload.timestamp}:${payload.status}:${receivedAt}`);
 
-  await env.DB.prepare(
-    `INSERT INTO doctor_runs (
+  const detectedRails = normalizeDetectedRails(payload.detectedRails);
+  const proofSource = payload.proofSource ?? 'external-reported';
+
+  try {
+    await env.DB.prepare(
+      `INSERT INTO doctor_runs (
       id,
       received_at,
       event_date,
@@ -126,23 +190,63 @@ async function recordDoctorRun(request, env) {
       has_payment_flow,
       has_unprotected_payment_files,
       finding_count,
-      sandbox_passed
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-  ).bind(
-    runId,
-    receivedAt,
-    eventDate,
-    payload.projectHash,
-    payload.version,
-    payload.status,
-    boolToInt(payload.ci),
-    boolToInt(payload.strict),
-    boolToInt(payload.applicable),
-    boolToInt(payload.hasPaymentFlow),
-    boolToInt(payload.hasUnprotectedPaymentFiles),
-    Number(payload.findingCount ?? 0),
-    boolToInt(payload.sandboxPassed),
-  ).run();
+      sandbox_passed,
+      detected_rails,
+      proof_source
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    ).bind(
+      runId,
+      receivedAt,
+      eventDate,
+      payload.projectHash,
+      payload.version,
+      payload.status,
+      boolToInt(payload.ci),
+      boolToInt(payload.strict),
+      boolToInt(payload.applicable),
+      boolToInt(payload.hasPaymentFlow),
+      boolToInt(payload.hasUnprotectedPaymentFiles),
+      Number(payload.findingCount ?? 0),
+      boolToInt(payload.sandboxPassed),
+      detectedRails.join(','),
+      proofSource,
+    ).run();
+  } catch (error) {
+    const message = String(error?.message ?? '');
+    if (!message.includes('detected_rails') && !message.includes('proof_source')) throw error;
+
+    await env.DB.prepare(
+      `INSERT INTO doctor_runs (
+        id,
+        received_at,
+        event_date,
+        project_hash,
+        version,
+        status,
+        ci,
+        strict,
+        applicable,
+        has_payment_flow,
+        has_unprotected_payment_files,
+        finding_count,
+        sandbox_passed
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    ).bind(
+      runId,
+      receivedAt,
+      eventDate,
+      payload.projectHash,
+      payload.version,
+      payload.status,
+      boolToInt(payload.ci),
+      boolToInt(payload.strict),
+      boolToInt(payload.applicable),
+      boolToInt(payload.hasPaymentFlow),
+      boolToInt(payload.hasUnprotectedPaymentFiles),
+      Number(payload.findingCount ?? 0),
+      boolToInt(payload.sandboxPassed),
+    ).run();
+  }
 
   return json({ accepted: true, stored: true }, request, 202);
 }
@@ -254,6 +358,89 @@ async function summary(request, env, url) {
   return json({ date, doctorRuns: dailyDoctorRuns, discovery, topDiscovery: topDiscovery.results ?? [] }, request);
 }
 
+async function proof(request, env, url) {
+  const date = url.searchParams.get('date') ?? new Date().toISOString().slice(0, 10);
+  const empty = publicProofPayload(date, {}, [], [], []);
+
+  if (!env.DB) {
+    return json({ ...empty, stored: false, reason: 'missing_db_binding' }, request);
+  }
+
+  try {
+    const totals = await env.DB.prepare(
+      `SELECT
+        COUNT(*) as total_runs,
+        COUNT(DISTINCT project_hash) as unique_projects,
+        SUM(CASE WHEN proof_source = 'internal-dogfood' THEN 1 ELSE 0 END) as internal_dogfood_runs,
+        SUM(CASE WHEN proof_source = 'public-example' THEN 1 ELSE 0 END) as reported_public_example_runs,
+        SUM(CASE WHEN proof_source = 'external-reported' OR proof_source IS NULL OR proof_source = '' THEN 1 ELSE 0 END) as external_reported_runs,
+        SUM(CASE WHEN ci = 1 THEN 1 ELSE 0 END) as ci_runs,
+        SUM(CASE WHEN ci = 0 THEN 1 ELSE 0 END) as reported_local_runs,
+        SUM(CASE WHEN status = 'passed' THEN 1 ELSE 0 END) as passed_runs,
+        SUM(CASE WHEN status IN ('failed', 'failed_no_payment_flow') THEN 1 ELSE 0 END) as blocked_or_failed_runs,
+        SUM(CASE WHEN has_unprotected_payment_files = 1 THEN 1 ELSE 0 END) as unsafe_paths_blocked
+      FROM doctor_runs
+      WHERE event_date = ?`,
+    ).bind(date).first();
+
+    const byStatus = await env.DB.prepare(
+      `SELECT status, COUNT(*) as runs
+      FROM doctor_runs
+      WHERE event_date = ?
+      GROUP BY status
+      ORDER BY runs DESC`,
+    ).bind(date).all();
+
+    const bySource = await env.DB.prepare(
+      `SELECT COALESCE(NULLIF(proof_source, ''), 'external-reported') as source, COUNT(*) as runs
+      FROM doctor_runs
+      WHERE event_date = ?
+      GROUP BY source
+      ORDER BY runs DESC`,
+    ).bind(date).all();
+
+    const rows = await env.DB.prepare(
+      `SELECT detected_rails
+      FROM doctor_runs
+      WHERE event_date = ? AND detected_rails != ''`,
+    ).bind(date).all();
+
+    return json(publicProofPayload(
+      date,
+      totals,
+      byStatus.results ?? [],
+      bySource.results ?? [],
+      railCounts(rows.results ?? []),
+    ), request);
+  } catch {
+    const fallbackTotals = await env.DB.prepare(
+      `SELECT
+        COUNT(*) as total_runs,
+        COUNT(DISTINCT project_hash) as unique_projects,
+        SUM(CASE WHEN ci = 1 THEN 1 ELSE 0 END) as ci_runs,
+        SUM(CASE WHEN ci = 0 THEN 1 ELSE 0 END) as reported_local_runs,
+        SUM(CASE WHEN status = 'passed' THEN 1 ELSE 0 END) as passed_runs,
+        SUM(CASE WHEN status IN ('failed', 'failed_no_payment_flow') THEN 1 ELSE 0 END) as blocked_or_failed_runs,
+        SUM(CASE WHEN has_unprotected_payment_files = 1 THEN 1 ELSE 0 END) as unsafe_paths_blocked
+      FROM doctor_runs
+      WHERE event_date = ?`,
+    ).bind(date).first();
+
+    const fallbackStatus = await env.DB.prepare(
+      `SELECT status, COUNT(*) as runs
+      FROM doctor_runs
+      WHERE event_date = ?
+      GROUP BY status
+      ORDER BY runs DESC`,
+    ).bind(date).all();
+
+    return json({
+      ...publicProofPayload(date, fallbackTotals, fallbackStatus.results ?? [], [], []),
+      schemaUpgradeRequired: true,
+    }, request);
+  }
+}
+
 function validatePayload(payload) {
   if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
     return 'payload_must_be_object';
@@ -287,6 +474,20 @@ function validatePayload(payload) {
 
   if (Number(payload.findingCount ?? 0) < 0 || Number(payload.findingCount ?? 0) > 10000) {
     return 'invalid_finding_count';
+  }
+
+  if (payload.proofSource !== undefined && !ALLOWED_PROOF_SOURCES.has(payload.proofSource)) {
+    return 'invalid_proof_source';
+  }
+
+  if (payload.detectedRails !== undefined) {
+    if (!Array.isArray(payload.detectedRails) || payload.detectedRails.length > ALLOWED_RAILS.size) {
+      return 'invalid_detected_rails';
+    }
+
+    for (const rail of payload.detectedRails) {
+      if (!ALLOWED_RAILS.has(rail)) return `invalid_detected_rail_${rail}`;
+    }
   }
 
   return null;
@@ -352,6 +553,60 @@ function boolToInt(value) {
 
 function limit(value, maxLength) {
   return String(value ?? '').slice(0, maxLength);
+}
+
+function normalizeDetectedRails(value) {
+  if (!Array.isArray(value)) return [];
+  return [...new Set(value.filter((rail) => ALLOWED_RAILS.has(rail)))].sort();
+}
+
+function railCounts(rows) {
+  const counts = new Map();
+
+  for (const row of rows) {
+    for (const rail of String(row.detected_rails ?? '').split(',')) {
+      if (!rail) continue;
+      counts.set(rail, (counts.get(rail) ?? 0) + 1);
+    }
+  }
+
+  return [...counts.entries()]
+    .map(([rail, runs]) => ({ rail, runs }))
+    .sort((a, b) => b.runs - a.runs || a.rail.localeCompare(b.rail));
+}
+
+function publicProofPayload(date, totals = {}, byStatus = [], bySource = [], byRail = []) {
+  return {
+    date,
+    generatedAt: new Date().toISOString(),
+    interpretation: {
+      internalDogfood: 'Monarch-run proof-of-function. Counts show that we can reproduce Doctor locally and in CI.',
+      publicExamples: 'Public unsafe examples showing blocked -> patched -> passed behavior.',
+      externalReported: 'Opt-in reports from outside Monarch. These are the strongest proof-of-demand signal.',
+    },
+    counters: {
+      totalRuns: numberOrZero(totals.total_runs),
+      uniqueProjects: numberOrZero(totals.unique_projects),
+      internalDogfoodRuns: numberOrZero(totals.internal_dogfood_runs),
+      publicExampleRuns: PUBLIC_PROOF_EXAMPLES.length + numberOrZero(totals.reported_public_example_runs),
+      externalReportedRuns: numberOrZero(totals.external_reported_runs),
+      reportedLocalRuns: numberOrZero(totals.reported_local_runs),
+      ciRuns: numberOrZero(totals.ci_runs),
+      passedRuns: numberOrZero(totals.passed_runs),
+      blockedOrFailedRuns: numberOrZero(totals.blocked_or_failed_runs),
+      unsafePathsBlocked: numberOrZero(totals.unsafe_paths_blocked),
+    },
+    byStatus,
+    bySource,
+    byRail,
+    examples: PUBLIC_PROOF_EXAMPLES,
+    shareableProofUrl: 'https://x402ms.ai/#proof',
+    installCommand: 'npx @monarch-shield/x402 doctor',
+  };
+}
+
+function numberOrZero(value) {
+  return Number(value ?? 0);
 }
 
 async function sha256(value) {

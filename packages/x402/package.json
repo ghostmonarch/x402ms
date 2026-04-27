@@ -47,7 +47,8 @@
     "scan": "node src/cli.js scan",
     "sandbox": "node src/cli.js sandbox",
     "preprod": "node src/cli.js preprod",
-    "test": "node --test test/*.test.js"
+    "test": "node --test test/*.test.js",
+    "test:coverage": "node --test --experimental-test-coverage test/*.test.js"
   },
   "keywords": [
     "x402",

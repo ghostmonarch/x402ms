@@ -9,6 +9,7 @@ It accepts anonymous Doctor run metadata only. It rejects payload keys that look
 - `POST /doctor-run`: accepts anonymous Doctor run metadata
 - `POST /discovery-event`: accepts anonymous discovery/A-B metadata
 - `GET /health`: public health check
+- `GET /proof`: public aggregate proof counters and example evidence
 - `GET /summary?date=YYYY-MM-DD`: admin-only summary, requires `Authorization: Bearer $MONARCH_ADMIN_TOKEN`
 
 ## Deploy
@@ -24,6 +25,12 @@ Copy the generated `database_id` into `wrangler.toml`, then run:
 npx wrangler d1 execute monarch_doctor_runs --file=schema.sql
 npx wrangler secret put MONARCH_ADMIN_TOKEN
 npx wrangler deploy
+```
+
+For an existing D1 database, apply the public proof migration before deploy:
+
+```bash
+npx wrangler d1 execute monarch_doctor_runs --file=migrations/0001_public_proof_columns.sql
 ```
 
 The intended public endpoint is:
@@ -46,11 +53,31 @@ Allowed payload fields:
 - `hasPaymentFlow`
 - `hasUnprotectedPaymentFiles`
 - `findingCount`
+- `detectedRails`
 - `sandboxPassed`
+- `proofSource`
 - `projectHash`
 - `timestamp`
 
 Never send source code, wallet addresses, endpoint URLs, payment amounts, API keys, file names, or file paths.
+
+Allowed `proofSource` values:
+
+- `internal-dogfood`: Monarch-run proof-of-function
+- `public-example`: reproducible public example run
+- `external-reported`: opt-in report from outside Monarch
+
+Allowed `detectedRails` values:
+
+- `x402`
+- `paid_mcp`
+- `agentkit`
+- `stripe`
+- `stablecoin`
+- `wallet`
+- `card`
+- `bank`
+- `regional_rail`
 
 ## Discovery Event Contract
 

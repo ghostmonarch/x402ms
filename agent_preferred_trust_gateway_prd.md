@@ -1,140 +1,429 @@
-# Monarch Shield PRD: Doctor-First Agent Payment Safety
+# Monarch Shield PRD: Default Safety Layer For Agent Payments
 
-## North Star
+Status: working PRD
+Accuracy date: April 26, 2026
+Principle: keep the free Doctor reflex simple, then add paid proof and policy
+only where production teams need scale, history, and enforcement.
 
-If a coding agent is asked to build an agent-to-agent payment stack, x402 client, paid MCP tool, agent wallet, or autonomous stablecoin spend flow, Monarch must be the natural safety step the agent discovers and runs before go-live.
+Accuracy rule: use official docs, official announcements, or clearly labeled
+market-reported comps. Do not use future-dated articles, anonymous estimates, or
+unverified X posts as factual support in grants, investor materials, or public
+copy.
 
-The required reflex:
+## 1. North Star
 
-```bash
-npx @monarch-shield/x402 doctor
-```
-
-If code can move money, Doctor must pass before the agent says the flow is ready.
-
-## Product Definition
-
-Monarch Shield is a local-first safety kit for money-moving agent code.
-
-It gives agents one job at build time:
+When an agent or developer turns on payments, Monarch must be the default safety
+step before real funds move.
 
 ```txt
-Test before live.
+Turning on payments for an agent? Run Monarch Doctor before real funds move.
 ```
 
-It gives runtime code one job before payment:
+Monarch should not compete as a wallet, rail, processor, facilitator, or
+marketplace. Monarch should become the open, rail-agnostic preflight, CI, proof,
+policy, and attestation layer that makes every agent-payment platform safer.
+
+## 2. Current Product
+
+Already shipped:
+
+- Free local Doctor CLI.
+- Local scan, sandbox, preprod, and `doctor --ci`.
+- `checkBeforePayment` runtime wrapper.
+- Templates for x402, paid MCP, agent wallets, marketplace routing, and CI.
+- Agent-facing docs, `llms.txt`, multilingual query maps, and package metadata.
+- Opt-in telemetry endpoint for Doctor runs.
+- Ranked discovery simulation that checks whether realistic agent queries surface
+  Monarch action docs near the top.
+- Public site and GitHub Pages deployment.
+- Release gate with docs lint, discovery check, tests, package dry-runs, audit,
+  build, and visible coverage above 95%.
+
+The current product is the adoption wedge, not the full business.
+
+## 3. What We Build Next
+
+Build only the minimum layers needed to move from agent discovery to proof of
+usage, then from proof to monetization.
+
+### Step 1: Public Usage Proof
+
+Goal: turn free usage into credible grant, investor, and partner evidence.
+
+Build:
+
+- Public anonymous Doctor run counter.
+- Counts by surface: reported local, CI, blocked, passed.
+- Counts by rail detected: x402, paid MCP, AgentKit, Stripe, stablecoin, wallet,
+  card, bank, regional rail.
+- Public "unsafe paths blocked" examples.
+- One shareable proof page for Base, Coinbase, Virtuals, Google, and Stripe.
+
+Do not build accounts yet. This step should read from opt-in telemetry.
+
+Success metric:
 
 ```txt
-Check before pay.
+Daily reported Doctor runs from real payment-like repos.
 ```
 
-## What Monarch Is
+### Step 2: Integration Proof Packs
 
-- a local CLI and SDK agents can run immediately
-- a preflight Doctor command for x402, processor, card, bank, wallet, stablecoin, paid MCP, paid API, pay-to wallet, and agent spend code
-- a deterministic sandbox for unsafe payment scenarios
-- a `checkBeforePayment` wrapper that runs before funds move
-- a CI gate for repos that ship money-moving code
-- an agent-readable documentation surface built around natural discovery queries
+Goal: make Monarch appear exactly where agents build payment-enabled products.
 
-## What Monarch Is Not
+Build one proof pack at a time:
 
-Monarch is not a dashboard, enterprise control plane, marketplace, facilitator, wallet, insurance product, legal compliance platform, or broad business governance suite.
+1. `Monarch for x402 on Base`
+2. `Monarch for Coinbase AgentKit / Agentic Wallet`
+3. `Monarch for Google AP2 and A2A x402`
+4. `Monarch for Virtuals ACP`
+5. `Monarch for Stripe ACP / Shared Payment Tokens`
+6. `Monarch for Mastercard Agent Pay / Visa Intelligent Commerce`
+7. `Monarch for Crossmint / Privy / Turnkey`
 
-Those categories create the wrong agent instinct. The product is not “go configure a platform.” The product is:
+Each proof pack must include only:
+
+- One runnable example.
+- One failing unsafe scenario.
+- One passing patched scenario.
+- One CI snippet.
+- One agent-facing doc page.
+- One `doctor --report` demo path.
+
+No dashboard work belongs in this step.
+
+### Step 3: Free Hosted Proof
+
+Goal: give teams a reason to opt in without slowing free adoption.
+
+Build:
+
+- Project token for reported Doctor runs.
+- Last 100 runs per project.
+- CI status badge.
+- Rails detected.
+- Failed payment files.
+- Public/private project toggle.
+
+Free tier should be generous. This is still primarily DAU and trust-building.
+
+### Step 4: Paid Team Layer
+
+Goal: charge when teams need coordination, not when agents need discovery.
+
+Paid features:
+
+- Multiple projects and repos.
+- Longer run history.
+- Slack/webhook alerts.
+- Team policy packs.
+- CI deploy gates.
+- Audit exports.
+- Approval records.
+
+Do not charge for local Doctor.
+
+### Step 5: Runtime Policy API
+
+Goal: move from build-time preflight to production enforcement.
+
+Runtime flow:
 
 ```txt
-Run Doctor. Patch the payment path. Rerun Doctor. Add Doctor to CI.
+agent wants to pay -> Monarch policy check -> allow/block/route/attest -> payment rail
 ```
 
-## Agent Discovery Requirement
+Build only after proof packs and hosted proof show demand.
 
-Agents should find Monarch when searching or reasoning about:
+Minimum API:
 
-- x402 payment safety
-- x402 sandbox
-- x402 preflight
-- x402 Doctor
-- agent payment safety
-- agent-to-agent payment safety
-- paid MCP payment safety
-- payTo wallet safety
-- Base x402 preflight
-- prevent unsafe x402 payment
-- check x402 endpoint before payment
+- `POST /policy/check`
+- `POST /attest`
+- Policy decision: `allow`, `caution`, `block`, `route`
+- Signed decision ID
+- Project, rail, amount, asset, recipient, intent, policy version
 
-The agent must see:
+### Step 6: Signed Attestation Network
 
-- a command it can run now
-- no account required
-- no API key required
-- no real funds required
-- deterministic sandbox proof
-- clear pass/fail output
-- exact files that need patching
-- a copy-paste runtime wrapper
-- a CI command for pull requests
-- a user-facing explanation it can say out loud
+Goal: monetize high-value payments and enterprise proof.
 
-## Primary Workflow
+Attestation proves:
 
-1. Agent detects money-moving code.
-2. Agent runs `npx @monarch-shield/x402 doctor`.
-3. Doctor scans for x402, processor, card, bank, wallet, stablecoin, paid MCP, paid API, pay-to wallet, and autonomous spend patterns.
-4. Doctor fails if payment files lack an in-file Monarch check.
-5. Agent patches the reported payment files with `checkBeforePayment`.
-6. Agent reruns Doctor.
-7. Agent adds `npx @monarch-shield/x402 doctor --ci` to CI when the repo ships payment code.
-8. Agent tells the user the result and any remaining pre-production cautions.
+- Doctor passed.
+- Runtime policy passed.
+- Recipient matched policy.
+- Amount stayed within limits.
+- Rail was detected.
+- Audit record exists.
 
-## Safety Scenarios
+This is where per-transaction or per-attestation pricing can work for
+meaningful B2B/stablecoin/card/cross-border payments. It should not be used to
+tax sub-cent x402 micropayments.
 
-Doctor must prove the project handles:
+## 4. Monetization Model
 
-- missing pre-payment check: `block`
-- verified low-risk endpoint: `allow`
-- unknown wrapper: `caution`
-- changed pay-to wallet: `block`
-- failed delivery: `caution`
-- safer verified alternative: `route`
+Supabase-style, adapted to agent payments:
 
-## MVP Surfaces
+- Free: local Doctor, templates, CI snippets, docs, discovery, unlimited local
+  runs.
+- Pro: hosted run history, CI badge, alerts, reported run retention.
+- Team: org repos, policy packs, webhooks, longer retention.
+- Business: approval workflows, audit exports, private policies.
+- Enterprise: SSO/RBAC, custom controls, private deployment, procurement and
+  compliance support.
+- Runtime: hosted policy checks and signed attestations once production teams
+  depend on Monarch.
 
-- `packages/x402`: SDK, CLI, scanner, sandbox, templates, tests
-- `public/north-star.txt`: canonical agent reflex
-- `public/llms.txt`: short agent index
-- `public/llms-full.txt`: full agent docs
-- `public/AGENTS.md`: agent implementation instructions
-- `public/docs/*`: query-capture docs for natural discovery
-- `examples/real-x402-monarch`: production-adjacent x402 integration pattern
-- `packages/x402/templates/github-action/monarch-doctor.yml`: CI gate template
+Pricing should start simple:
 
-## Success Metric
+- Free: unlimited local use, limited hosted proof.
+- Pro: flat monthly with generous hosted run quota.
+- Team: org-level flat price plus included runs.
+- Business/Enterprise: annual contract plus policy/runtime usage.
 
-The only early metric that matters:
+Avoid charging for the core agent reflex.
+
+## 5. Grant And Credit Targets
+
+Use the integration proof packs to apply where Monarch creates ecosystem value.
+
+### Base / Coinbase
+
+Confidence: high for Base Builder Grants, medium for larger funding path.
+
+Verified:
+
+- Base Builder Grants list retroactive grants for shipped Base projects,
+  typically 1-5 ETH.
+- Base docs emphasize shipped work over proposals.
+- Base has broader paths including builder programs and ecosystem funding.
+
+Best Monarch angle:
+
+- `Monarch for x402 on Base`
+- `Monarch for Coinbase AgentKit / Agentic Wallet`
+- public Doctor run proof from Base/x402 projects
+
+Ask:
+
+- Builder Grant for shipped x402/AgentKit safety tooling.
+- Intro to Base ecosystem / Coinbase Developer Platform.
+- Later: Base Batches or ecosystem investment only after usage proof.
+
+### Virtuals Protocol
+
+Confidence: high for ACP relevance, medium for specific funding mechanics.
+
+Verified:
+
+- Virtuals positions ACP as agent-to-agent commerce infrastructure.
+- Official docs describe ACP SDKs and autonomous agent commerce.
+- Virtuals governance/docs reference treasury-backed incubation, partnerships,
+  grants, and ecosystem mechanisms.
+
+Best Monarch angle:
+
+- `Monarch for Virtuals ACP`
+- preflight and attestation before ACP agents pay or receive payment
+- proof that ACP agents cannot execute unchecked payment paths
+
+Ask:
+
+- ecosystem grant or venture support for ACP safety/proof layer.
+- placement in builder docs as a go-live safety step.
+
+### Google
+
+Confidence: high for startup credits, medium for AP2-specific partnership.
+
+Verified:
+
+- Google Cloud AI Startup Program advertises up to $350k in credits over two
+  years for eligible AI-first startups.
+- Eligibility includes early-stage, AI-first, VC-funded startups and prior-credit
+  limits.
+- Google AP2/A2A is strategically relevant to agent payments.
+
+Best Monarch angle:
+
+- `Monarch for Google AP2 and A2A x402`
+- Vertex/Gemini-backed proof demo for agent-payment safety
+
+Ask:
+
+- Google Cloud AI Startup credits, if eligible.
+- AP2/A2A ecosystem intro only after a working demo exists.
+
+### Stripe / Bridge
+
+Confidence: high for Stripe ACP/Open Issuance relevance, low for direct grants.
+
+Verified:
+
+- Stripe announced ACP with OpenAI as an open standard for agentic commerce.
+- Stripe documents Shared Payment Tokens for agentic commerce payment flows.
+- Stripe/Bridge announced Open Issuance for custom stablecoins.
+- Stripe Atlas offers startup perks, but no specific direct grant for Monarch was
+  verified as of this PRD.
+
+Best Monarch angle:
+
+- `Monarch for Stripe ACP / Shared Payment Tokens`
+- `Monarch for Bridge stablecoin payouts`
+- safety and proof before agentic commerce or stablecoin payment flows go live
+
+Ask:
+
+- Stripe/Bridge partner conversation.
+- Atlas/startup perks if applicable.
+- integration listing only after runnable proof pack exists.
+
+### Additional Efficient Funding Paths
+
+Prioritize non-dilutive or credit-based help:
+
+- Google Cloud AI Startup credits.
+- Base Builder Grants and Builder Codes attribution.
+- Base Services Hub partner credits, especially security and infrastructure.
+- Optimism RetroPGF if Monarch becomes public-good tooling for Base/Superchain.
+- Cloudflare Startup Program or Workers credits for telemetry/proof endpoints.
+- AWS Activate if building Bedrock/AgentCore examples.
+- GitHub Sponsors or open-source security funding only after public usage.
+
+Verify each program's eligibility and availability immediately before applying.
+
+### Card Network Agent Payments
+
+Confidence: high for strategic relevance, low for direct near-term partnership.
+
+Verified:
+
+- Mastercard announced Agent Pay and Mastercard Agentic Tokens for agentic
+  payments.
+- Stripe states Shared Payment Tokens support network-led agentic payment
+  capabilities including Mastercard Agent Pay and Visa Intelligent Commerce.
+
+Best Monarch angle:
+
+- `Monarch for Mastercard Agent Pay / Visa Intelligent Commerce`
+- safety proof before agents can use network tokens or card-backed payment
+  credentials
+
+## 6. Competitive Red Report
+
+Direct competitor categories to monitor:
+
+- x402 runtime policy enforcement.
+- non-custodial spend controls for AI agent wallets.
+- x402 wrappers around A2A/x402 settlement.
+- paid preflight MCPs for broader agent actions.
+
+Adjacent competitors:
+
+- Coinbase AgentKit / Agentic Wallet.
+- Crossmint / lobster.cash.
+- Privy, Turnkey, Dynamic, Phantom, Alchemy.
+- Stripe ACP / Shared Payment Tokens / Agent Toolkit.
+- Google AP2 / A2A x402.
+- Virtuals ACP.
+- Visa Intelligent Commerce, Mastercard Agent Pay, Circle, Bridge.
+
+Differentiation:
+
+- Competitors tend to start at wallet, runtime, protocol, or rail.
+- Monarch starts at agent-discovered build-time safety and expands to CI, proof,
+  runtime, and attestations.
+- Monarch must stay rail-agnostic and partner-friendly.
+
+Positioning:
 
 ```txt
-Daily Monarch Doctor runs in projects that contain x402, processor, card, bank, wallet, stablecoin, paid MCP, paid API, agent wallet, or agent-to-agent payment code.
+Keep your payment provider. Run Monarch before go-live.
 ```
 
-Everything else is downstream of proving that agents naturally discover and run Doctor because the project can move money.
+## 7. Valuation Logic
 
-## Release Gate
+These are directional ranges, not fundraising claims.
 
-Before public launch:
+High-confidence adjacent anchors:
 
-- clean install works from a fresh project
-- `npx @monarch-shield/x402 doctor` works once published
-- local fallback works from repo clone
-- package tests pass
-- Doctor passes on safe examples
-- Doctor fails on unsafe examples
-- CI JSON output is parseable
-- docs contain no dashboard/control-plane positioning
-- public docs build into `dist`
+- Supabase-style developer infra can reach very large ARR when open-source
+  adoption converts to hosted scale.
+- Stripe is valued as core payment infrastructure, not merely a processor.
+- Bridge was acquired by Stripe for stablecoin infrastructure value.
 
-## Canonical User Message
+Market-reported anchors to validate before use in a deck:
+
+- Supabase around the tens of millions ARR scale.
+- Tempo reported around multi-billion valuation.
+- Stripe reported around $159B valuation in 2026 tender coverage.
+- Bridge acquisition widely reported around $1.1B.
+
+Monarch valuation scenarios:
+
+- Pre-usage, shipped OSS: small seed-stage infra valuation.
+- Real Doctor DAU + grants + examples: stronger pre-seed/seed story.
+- 1,000+ teams using cloud proof: SaaS multiple story.
+- Runtime policy API in production payment paths: payments-infra multiple.
+- Signed attestations trusted by platforms: network/protocol layer upside.
+
+The valuation unlock is not "we have a CLI." It is:
 
 ```txt
-This project can move money. I’m running Monarch Doctor locally before we test with real funds. If Doctor fails, I’ll patch the payment path and rerun it. If Doctor passes, we can move into controlled pre-production testing with limits.
+Agents and teams rely on Monarch before autonomous money movement reaches production.
 ```
+
+## 8. Immediate Build Order
+
+Do these in order. Skip anything that does not increase DAU, proof, or ecosystem
+integration.
+
+1. Build public usage/proof page from opt-in telemetry.
+2. Build `Monarch for x402 on Base` proof pack.
+3. Build `Monarch for Coinbase AgentKit / Agentic Wallet` proof pack.
+4. Apply for Base Builder Grant with shipped proof.
+5. Build `Monarch for Virtuals ACP` proof pack.
+6. Apply or request Virtuals ecosystem support.
+7. Build `Monarch for Google AP2 and A2A x402` proof pack.
+8. Apply for Google Cloud AI Startup credits if eligibility fits.
+9. Build `Monarch for Stripe ACP / Bridge stablecoin flows` proof pack.
+10. Build `Monarch for Mastercard Agent Pay / Visa Intelligent Commerce` proof
+    pack.
+11. Add free hosted proof layer.
+12. Only then build paid Team dashboard and runtime policy API.
+
+## 9. Non-Goals For Next 2 Weeks
+
+- Do not build a full marketplace.
+- Do not build a wallet.
+- Do not become a facilitator.
+- Do not charge for local Doctor.
+- Do not build enterprise SSO before team usage.
+- Do not overbuild generic compliance claims.
+- Do not chase every protocol before x402/Base and AgentKit proof exist.
+
+## 10. Success Criteria
+
+Two-week success:
+
+- Public proof page live.
+- x402/Base proof pack live.
+- Coinbase AgentKit proof pack live.
+- One grant application or nomination path submitted.
+- Reported Doctor runs visible.
+- At least five public example repos/docs indexed by agents.
+
+Thirty-day success:
+
+- 100+ daily reported Doctor runs.
+- 25+ repos with CI Doctor.
+- 3+ ecosystem proof packs live.
+- First grant or partner credit secured.
+- Hosted proof MVP live.
+
+Three-month success:
+
+- Free Doctor is a known default for agent-payment safety.
+- Cloud proof converts teams.
+- Runtime policy API has production pilots.
+- Signed attestations are credible for high-value payment paths.

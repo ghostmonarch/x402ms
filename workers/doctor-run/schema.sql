@@ -11,7 +11,9 @@ CREATE TABLE IF NOT EXISTS doctor_runs (
   has_payment_flow INTEGER NOT NULL,
   has_unprotected_payment_files INTEGER NOT NULL,
   finding_count INTEGER NOT NULL,
-  sandbox_passed INTEGER NOT NULL
+  sandbox_passed INTEGER NOT NULL,
+  detected_rails TEXT NOT NULL DEFAULT '',
+  proof_source TEXT NOT NULL DEFAULT 'external-reported'
 );
 
 CREATE INDEX IF NOT EXISTS doctor_runs_event_date_idx
@@ -19,6 +21,9 @@ ON doctor_runs (event_date);
 
 CREATE INDEX IF NOT EXISTS doctor_runs_project_date_idx
 ON doctor_runs (project_hash, event_date);
+
+CREATE INDEX IF NOT EXISTS doctor_runs_proof_source_idx
+ON doctor_runs (proof_source, event_date);
 
 CREATE TABLE IF NOT EXISTS discovery_events (
   id TEXT PRIMARY KEY,

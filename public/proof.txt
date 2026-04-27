@@ -1,0 +1,52 @@
+Monarch Shield public proof surface
+
+Canonical URL:
+https://x402ms.ai/#proof
+
+Public aggregate API:
+https://monarch-doctor-run.ghostmonarchalerts.workers.dev/proof
+
+Interpretation:
+- Internal dogfood runs are Monarch-run proof-of-function, not proof-of-demand.
+- Public example runs are reproducible unsafe examples showing blocked -> patched -> passed.
+- External reported runs are opt-in reports from users or agents outside Monarch and are the strongest usage signal.
+
+The proof page intentionally separates these buckets so Base, Coinbase, Virtuals, Google, Stripe, investors, and partners can see what is self-run, what is reproducible, and what is external adoption.
+
+Run local dogfood proof:
+
+```bash
+npm run proof:dogfood
+```
+
+Run CI-style dogfood proof:
+
+```bash
+npm run proof:dogfood:ci
+```
+
+Run and record the Base x402 proof pack:
+
+```bash
+npm run qa:base-x402
+```
+
+Run and record the Coinbase AgentKit / Agentic Wallet proof pack:
+
+```bash
+npm run qa:coinbase-agentkit
+```
+
+Report the patched Base x402 example as a public example:
+
+```bash
+npm run proof:base-x402
+```
+
+Report the patched Coinbase AgentKit / Agentic Wallet example as a public example:
+
+```bash
+npm run proof:coinbase-agentkit
+```
+
+Never send source code, file paths, wallet addresses, endpoint URLs, payment amounts, secrets, API keys, or raw payment payloads in proof reports.

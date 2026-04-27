@@ -1,0 +1,31 @@
+{
+  "demo": "monarch-for-coinbase-agentkit-agentic-wallet-proof-pack",
+  "status": "passed",
+  "publicProofUrl": "https://x402ms.ai/#proof",
+  "recordingPath": "public/coinbase-agentkit-proof-pack-recording.txt",
+  "examples": {
+    "unsafe": "examples/coinbase-agentkit-proof-pack/unsafe",
+    "patched": "examples/coinbase-agentkit-proof-pack/patched"
+  },
+  "proves": [
+    "Doctor blocks AgentKit / Agentic Wallet spend without a Monarch pre-payment check",
+    "Doctor passes after checkBeforePayment wraps wallet send and x402 pay-for-service execution",
+    "The patched example keeps Monarch before Base USDC spend",
+    "CI can enforce Doctor with --ci --strict",
+    "Sandbox covers allow/caution/block/route branches without real funds"
+  ],
+  "results": [
+    {
+      "label": "Unsafe AgentKit / Agentic Wallet project fails Doctor",
+      "status": 1
+    },
+    {
+      "label": "Patched AgentKit / Agentic Wallet project passes Doctor",
+      "status": 0
+    },
+    {
+      "label": "Sandbox proves unsafe payment branches",
+      "status": 0
+    }
+  ]
+}

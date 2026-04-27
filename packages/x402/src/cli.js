@@ -44,6 +44,9 @@ Usage:
   npx @monarch-shield/x402 preprod [--root .]
   npx @monarch-shield/x402 check --resource-url URL --pay-to WALLET --amount AMOUNT --asset USDC --network base --intent "..."
 
+Proof reporting:
+  npx @monarch-shield/x402 doctor --report [--proof-source internal-dogfood|public-example|external-reported]
+
 Core rule:
   Test before live. Check before pay.`);
 }
@@ -369,7 +372,9 @@ async function reportDoctorRun(result, options) {
     hasPaymentFlow: result.scan.hasPaymentFlow,
     hasUnprotectedPaymentFiles: result.scan.hasUnprotectedPaymentFiles,
     findingCount: result.scan.findings.length,
+    detectedRails: detectedRails(result.scan.findings),
     sandboxPassed: result.sandbox.every((scenario) => scenario.passed),
+    proofSource: proofSource(options),
     projectHash: hashProject(options.root),
     timestamp: new Date().toISOString(),
   };
@@ -396,4 +401,27 @@ function hashProject(root) {
     .update(`${root}:${packageJson.name}`)
     .digest('hex')
     .slice(0, 24);
+}
+
+function detectedRails(findings) {
+  const rails = new Set();
+
+  for (const finding of findings) {
+    for (const rail of finding.rails ?? []) {
+      rails.add(rail);
+    }
+  }
+
+  return [...rails].sort();
+}
+
+function proofSource(options) {
+  const source = options['proof-source'] ?? process.env.MONARCH_PROOF_SOURCE ?? 'external-reported';
+  const allowed = new Set(['internal-dogfood', 'public-example', 'external-reported']);
+
+  if (!allowed.has(source)) {
+    throw new Error('Invalid --proof-source. Use internal-dogfood, public-example, or external-reported.');
+  }
+
+  return source;
 }
