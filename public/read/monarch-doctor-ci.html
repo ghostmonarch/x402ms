@@ -99,9 +99,10 @@ jobs:
 </code></pre>
 <p>The action runs:</p>
 <pre><code>
-npx @monarch-shield/x402 doctor --root . --ci --strict
+npx @monarch-shield/x402@0.1.0 doctor --root . --ci --strict
 
 </code></pre>
+<p>The default action package is pinned to <code>@monarch-shield/x402@0.1.0</code> so CI behavior does not silently drift with the npm <code>latest</code> tag. Change the <code>package</code> input only when intentionally testing a newer Doctor release.</p>
 <p>Manual workflow fallback:</p>
 <pre><code>
 name: Monarch Doctor

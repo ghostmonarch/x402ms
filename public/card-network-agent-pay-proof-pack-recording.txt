@@ -150,7 +150,7 @@ $ node packages/x402/src/cli.js doctor --root examples/card-network-agent-pay-pr
     {
       "kind": "monarch_check",
       "file": "card-network-agent-checkout.js",
-      "message": "Monarch pre-payment check reference found",
+      "message": "Monarch pre-payment guard detected before payment execution",
       "rails": []
     }
   ],

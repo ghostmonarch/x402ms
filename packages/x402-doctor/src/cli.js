@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 
 const args = process.argv.slice(2);
 const commands = new Set(['doctor', 'init', 'scan', 'sandbox', 'preprod', 'check', 'help']);
@@ -9,9 +10,19 @@ const monarchArgs = !firstArg || firstArg.startsWith('-') || firstArg === 'help'
   : commands.has(firstArg)
     ? args
     : ['doctor', ...args];
-const monarchBin = process.platform === 'win32' ? 'monarch.cmd' : 'monarch';
 
-const result = spawnSync(monarchBin, monarchArgs, { stdio: 'inherit' });
+let monarchCli;
+
+try {
+  monarchCli = fileURLToPath(new URL('./cli.js', import.meta.resolve('@monarch-shield/x402')));
+} catch (error) {
+  console.error('x402-doctor could not resolve the packaged Monarch Doctor CLI.');
+  console.error('Install or run the canonical package directly: npx @monarch-shield/x402 doctor');
+  console.error(error.message);
+  process.exit(1);
+}
+
+const result = spawnSync(process.execPath, [monarchCli, ...monarchArgs], { stdio: 'inherit' });
 
 if (result.error) {
   console.error('x402-doctor could not start Monarch Doctor.');

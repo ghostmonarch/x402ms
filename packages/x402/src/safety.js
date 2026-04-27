@@ -34,12 +34,17 @@ const ignoredScanPaths = [
   'examples/stripe-bridge-stablecoin-proof-pack/unsafe/',
   'examples/card-network-agent-pay-proof-pack/unsafe/',
   'packages/x402/src/cli.js',
+  'packages/x402/src/safety.js',
+  'packages/x402/examples/',
+  'packages/x402/templates/',
+  'packages/x402/test/',
   'scripts/generate-doc-html.js',
   'scripts/monte-carlo-agent-discovery.js',
   'scripts/record-base-x402-proof-pack.js',
   'scripts/record-doctor-demo.js',
   'workers/doctor-run/',
 ];
+const paymentSinkPattern = /fetch\s*\(|wallet\.send\s*\(|sendTransaction\s*\(|paymentIntents\.create\s*\(|checkout\.sessions\.create\s*\(|charges\.create\s*\(|transfers?\.create\s*\(|payouts?\.create\s*\(|transferUSDC\s*\(|usdcTransfer\s*\(|commerce\.charges\.create\s*\(|createJobFromOffering\s*\(|fundJobEscrow\s*\(|submitPaymentMandate\s*\(|bridgeStablecoin\s*\(|\.checkout\s*\(|cardCharge\s*\(|achDebit\s*\(|wireTransfer\s*\(|bankTransfer\s*\(|rtpPayment\s*\(|fedNow\s*\(|pixPayment\s*\(|upiPayment\s*\(/i;
 
 export function evaluatePayment(input = {}) {
   const evidence = normalizeInput(input);
@@ -150,7 +155,14 @@ export function scanProject(root = process.cwd()) {
     addFinding(findings, rel, codeContent, /visa|mastercard|cardPayment|virtualCard|cardCharge|applePay|googlePay|Agent Pay|agentPay|agentic token|MDES|DSRP|DTVC|Digital Commerce Solution|Intelligent Commerce|Visa Token Service|Visa Payment Passkey|tokenized payment credential|purchaseIntent/i, 'card payment rail handling found', ['card']);
     addFinding(findings, rel, codeContent, /achDebit|wireTransfer|bankTransfer|rtpPayment|fedNow|openBanking|plaid|dwolla|zelle|sepa|payouts?\.create|transfers?\.create|wise|revolut|yapily|tink|finicity/i, 'bank payment rail handling found', ['bank']);
     addFinding(findings, rel, codeContent, /pixPayment|upiPayment|qris|promptPay|payNow|duitNow|vietQR|spei|ideal|blik|m-pesa|mpesa/i, 'regional payment rail handling found', ['regional_rail', 'bank']);
-    addFinding(findings, rel, codeContent, /checkBeforePayment|checkPayment|safePayX402|check-payment|@monarch-shield\/x402/i, 'Monarch pre-payment check reference found');
+    if (hasEffectiveMonarchGuard(codeContent)) {
+      findings.push({
+        kind: 'monarch_check',
+        file: rel,
+        message: 'Monarch pre-payment guard detected before payment execution',
+        rails: [],
+      });
+    }
   }
 
   const hasPaymentFlow = findings.some((finding) => finding.kind !== 'monarch_check');
@@ -249,6 +261,113 @@ function stripComments(content) {
 
 function hasPaymentExecutionSignal(content) {
   return /fetch\s*\(|headers\s*:|wallet\.send|sendTransaction|paymentIntents\.create|checkout\.sessions\.create|charges\.create|transfers?\.create|payouts?\.create/i.test(content);
+}
+
+function hasEffectiveMonarchGuard(content) {
+  const sinkIndexes = findMatchIndexes(content, paymentSinkPattern);
+  if (sinkIndexes.length === 0) return false;
+
+  const guardedRanges = findGuardedPaymentRanges(content);
+  if (guardedRanges.length === 0) return false;
+
+  return sinkIndexes.every((sinkIndex) => guardedRanges.some(([start, end]) => sinkIndex >= start && sinkIndex <= end));
+}
+
+function findGuardedPaymentRanges(content) {
+  const ranges = [];
+  const guardPattern = /checkBeforePayment\s*\(/ig;
+  let match;
+
+  while ((match = guardPattern.exec(content)) !== null) {
+    const openParenIndex = content.indexOf('(', match.index);
+    if (openParenIndex === -1) continue;
+
+    const closeParenIndex = findMatchingDelimiter(content, openParenIndex, '(', ')');
+    if (closeParenIndex === -1) continue;
+
+    const guardedContent = content.slice(openParenIndex + 1, closeParenIndex);
+    if (paymentSinkPattern.test(guardedContent)) {
+      ranges.push([openParenIndex, closeParenIndex]);
+    }
+
+    for (const callbackName of findGuardedCallbackNames(guardedContent)) {
+      const callbackRange = findFunctionBodyRange(content, callbackName);
+      if (callbackRange && paymentSinkPattern.test(content.slice(callbackRange[0], callbackRange[1]))) {
+        ranges.push(callbackRange);
+      }
+    }
+  }
+
+  return ranges;
+}
+
+function findGuardedCallbackNames(content) {
+  const names = [];
+  const callbackPattern = /,\s*([A-Za-z_$][\w$]*)\s*(?:,|$)/g;
+  let match;
+
+  while ((match = callbackPattern.exec(content)) !== null) {
+    names.push(match[1]);
+  }
+
+  return names;
+}
+
+function findFunctionBodyRange(content, name) {
+  const declarationPattern = new RegExp(`(?:async\\s+)?function\\s+${escapeRegExp(name)}\\s*\\(`);
+  const declaration = declarationPattern.exec(content);
+  if (!declaration) return null;
+
+  const openParenIndex = content.indexOf('(', declaration.index);
+  if (openParenIndex === -1) return null;
+
+  const closeParenIndex = findMatchingDelimiter(content, openParenIndex, '(', ')');
+  if (closeParenIndex === -1) return null;
+
+  const openBraceIndex = content.indexOf('{', closeParenIndex);
+  if (openBraceIndex === -1) return null;
+
+  const closeBraceIndex = findMatchingDelimiter(content, openBraceIndex, '{', '}');
+  if (closeBraceIndex === -1) return null;
+
+  return [openBraceIndex, closeBraceIndex];
+}
+
+function findMatchIndexes(content, pattern) {
+  const globalPattern = new RegExp(pattern.source, pattern.flags.includes('i') ? 'ig' : 'g');
+  const indexes = [];
+  let match;
+
+  while ((match = globalPattern.exec(content)) !== null) {
+    if (!isLikelyDeclaration(content, match.index)) {
+      indexes.push(match.index);
+    }
+  }
+
+  return indexes;
+}
+
+function isLikelyDeclaration(content, matchIndex) {
+  const lineStart = content.lastIndexOf('\n', matchIndex) + 1;
+  const prefix = content.slice(lineStart, matchIndex);
+  return /\b(?:async|function)\s+$/.test(prefix);
+}
+
+function findMatchingDelimiter(content, openIndex, openChar, closeChar) {
+  let depth = 0;
+
+  for (let index = openIndex; index < content.length; index += 1) {
+    const char = content[index];
+    if (char === openChar) depth += 1;
+    if (char === closeChar) depth -= 1;
+    if (depth === 0) return index;
+  }
+
+  return -1;
+}
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function normalizeInput(input) {

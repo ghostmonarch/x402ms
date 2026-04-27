@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "doctor": "node src/cli.js",
-    "test": "node src/cli.js --help"
+    "test": "node --test test/*.test.js"
   },
   "keywords": [
     "x402",

@@ -51,6 +51,8 @@ await checkBeforePayment({
 }, payX402);
 ```
 
+Doctor is a build-time preflight and CI gate. It checks that detectable payment execution is guarded by `checkBeforePayment`; hosted policy, provider verification, fraud controls, and settlement checks remain separate runtime layers.
+
 ## CLI
 
 - `monarch init`: scaffold template snippets and a user notice under `./monarch`.
@@ -103,7 +105,7 @@ Public proof artifacts:
 - `https://x402ms.ai/doctor-demo-recording.txt`
 - `https://x402ms.ai/doctor-demo-summary.json`
 
-The demo shows Doctor failing unsafe x402-style code, failing again when a wrapper exists but the original payment path is unpatched, then passing after the payment file calls Monarch before payment.
+The demo shows Doctor failing unsafe x402-style code, failing again when a wrapper exists but the original payment path is unpatched, then passing after payment execution is guarded by `checkBeforePayment`.
 
 ## Agent Discovery Docs
 

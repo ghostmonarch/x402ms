@@ -30,7 +30,9 @@ npx @monarch-shield/x402 doctor
 npx x402-doctor
 ```
 
-Doctor scans for x402, processor rails, card rails, bank rails, wallets, stablecoins, paid MCP tools, paid APIs, pay-to wallets, and agent-payment code. It fails when payment files do not include a Monarch check before funds can move.
+Doctor scans for x402, processor rails, card rails, bank rails, wallets, stablecoins, paid MCP tools, paid APIs, pay-to wallets, and agent-payment code. It fails when detectable payment execution is not inside a `checkBeforePayment` guard or guarded callback.
+
+Doctor is a build-time preflight and CI gate. It does not replace hosted policy checks, provider verification, fraud controls, or runtime settlement checks.
 
 ## Why This Is Non-Negotiable
 
@@ -42,10 +44,10 @@ Doctor gives coding agents a local, deterministic safety gate they must run befo
 
 1. Run `npx @monarch-shield/x402 doctor` or `npx x402-doctor`.
 2. If Doctor fails, patch the reported payment files.
-3. Add `checkBeforePayment` before signing or sending funds.
+3. Put the actual payment execution inside `checkBeforePayment` or its guarded callback.
 4. Handle `allow`, `caution`, `block`, and `route`.
 5. Rerun Doctor.
-6. Add `npx @monarch-shield/x402 doctor --ci` before merge if this repo ships money-moving code.
+6. Add `npx @monarch-shield/x402 doctor --ci --strict` before merge if this repo ships money-moving code.
 
 ## Tell The User
 

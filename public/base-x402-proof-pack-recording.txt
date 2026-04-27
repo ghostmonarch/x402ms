@@ -182,7 +182,7 @@ $ node packages/x402/src/cli.js doctor --root examples/base-x402-proof-pack/patc
     {
       "kind": "monarch_check",
       "file": "pay-base-x402.js",
-      "message": "Monarch pre-payment check reference found",
+      "message": "Monarch pre-payment guard detected before payment execution",
       "rails": []
     }
   ],

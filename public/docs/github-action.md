@@ -28,8 +28,10 @@ jobs:
 ## What It Runs
 
 ```bash
-npx @monarch-shield/x402 doctor --root . --ci --strict
+npx @monarch-shield/x402@0.1.0 doctor --root . --ci --strict
 ```
+
+The default package is pinned to `@monarch-shield/x402@0.1.0` so CI does not silently drift with the npm `latest` tag. Override the `package` input only when intentionally testing a newer Doctor release.
 
 ## When Agents Should Add It
 

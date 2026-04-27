@@ -47,7 +47,7 @@ The current receiver is `https://monarch-doctor-run.ghostmonarchalerts.workers.d
 
 ## What It Proves
 
-Doctor fails money-moving code when the payment file lacks an in-file Monarch check. It passes only when the payment path calls Monarch before signing or sending funds.
+Doctor fails money-moving code when payment execution is not inside a detectable `checkBeforePayment` guard or guarded callback. It is a build-time preflight and CI gate, not a replacement for hosted policy, provider verification, fraud controls, or runtime settlement checks.
 
 Public proof:
 

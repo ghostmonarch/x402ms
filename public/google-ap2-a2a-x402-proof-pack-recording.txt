@@ -184,7 +184,7 @@ $ node packages/x402/src/cli.js doctor --root examples/google-ap2-a2a-x402-proof
     {
       "kind": "monarch_check",
       "file": "ap2-a2a-x402-payment.js",
-      "message": "Monarch pre-payment check reference found",
+      "message": "Monarch pre-payment guard detected before payment execution",
       "rails": []
     }
   ],

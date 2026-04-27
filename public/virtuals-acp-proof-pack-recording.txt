@@ -168,7 +168,7 @@ $ node packages/x402/src/cli.js doctor --root examples/virtuals-acp-proof-pack/p
     {
       "kind": "monarch_check",
       "file": "acp-job-escrow.js",
-      "message": "Monarch pre-payment check reference found",
+      "message": "Monarch pre-payment guard detected before payment execution",
       "rails": []
     }
   ],

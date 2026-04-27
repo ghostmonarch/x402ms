@@ -291,6 +291,63 @@ test('Doctor ignores string-only Monarch checks in payment files', () => {
   });
 });
 
+test('Doctor rejects Monarch checks that run after payment execution', () => {
+  withTempProject({
+    'pay.js': `
+      import { checkBeforePayment } from '@monarch-shield/x402';
+      export async function unsafePay(wallet, payment) {
+        const receipt = await wallet.send(payment.payTo, payment.amount);
+        await checkBeforePayment(payment);
+        return receipt;
+      }
+    `,
+  }, (root) => {
+    const result = validatePreprod(root);
+
+    assert.equal(result.applicable, true);
+    assert.equal(result.ready, false);
+    assert.deepEqual(result.scan.unprotectedPaymentFiles, ['pay.js']);
+  });
+});
+
+test('Doctor rejects dead Monarch helper functions in payment files', () => {
+  withTempProject({
+    'pay.js': `
+      import { checkBeforePayment } from '@monarch-shield/x402';
+      async function safePay(wallet, payment) {
+        return checkBeforePayment(payment, () => wallet.send(payment.payTo, payment.amount));
+      }
+
+      export async function unsafePay(wallet, payment) {
+        return wallet.send(payment.payTo, payment.amount);
+      }
+    `,
+  }, (root) => {
+    const result = validatePreprod(root);
+
+    assert.equal(result.applicable, true);
+    assert.equal(result.ready, false);
+    assert.deepEqual(result.scan.unprotectedPaymentFiles, ['pay.js']);
+  });
+});
+
+test('Doctor rejects unused Monarch imports in payment files', () => {
+  withTempProject({
+    'pay.js': `
+      import { checkBeforePayment } from '@monarch-shield/x402';
+      export async function unsafePay(wallet, payment) {
+        return wallet.send(payment.payTo, payment.amount);
+      }
+    `,
+  }, (root) => {
+    const result = validatePreprod(root);
+
+    assert.equal(result.applicable, true);
+    assert.equal(result.ready, false);
+    assert.deepEqual(result.scan.unprotectedPaymentFiles, ['pay.js']);
+  });
+});
+
 test('scan detects non-JavaScript payment code', () => {
   withTempProject({
     'wallet.rs': `
@@ -340,6 +397,14 @@ test('scan handles missing roots and mixed protected payment files', () => {
     assert.match(result.recommendation, /unsafe\.js/);
     assert.equal(result.findings.some((finding) => finding.file.includes('node_modules')), false);
   });
+});
+
+test('scan ignores Monarch package internals when dogfooding the repo', () => {
+  const result = validatePreprod(repoRoot);
+
+  assert.equal(result.applicable, true);
+  assert.equal(result.ready, true);
+  assert.deepEqual(result.scan.unprotectedPaymentFiles, []);
 });
 
 test('scan ignores telemetry receiver validation fields', () => {

@@ -20,4 +20,4 @@ jobs:
           node-version: 20
 
       - name: Run Monarch Doctor
-        run: npx @monarch-shield/x402 doctor --ci
+        run: npx @monarch-shield/x402 doctor --ci --strict

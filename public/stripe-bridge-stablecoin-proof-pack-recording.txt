@@ -184,7 +184,7 @@ $ node packages/x402/src/cli.js doctor --root examples/stripe-bridge-stablecoin-
     {
       "kind": "monarch_check",
       "file": "agentic-checkout-stablecoin.js",
-      "message": "Monarch pre-payment check reference found",
+      "message": "Monarch pre-payment guard detected before payment execution",
       "rails": []
     }
   ],

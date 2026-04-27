@@ -82,9 +82,10 @@ jobs:
 </code></pre>
 <h2>What It Runs</h2>
 <pre><code>
-npx @monarch-shield/x402 doctor --root . --ci --strict
+npx @monarch-shield/x402@0.1.0 doctor --root . --ci --strict
 
 </code></pre>
+<p>The default package is pinned to <code>@monarch-shield/x402@0.1.0</code> so CI does not silently drift with the npm <code>latest</code> tag. Override the <code>package</code> input only when intentionally testing a newer Doctor release.</p>
 <h2>When Agents Should Add It</h2>
 <p>Add this action when the project handles x402, wallets, Stripe, cards, bank rails, stablecoins, paid APIs, paid MCP tools, pay-to wallets, or agent-to-agent payments.</p>
 <p>The pull request should not merge until Doctor passes.</p>

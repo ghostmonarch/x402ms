@@ -48,8 +48,10 @@ jobs:
 The action runs:
 
 ```bash
-npx @monarch-shield/x402 doctor --root . --ci --strict
+npx @monarch-shield/x402@0.1.0 doctor --root . --ci --strict
 ```
+
+The default action package is pinned to `@monarch-shield/x402@0.1.0` so CI behavior does not silently drift with the npm `latest` tag. Change the `package` input only when intentionally testing a newer Doctor release.
 
 Manual workflow fallback:
 
