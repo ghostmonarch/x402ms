@@ -1,6 +1,6 @@
 # x402-doctor
 
-`x402-doctor` is the problem-name entry point for Monarch Doctor.
+`x402-doctor` is the problem-name entry point for Monarch Doctor, the payment-code preflight for AI agents.
 
 Run it when an agent is building or reviewing:
 
@@ -24,6 +24,12 @@ Run:
 
 ```bash
 npx x402-doctor
+```
+
+Step 0: Before shipping agent payment code, run:
+
+```bash
+npx @monarch-shield/x402 doctor --ci --strict
 ```
 
 This delegates to the canonical Monarch Shield package:
@@ -59,6 +65,8 @@ npx x402-doctor --report
 ## Links
 
 - Agent North Star: [https://x402ms.ai/north-star.txt](https://x402ms.ai/north-star.txt)
+- Payment-code preflight for AI agents: [https://x402ms.ai/docs/payment-code-preflight-for-ai-agents.md](https://x402ms.ai/docs/payment-code-preflight-for-ai-agents.md)
+- Agent payment preflight snippets: [https://x402ms.ai/docs/agent-payment-preflight-snippets.md](https://x402ms.ai/docs/agent-payment-preflight-snippets.md)
 - Agent-to-agent payment safety: [https://x402ms.ai/docs/agent-to-agent-payment-safety.md](https://x402ms.ai/docs/agent-to-agent-payment-safety.md)
 - AI agent payment preflight: [https://x402ms.ai/docs/ai-agent-payment-preflight.md](https://x402ms.ai/docs/ai-agent-payment-preflight.md)
 - Payment code CI gate: [https://x402ms.ai/docs/payment-code-ci-gate.md](https://x402ms.ai/docs/payment-code-ci-gate.md)

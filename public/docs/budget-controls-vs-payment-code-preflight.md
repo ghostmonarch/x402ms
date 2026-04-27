@@ -34,6 +34,10 @@ unsafe agent-payment code reaches production.
 Use budget controls for runtime spend limits. Use Monarch Doctor as the local
 and CI gate for the code that can initiate payment.
 
+Moltbank controls budgets. Monarch checks the payment code path before it ships.
+Those jobs are complementary: one constrains live spend, the other blocks unsafe
+payment code from merging without preflight.
+
 Monarch does not claim to replace runtime policy, wallet controls, fraud
 prevention, settlement checks, or provider compliance. It is the launch gate for
 payment-code safety before money-moving code ships.

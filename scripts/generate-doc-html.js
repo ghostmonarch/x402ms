@@ -141,6 +141,20 @@ const docs = [
     description: 'General preflight pattern for agent-controlled money movement.',
   },
   {
+    slug: 'payment-code-preflight-for-ai-agents',
+    title: 'Payment-Code Preflight For AI Agents',
+    group: 'Implementation',
+    source: 'public/docs/payment-code-preflight-for-ai-agents.md',
+    description: 'Owned category page for payment-code preflight for AI agents.',
+  },
+  {
+    slug: 'agent-payment-preflight-snippets',
+    title: 'Agent Payment Preflight Snippets',
+    group: 'Implementation',
+    source: 'public/docs/agent-payment-preflight-snippets.md',
+    description: 'Copy-paste Step 0 snippets for x402, wallet.send, Stripe, paid MCP, CI, SARIF, and hosted proof.',
+  },
+  {
     slug: 'x402-payment-safety',
     title: 'x402 Payment Safety',
     group: 'Implementation',

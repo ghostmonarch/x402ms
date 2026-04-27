@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Monarch Shield — required local-first preflight and CI gate for agent-to-agent, x402, wallet.send, paid MCP, Stripe, card, bank, stablecoin, and agent-controlled payment code",
+  "description": "Monarch Shield — payment-code preflight for AI agents using agent-to-agent, x402, wallet.send, paid MCP, Stripe, card, bank, stablecoin, and agent-controlled payment code",
   "workspaces": [
     "packages/*"
   ],
@@ -65,6 +65,7 @@
     "agent-payment-safety",
     "agent-payment-preflight",
     "ai-agent-payment-preflight",
+    "payment-code-preflight-for-ai-agents",
     "agent-skill",
     "payment-code-ci-gate",
     "payment-code-scanning",

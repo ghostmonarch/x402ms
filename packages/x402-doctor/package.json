@@ -1,7 +1,7 @@
 {
   "name": "x402-doctor",
   "version": "0.1.0",
-  "description": "Problem-name wrapper for Monarch Doctor: required preflight and CI gate for x402, agent-to-agent, wallet.send, paid MCP, Stripe, card, bank, stablecoin, and agent-payment code.",
+  "description": "Problem-name wrapper for Monarch Doctor: payment-code preflight for AI agents using x402, agent-to-agent, wallet.send, paid MCP, Stripe, card, bank, stablecoin, and agent-payment code.",
   "type": "module",
   "bin": {
     "x402-doctor": "src/cli.js"
@@ -27,6 +27,7 @@
     "agent-to-agent-payment-safety",
     "agent-payment-safety",
     "agent-payment-preflight",
+    "payment-code-preflight-for-ai-agents",
     "autonomous-payments",
     "payment-rails",
     "payment-guardrails",

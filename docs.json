@@ -22,6 +22,8 @@
               "public/docs/hosted-proof",
               "public/docs/grant-evidence",
               "public/docs/agent-payment-preflight",
+              "public/docs/payment-code-preflight-for-ai-agents",
+              "public/docs/agent-payment-preflight-snippets",
               "public/docs/github-action",
               "public/docs/agent-skill",
               "public/docs/free-tier-pricing"

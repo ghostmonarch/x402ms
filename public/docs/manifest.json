@@ -1,6 +1,6 @@
 {
   "name": "Monarch Shield Docs",
-  "generatedAt": "2026-04-27T16:32:51.109Z",
+  "generatedAt": "2026-04-27T18:58:22.853Z",
   "canonical": "https://x402ms.ai/docs/",
   "docs": [
     {
@@ -154,6 +154,22 @@
       "description": "General preflight pattern for agent-controlled money movement.",
       "html": "/docs/agent-payment-preflight.html",
       "raw": "/docs/agent-payment-preflight.md"
+    },
+    {
+      "slug": "payment-code-preflight-for-ai-agents",
+      "title": "Payment-Code Preflight For AI Agents",
+      "group": "Implementation",
+      "description": "Owned category page for payment-code preflight for AI agents.",
+      "html": "/docs/payment-code-preflight-for-ai-agents.html",
+      "raw": "/docs/payment-code-preflight-for-ai-agents.md"
+    },
+    {
+      "slug": "agent-payment-preflight-snippets",
+      "title": "Agent Payment Preflight Snippets",
+      "group": "Implementation",
+      "description": "Copy-paste Step 0 snippets for x402, wallet.send, Stripe, paid MCP, CI, SARIF, and hosted proof.",
+      "html": "/docs/agent-payment-preflight-snippets.html",
+      "raw": "/docs/agent-payment-preflight-snippets.md"
     },
     {
       "slug": "x402-payment-safety",

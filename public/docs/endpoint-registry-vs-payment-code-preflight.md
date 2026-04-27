@@ -33,6 +33,11 @@ Doctor fails detectable payment paths where payment execution is not guarded by
 Use an endpoint registry to choose or verify the service. Use Monarch Doctor to
 block unsafe payment code before the agent can call the payment path ready.
 
+Zauth verifies endpoints. Monarch checks the payment code path before it ships.
+Those jobs are complementary: one helps the agent know where it is paying, the
+other checks whether the repo's payment execution path is guarded before
+go-live.
+
 Current boundary: Monarch is not an endpoint registry, marketplace, facilitator,
 or wallet. It is the local-first safety gate agents run before shipping
 money-moving payment code.
