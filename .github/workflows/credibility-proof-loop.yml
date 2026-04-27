@@ -1,0 +1,41 @@
+name: Credibility Proof Loop
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  proof-loop:
+    name: External proof and coverage gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npm test
+      - run: npm run coverage:verify
+      - run: npm run benchmark:adversarial
+      - run: npm run smoke:external-agent
+      - run: node packages/x402/src/cli.js doctor --ci --strict
+
+      - name: Upload proof artifacts
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: monarch-proof-loop
+          path: |
+            artifacts/external-agent-smoke.json
+            artifacts/external-agent-smoke.md
+            artifacts/adversarial-benchmark.json
+            artifacts/adversarial-benchmark.md
+            artifacts/coverage-threshold.json

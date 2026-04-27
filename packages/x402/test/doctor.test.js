@@ -1,4 +1,4 @@
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -625,6 +625,20 @@ test('Mastercard Agent Pay / Visa Intelligent Commerce proof pack fails unsafe p
   });
 });
 
+test('adversarial benchmark corpus matches expected Doctor outcomes', () => {
+  const benchmarkRoot = join(repoRoot, 'examples/adversarial-doctor-benchmark');
+  const manifest = JSON.parse(readFileSync(join(benchmarkRoot, 'manifest.json'), 'utf8'));
+
+  for (const benchmarkCase of manifest.cases) {
+    const result = runCli(['doctor', '--root', join(benchmarkRoot, benchmarkCase.root), '--ci', '--strict']);
+    const payload = JSON.parse(result.stdout);
+
+    assert.equal(result.status, benchmarkCase.expectedExitCode, benchmarkCase.id);
+    assert.equal(payload.status, benchmarkCase.expectedStatus, benchmarkCase.id);
+    assert.deepEqual(payload.unprotectedPaymentFiles, benchmarkCase.expectedUnprotectedPaymentFiles, benchmarkCase.id);
+  }
+});
+
 test('Doctor report mode is non-blocking when telemetry endpoint is unavailable', () => {
   withTempProject({
     'pay.js': `
@@ -779,6 +793,34 @@ test('CLI doctor JSON reports strict no-flow status', () => {
     assert.equal(payload.status, 'failed_no_payment_flow');
     assert.equal(payload.ready, false);
     assert.match(payload.summary, /Strict mode expected money-moving code/);
+  });
+});
+
+test('CLI doctor SARIF reports unprotected payment files', () => {
+  withTempProject({
+    'pay.js': 'export const pay = (wallet, payment) => wallet.send(payment.payTo, payment.amount);',
+  }, (root) => {
+    const result = runCli(['doctor', '--root', root, '--sarif', '--strict']);
+    const payload = JSON.parse(result.stdout);
+    const sarifResult = payload.runs[0].results[0];
+
+    assert.equal(result.status, 1);
+    assert.equal(payload.version, '2.1.0');
+    assert.equal(sarifResult.ruleId, 'monarch-doctor/unprotected-payment-file');
+    assert.equal(sarifResult.locations[0].physicalLocation.artifactLocation.uri, 'pay.js');
+    assert.equal(sarifResult.locations[0].physicalLocation.region.startLine, 1);
+  });
+
+  withTempProject({
+    'pay.js': 'export const pay = (wallet, payment) => wallet.send(payment.payTo, payment.amount);',
+  }, (root) => {
+    const output = join(root, 'monarch-doctor.sarif');
+    const result = runCli(['doctor', '--root', root, '--sarif-output', output, '--strict']);
+    const payload = JSON.parse(readFileSync(output, 'utf8'));
+
+    assert.equal(result.status, 1);
+    assert.equal(result.stdout, '');
+    assert.equal(payload.runs[0].results[0].level, 'error');
   });
 });
 

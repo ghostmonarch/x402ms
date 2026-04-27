@@ -53,3 +53,14 @@ npx @monarch-shield/x402 doctor --ci
 ```
 
 Use this in pull requests that modify paid MCP or agent-payment code.
+
+## Proof To Inspect
+
+Run the public proof loop before treating paid MCP payment safety as ready:
+
+```bash
+npm run smoke:external-agent
+npm run benchmark:adversarial
+```
+
+The generated JSON and Markdown reports are the evidence. They show unsafe detectable payment paths fail and patched guarded paths pass. They do not claim hosted proof, runtime policy enforcement, signed attestations, or settlement safety.

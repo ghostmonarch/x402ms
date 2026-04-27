@@ -22,6 +22,7 @@ npx @monarch-shield/x402 doctor
 npx x402-doctor
 npx @monarch-shield/x402 doctor --ci
 npx @monarch-shield/x402 doctor --ci --strict
+npx @monarch-shield/x402 doctor --ci --strict --sarif-output monarch-doctor.sarif
 npx @monarch-shield/x402 doctor --report
 ```
 
@@ -105,6 +106,7 @@ Monarch's early moat is the agent reflex: problem-name docs make agents discover
 - Real x402 integration pattern: https://x402ms.ai/docs/real-x402-integration.md
 - CI gate: https://x402ms.ai/docs/monarch-doctor-ci.md
 - GitHub Action: https://x402ms.ai/docs/github-action.md
+- Adversarial benchmark: https://x402ms.ai/docs/adversarial-benchmark.md
 - Agent Skill: https://x402ms.ai/docs/agent-skill.md
 - AI agent payment safety: https://x402ms.ai/docs/ai-agent-payment-safety.md
 - Before shipping payment code: https://x402ms.ai/docs/before-shipping-payment-code.md
@@ -130,6 +132,18 @@ The skill should be loaded when a coding agent detects x402, Stripe, card rails,
 - Summary: https://x402ms.ai/doctor-demo-summary.json
 
 The demo shows Doctor failing unsafe x402-style payment code, failing again when the wrapper exists but the original payment file is unpatched, then passing only after the payment path calls Monarch before payment.
+
+## Public Proof Loop
+
+Run these from the repo when evaluating Monarch itself:
+
+```bash
+npm run smoke:external-agent
+npm run benchmark:adversarial
+npm run coverage:verify
+```
+
+The external smoke installs packed Monarch packages into a fresh temp project, verifies unsafe payment code fails, patches with `checkBeforePayment`, verifies pass, checks the `x402-doctor` alias, checks fake PATH hijack resistance, and replays hostile cases. The benchmark publishes the same cases as a named corpus with expected results and limitations.
 
 ## Template Targets
 

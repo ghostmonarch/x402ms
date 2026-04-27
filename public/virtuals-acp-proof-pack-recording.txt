@@ -38,7 +38,12 @@ $ node packages/x402/src/cli.js doctor --root examples/virtuals-acp-proof-pack/u
       "message": "pay-to wallet handling found",
       "rails": [
         "wallet"
-      ]
+      ],
+      "ruleId": "monarch.payment.pay-to-wallet-handling-found",
+      "location": {
+        "startLine": 18,
+        "startColumn": 79
+      }
     },
     {
       "kind": "payment_flow",
@@ -46,7 +51,12 @@ $ node packages/x402/src/cli.js doctor --root examples/virtuals-acp-proof-pack/u
       "message": "stablecoin payment handling found",
       "rails": [
         "stablecoin"
-      ]
+      ],
+      "ruleId": "monarch.payment.stablecoin-payment-handling-found",
+      "location": {
+        "startLine": 2,
+        "startColumn": 3
+      }
     },
     {
       "kind": "payment_flow",
@@ -55,7 +65,12 @@ $ node packages/x402/src/cli.js doctor --root examples/virtuals-acp-proof-pack/u
       "rails": [
         "stablecoin",
         "wallet"
-      ]
+      ],
+      "ruleId": "monarch.payment.virtuals-acp-payment-handling-found",
+      "location": {
+        "startLine": 7,
+        "startColumn": 10
+      }
     }
   ],
   "sandbox": [
@@ -146,7 +161,12 @@ $ node packages/x402/src/cli.js doctor --root examples/virtuals-acp-proof-pack/p
       "message": "pay-to wallet handling found",
       "rails": [
         "wallet"
-      ]
+      ],
+      "ruleId": "monarch.payment.pay-to-wallet-handling-found",
+      "location": {
+        "startLine": 25,
+        "startColumn": 5
+      }
     },
     {
       "kind": "payment_flow",
@@ -154,7 +174,12 @@ $ node packages/x402/src/cli.js doctor --root examples/virtuals-acp-proof-pack/p
       "message": "stablecoin payment handling found",
       "rails": [
         "stablecoin"
-      ]
+      ],
+      "ruleId": "monarch.payment.stablecoin-payment-handling-found",
+      "location": {
+        "startLine": 4,
+        "startColumn": 3
+      }
     },
     {
       "kind": "payment_flow",
@@ -163,13 +188,23 @@ $ node packages/x402/src/cli.js doctor --root examples/virtuals-acp-proof-pack/p
       "rails": [
         "stablecoin",
         "wallet"
-      ]
+      ],
+      "ruleId": "monarch.payment.virtuals-acp-payment-handling-found",
+      "location": {
+        "startLine": 9,
+        "startColumn": 10
+      }
     },
     {
       "kind": "monarch_check",
       "file": "acp-job-escrow.js",
       "message": "Monarch pre-payment guard detected before payment execution",
-      "rails": []
+      "rails": [],
+      "ruleId": "monarch.guard.check-before-payment",
+      "location": {
+        "startLine": 38,
+        "startColumn": 10
+      }
     }
   ],
   "sandbox": [

@@ -38,7 +38,12 @@ $ node packages/x402/src/cli.js doctor --root examples/base-x402-proof-pack/unsa
       "message": "x402 payment handling found",
       "rails": [
         "x402"
-      ]
+      ],
+      "ruleId": "monarch.payment.x402-payment-handling-found",
+      "location": {
+        "startLine": 20,
+        "startColumn": 8
+      }
     },
     {
       "kind": "payment_flow",
@@ -46,7 +51,12 @@ $ node packages/x402/src/cli.js doctor --root examples/base-x402-proof-pack/unsa
       "message": "x402 payment handling found",
       "rails": [
         "x402"
-      ]
+      ],
+      "ruleId": "monarch.payment.x402-payment-handling-found",
+      "location": {
+        "startLine": 7,
+        "startColumn": 30
+      }
     },
     {
       "kind": "payment_flow",
@@ -54,7 +64,12 @@ $ node packages/x402/src/cli.js doctor --root examples/base-x402-proof-pack/unsa
       "message": "pay-to wallet handling found",
       "rails": [
         "wallet"
-      ]
+      ],
+      "ruleId": "monarch.payment.pay-to-wallet-handling-found",
+      "location": {
+        "startLine": 7,
+        "startColumn": 50
+      }
     },
     {
       "kind": "payment_flow",
@@ -62,7 +77,12 @@ $ node packages/x402/src/cli.js doctor --root examples/base-x402-proof-pack/unsa
       "message": "stablecoin payment handling found",
       "rails": [
         "stablecoin"
-      ]
+      ],
+      "ruleId": "monarch.payment.stablecoin-payment-handling-found",
+      "location": {
+        "startLine": 2,
+        "startColumn": 7
+      }
     }
   ],
   "sandbox": [
@@ -153,7 +173,12 @@ $ node packages/x402/src/cli.js doctor --root examples/base-x402-proof-pack/patc
       "message": "x402 payment handling found",
       "rails": [
         "x402"
-      ]
+      ],
+      "ruleId": "monarch.payment.x402-payment-handling-found",
+      "location": {
+        "startLine": 22,
+        "startColumn": 8
+      }
     },
     {
       "kind": "payment_flow",
@@ -161,7 +186,12 @@ $ node packages/x402/src/cli.js doctor --root examples/base-x402-proof-pack/patc
       "message": "x402 payment handling found",
       "rails": [
         "x402"
-      ]
+      ],
+      "ruleId": "monarch.payment.x402-payment-handling-found",
+      "location": {
+        "startLine": 9,
+        "startColumn": 24
+      }
     },
     {
       "kind": "payment_flow",
@@ -169,7 +199,12 @@ $ node packages/x402/src/cli.js doctor --root examples/base-x402-proof-pack/patc
       "message": "pay-to wallet handling found",
       "rails": [
         "wallet"
-      ]
+      ],
+      "ruleId": "monarch.payment.pay-to-wallet-handling-found",
+      "location": {
+        "startLine": 9,
+        "startColumn": 51
+      }
     },
     {
       "kind": "payment_flow",
@@ -177,13 +212,23 @@ $ node packages/x402/src/cli.js doctor --root examples/base-x402-proof-pack/patc
       "message": "stablecoin payment handling found",
       "rails": [
         "stablecoin"
-      ]
+      ],
+      "ruleId": "monarch.payment.stablecoin-payment-handling-found",
+      "location": {
+        "startLine": 4,
+        "startColumn": 7
+      }
     },
     {
       "kind": "monarch_check",
       "file": "pay-base-x402.js",
       "message": "Monarch pre-payment guard detected before payment execution",
-      "rails": []
+      "rails": [],
+      "ruleId": "monarch.guard.check-before-payment",
+      "location": {
+        "startLine": 29,
+        "startColumn": 10
+      }
     }
   ],
   "sandbox": [

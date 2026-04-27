@@ -4,6 +4,7 @@ import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, statSyn
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { evaluatePayment, packagePath, runSandbox, scanProject, validatePreprod } from './index.js';
+import { toSarif } from './sarif.js';
 
 const packageJson = JSON.parse(readFileSync(packagePath('package.json'), 'utf8'));
 
@@ -37,7 +38,7 @@ function help() {
   console.log(`Monarch Shield Agent Payment Safety Kit
 
 Usage:
-  npx @monarch-shield/x402 doctor [--root .] [--ci] [--json] [--strict] [--report]
+  npx @monarch-shield/x402 doctor [--root .] [--ci] [--json] [--strict] [--report] [--sarif] [--sarif-output file]
   npx @monarch-shield/x402 init [--template x402-client]
   npx @monarch-shield/x402 scan [--root .]
   npx @monarch-shield/x402 sandbox
@@ -57,6 +58,15 @@ async function doctor(options) {
   const ciMode = options.ci === 'true' || options.json === 'true';
   const strictMode = options.strict === 'true';
   const status = doctorStatus(result, { root, strictMode });
+
+  if (options.sarif === 'true' || options['sarif-output']) {
+    printOrWriteSarif(result, { root, status, output: options['sarif-output'] });
+    await reportDoctorRun(result, { root, status, strictMode, ciMode: true, reportMode: reportMode(options) });
+    if (status === 'failed' || status === 'failed_no_payment_flow') {
+      process.exitCode = 1;
+    }
+    return;
+  }
 
   if (ciMode) {
     printDoctorJson(result, { root, strictMode, status });
@@ -327,6 +337,21 @@ function printDoctorJson(result, options) {
   };
 
   console.log(JSON.stringify(payload, null, 2));
+}
+
+function printOrWriteSarif(result, options) {
+  if (options.output === 'true') throw new Error('Missing value for --sarif-output');
+
+  const payload = toSarif(result, { root: options.root, version: packageJson.version });
+  const text = `${JSON.stringify(payload, null, 2)}\n`;
+
+  if (options.output && options.output !== 'true') {
+    mkdirSync(dirname(options.output), { recursive: true });
+    writeFileSync(options.output, text);
+    return;
+  }
+
+  console.log(text.trimEnd());
 }
 
 function doctorStatus(result, options) {

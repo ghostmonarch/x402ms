@@ -23,3 +23,17 @@ await checkBeforePayment(payment, async (safePayment) => {
 ## CI Gate
 
 Keep the Doctor command in CI so future wallet-send changes cannot merge without the preflight.
+
+## Proof To Check
+
+The adversarial benchmark includes direct `wallet.send`, unused guard import, guard-after-payment, dead helper, and patched guarded callback cases:
+
+```bash
+npm run benchmark:adversarial
+```
+
+The external smoke installs Monarch like a third-party agent and verifies unsafe fail, patched pass, `x402-doctor`, fake PATH binary, and wrapper-only limitation behavior:
+
+```bash
+npm run smoke:external-agent
+```

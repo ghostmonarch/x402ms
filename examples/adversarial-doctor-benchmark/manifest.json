@@ -1,0 +1,68 @@
+{
+  "name": "Monarch Doctor Adversarial Benchmark",
+  "claim": "Build-time static preflight coverage for detectable agent-controlled payment paths.",
+  "nonClaims": [
+    "runtime policy enforcement",
+    "hosted proof",
+    "wallet ownership verification",
+    "settlement safety",
+    "fraud prevention"
+  ],
+  "cases": [
+    {
+      "id": "unsafe-wallet-send",
+      "title": "Unsafe wallet send fails",
+      "root": "cases/unsafe-wallet-send",
+      "expectedStatus": "failed",
+      "expectedExitCode": 1,
+      "expectedUnprotectedPaymentFiles": ["pay.js"],
+      "rationale": "A direct wallet.send payment sink is not inside checkBeforePayment."
+    },
+    {
+      "id": "patched-check-before-payment",
+      "title": "Patched payment path passes",
+      "root": "cases/patched-check-before-payment",
+      "expectedStatus": "passed",
+      "expectedExitCode": 0,
+      "expectedUnprotectedPaymentFiles": [],
+      "rationale": "The wallet.send payment sink is inside the checkBeforePayment guarded callback."
+    },
+    {
+      "id": "unused-check-import",
+      "title": "Unused Monarch import fails",
+      "root": "cases/unused-check-import",
+      "expectedStatus": "failed",
+      "expectedExitCode": 1,
+      "expectedUnprotectedPaymentFiles": ["pay.js"],
+      "rationale": "Importing checkBeforePayment is not enough; the payment execution remains unguarded."
+    },
+    {
+      "id": "guard-after-payment",
+      "title": "Guard after payment fails",
+      "root": "cases/guard-after-payment",
+      "expectedStatus": "failed",
+      "expectedExitCode": 1,
+      "expectedUnprotectedPaymentFiles": ["pay.js"],
+      "rationale": "The payment executes before checkBeforePayment runs."
+    },
+    {
+      "id": "dead-helper",
+      "title": "Dead guarded helper fails",
+      "root": "cases/dead-helper",
+      "expectedStatus": "failed",
+      "expectedExitCode": 1,
+      "expectedUnprotectedPaymentFiles": ["pay.js"],
+      "rationale": "A guarded helper that does not protect the live payment path does not satisfy Doctor."
+    },
+    {
+      "id": "wrapper-only-safety",
+      "title": "Wrapper-only guarded helper passes with static limitation",
+      "root": "cases/wrapper-only-safety",
+      "expectedStatus": "passed",
+      "expectedExitCode": 0,
+      "expectedUnprotectedPaymentFiles": [],
+      "rationale": "Doctor can verify the sink is inside a detectable guarded helper in the same scanned project.",
+      "limitation": "Doctor does not prove runtime policy, wallet ownership, settlement behavior, or every caller-supplied payment field."
+    }
+  ]
+}

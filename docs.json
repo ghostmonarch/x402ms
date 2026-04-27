@@ -18,6 +18,7 @@
             "group": "Start",
             "pages": [
               "public/docs/partner-proof-packs",
+              "public/docs/adversarial-benchmark",
               "public/docs/grant-evidence",
               "public/docs/agent-payment-preflight",
               "public/docs/github-action",

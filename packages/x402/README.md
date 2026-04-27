@@ -20,6 +20,7 @@ Treat it as the go-live gate for payment-enabled OpenAI Agents SDK, Anthropic MC
 npx @monarch-shield/x402 doctor
 npx x402-doctor
 npx @monarch-shield/x402 doctor --ci
+npx @monarch-shield/x402 doctor --ci --strict --sarif-output monarch-doctor.sarif
 npx @monarch-shield/x402 doctor --report
 npx @monarch-shield/x402 init --template x402-client
 npx @monarch-shield/x402 scan
@@ -58,6 +59,7 @@ Doctor is a build-time preflight and CI gate. It checks that detectable payment 
 - `monarch init`: scaffold template snippets and a user notice under `./monarch`.
 - `monarch doctor`: run the complete preflight safety gate.
 - `monarch doctor --ci`: emit machine-readable output for CI gates.
+- `monarch doctor --sarif-output monarch-doctor.sarif`: emit GitHub code scanning output for unprotected payment files.
 - `monarch doctor --report`: opt in to anonymous Doctor run reporting for early DAU proof.
 - `monarch scan`: detect payment flows and missing Monarch checks.
 - `monarch sandbox`: run deterministic unsafe payment scenarios.
@@ -104,8 +106,17 @@ Public proof artifacts:
 
 - `https://x402ms.ai/doctor-demo-recording.txt`
 - `https://x402ms.ai/doctor-demo-summary.json`
+- `https://x402ms.ai/docs/adversarial-benchmark.md`
 
 The demo shows Doctor failing unsafe x402-style code, failing again when a wrapper exists but the original payment path is unpatched, then passing after payment execution is guarded by `checkBeforePayment`.
+
+Proof-loop commands from the repo:
+
+```bash
+npm run smoke:external-agent
+npm run benchmark:adversarial
+npm run coverage:verify
+```
 
 ## Agent Discovery Docs
 
@@ -117,6 +128,7 @@ The demo shows Doctor failing unsafe x402-style code, failing again when a wrapp
 - `https://x402ms.ai/docs/base-x402-preflight.md`
 - `https://x402ms.ai/docs/real-x402-integration.md`
 - `https://x402ms.ai/docs/monarch-doctor-ci.md`
+- `https://x402ms.ai/docs/adversarial-benchmark.md`
 
 ## User Notice
 

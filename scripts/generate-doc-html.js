@@ -15,6 +15,13 @@ const docs = [
     description: 'Index of reproducible Monarch proof packs across agent-payment ecosystems.',
   },
   {
+    slug: 'adversarial-benchmark',
+    title: 'Adversarial Benchmark',
+    group: 'Proof Packs',
+    source: 'public/docs/adversarial-benchmark.md',
+    description: 'Public benchmark showing what Doctor catches and what it does not claim to prove.',
+  },
+  {
     slug: 'grant-evidence',
     title: 'Grant Evidence Packet',
     group: 'Proof Packs',

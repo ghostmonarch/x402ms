@@ -8,3 +8,4 @@ export {
   scenarios,
   packagePath,
 } from './safety.js';
+export { toSarif } from './sarif.js';

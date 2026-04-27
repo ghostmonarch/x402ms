@@ -38,7 +38,12 @@ $ node packages/x402/src/cli.js doctor --root examples/card-network-agent-pay-pr
       "message": "pay-to wallet handling found",
       "rails": [
         "wallet"
-      ]
+      ],
+      "ruleId": "monarch.payment.pay-to-wallet-handling-found",
+      "location": {
+        "startLine": 20,
+        "startColumn": 63
+      }
     },
     {
       "kind": "payment_flow",
@@ -46,7 +51,12 @@ $ node packages/x402/src/cli.js doctor --root examples/card-network-agent-pay-pr
       "message": "card payment rail handling found",
       "rails": [
         "card"
-      ]
+      ],
+      "ruleId": "monarch.payment.card-payment-rail-handling-found",
+      "location": {
+        "startLine": 1,
+        "startColumn": 10
+      }
     }
   ],
   "sandbox": [
@@ -137,7 +147,12 @@ $ node packages/x402/src/cli.js doctor --root examples/card-network-agent-pay-pr
       "message": "pay-to wallet handling found",
       "rails": [
         "wallet"
-      ]
+      ],
+      "ruleId": "monarch.payment.pay-to-wallet-handling-found",
+      "location": {
+        "startLine": 34,
+        "startColumn": 34
+      }
     },
     {
       "kind": "payment_flow",
@@ -145,13 +160,23 @@ $ node packages/x402/src/cli.js doctor --root examples/card-network-agent-pay-pr
       "message": "card payment rail handling found",
       "rails": [
         "card"
-      ]
+      ],
+      "ruleId": "monarch.payment.card-payment-rail-handling-found",
+      "location": {
+        "startLine": 3,
+        "startColumn": 10
+      }
     },
     {
       "kind": "monarch_check",
       "file": "card-network-agent-checkout.js",
       "message": "Monarch pre-payment guard detected before payment execution",
-      "rails": []
+      "rails": [],
+      "ruleId": "monarch.guard.check-before-payment",
+      "location": {
+        "startLine": 47,
+        "startColumn": 10
+      }
     }
   ],
   "sandbox": [

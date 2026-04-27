@@ -38,7 +38,12 @@ $ node packages/x402/src/cli.js doctor --root examples/coinbase-agentkit-proof-p
       "message": "x402 payment handling found",
       "rails": [
         "x402"
-      ]
+      ],
+      "ruleId": "monarch.payment.x402-payment-handling-found",
+      "location": {
+        "startLine": 31,
+        "startColumn": 5
+      }
     },
     {
       "kind": "payment_flow",
@@ -46,7 +51,12 @@ $ node packages/x402/src/cli.js doctor --root examples/coinbase-agentkit-proof-p
       "message": "pay-to wallet handling found",
       "rails": [
         "wallet"
-      ]
+      ],
+      "ruleId": "monarch.payment.pay-to-wallet-handling-found",
+      "location": {
+        "startLine": 21,
+        "startColumn": 61
+      }
     },
     {
       "kind": "payment_flow",
@@ -54,7 +64,12 @@ $ node packages/x402/src/cli.js doctor --root examples/coinbase-agentkit-proof-p
       "message": "agent spend payment reference found",
       "rails": [
         "wallet"
-      ]
+      ],
+      "ruleId": "monarch.payment.agent-spend-payment-reference-found",
+      "location": {
+        "startLine": 21,
+        "startColumn": 23
+      }
     },
     {
       "kind": "payment_flow",
@@ -62,7 +77,12 @@ $ node packages/x402/src/cli.js doctor --root examples/coinbase-agentkit-proof-p
       "message": "stablecoin payment handling found",
       "rails": [
         "stablecoin"
-      ]
+      ],
+      "ruleId": "monarch.payment.stablecoin-payment-handling-found",
+      "location": {
+        "startLine": 1,
+        "startColumn": 7
+      }
     },
     {
       "kind": "payment_flow",
@@ -71,7 +91,12 @@ $ node packages/x402/src/cli.js doctor --root examples/coinbase-agentkit-proof-p
       "rails": [
         "agentkit",
         "wallet"
-      ]
+      ],
+      "ruleId": "monarch.payment.coinbase-agentkit-or-agentic-wallet-payment-handling-found",
+      "location": {
+        "startLine": 6,
+        "startColumn": 16
+      }
     }
   ],
   "sandbox": [
@@ -162,7 +187,12 @@ $ node packages/x402/src/cli.js doctor --root examples/coinbase-agentkit-proof-p
       "message": "x402 payment handling found",
       "rails": [
         "x402"
-      ]
+      ],
+      "ruleId": "monarch.payment.x402-payment-handling-found",
+      "location": {
+        "startLine": 33,
+        "startColumn": 5
+      }
     },
     {
       "kind": "payment_flow",
@@ -170,7 +200,12 @@ $ node packages/x402/src/cli.js doctor --root examples/coinbase-agentkit-proof-p
       "message": "pay-to wallet handling found",
       "rails": [
         "wallet"
-      ]
+      ],
+      "ruleId": "monarch.payment.pay-to-wallet-handling-found",
+      "location": {
+        "startLine": 23,
+        "startColumn": 57
+      }
     },
     {
       "kind": "payment_flow",
@@ -178,7 +213,12 @@ $ node packages/x402/src/cli.js doctor --root examples/coinbase-agentkit-proof-p
       "message": "agent spend payment reference found",
       "rails": [
         "wallet"
-      ]
+      ],
+      "ruleId": "monarch.payment.agent-spend-payment-reference-found",
+      "location": {
+        "startLine": 23,
+        "startColumn": 23
+      }
     },
     {
       "kind": "payment_flow",
@@ -186,7 +226,12 @@ $ node packages/x402/src/cli.js doctor --root examples/coinbase-agentkit-proof-p
       "message": "stablecoin payment handling found",
       "rails": [
         "stablecoin"
-      ]
+      ],
+      "ruleId": "monarch.payment.stablecoin-payment-handling-found",
+      "location": {
+        "startLine": 3,
+        "startColumn": 7
+      }
     },
     {
       "kind": "payment_flow",
@@ -195,13 +240,23 @@ $ node packages/x402/src/cli.js doctor --root examples/coinbase-agentkit-proof-p
       "rails": [
         "agentkit",
         "wallet"
-      ]
+      ],
+      "ruleId": "monarch.payment.coinbase-agentkit-or-agentic-wallet-payment-handling-found",
+      "location": {
+        "startLine": 8,
+        "startColumn": 16
+      }
     },
     {
       "kind": "monarch_check",
       "file": "agentic-wallet-spend.js",
       "message": "Monarch pre-payment guard detected before payment execution",
-      "rails": []
+      "rails": [],
+      "ruleId": "monarch.guard.check-before-payment",
+      "location": {
+        "startLine": 47,
+        "startColumn": 10
+      }
     }
   ],
   "sandbox": [

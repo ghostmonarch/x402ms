@@ -50,6 +50,11 @@ export interface ScanFinding {
   file: string;
   message: string;
   rails: Array<'x402' | 'paid_mcp' | 'agentkit' | 'stripe' | 'stablecoin' | 'wallet' | 'card' | 'bank' | 'regional_rail'>;
+  ruleId?: string;
+  location?: {
+    startLine: number;
+    startColumn: number;
+  };
 }
 
 export interface ScanProjectResult {
@@ -90,4 +95,5 @@ export function checkBeforePayment<T>(
 export function runSandbox(): SandboxResult[];
 export function scanProject(root?: string): ScanProjectResult;
 export function validatePreprod(root?: string): ValidatePreprodResult;
+export function toSarif(result: ValidatePreprodResult, options?: { root?: string; version?: string }): unknown;
 export const scenarios: unknown[];

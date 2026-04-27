@@ -21,6 +21,22 @@ AI agents can call wallets, cards, stablecoins, paid APIs, and paid MCP tools. A
 3. Rerun Doctor.
 4. Keep Doctor in CI.
 
+## Proof Loop
+
+Monarch's credibility test is external: install it cold, run unsafe payment code, see Doctor fail, patch the path, and see Doctor pass.
+
+```bash
+npm run smoke:external-agent
+npm run benchmark:adversarial
+```
+
+Read the generated proof:
+
+- `artifacts/external-agent-smoke.md`
+- `artifacts/adversarial-benchmark.md`
+
+These reports prove build-time static preflight behavior. They do not claim runtime policy, hosted proof, wallet ownership, settlement safety, or fraud prevention.
+
 ## CI
 
 ```yaml

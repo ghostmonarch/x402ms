@@ -38,7 +38,12 @@ $ node packages/x402/src/cli.js doctor --root examples/google-ap2-a2a-x402-proof
       "message": "x402 payment handling found",
       "rails": [
         "x402"
-      ]
+      ],
+      "ruleId": "monarch.payment.x402-payment-handling-found",
+      "location": {
+        "startLine": 1,
+        "startColumn": 7
+      }
     },
     {
       "kind": "payment_flow",
@@ -46,7 +51,12 @@ $ node packages/x402/src/cli.js doctor --root examples/google-ap2-a2a-x402-proof
       "message": "pay-to wallet handling found",
       "rails": [
         "wallet"
-      ]
+      ],
+      "ruleId": "monarch.payment.pay-to-wallet-handling-found",
+      "location": {
+        "startLine": 28,
+        "startColumn": 52
+      }
     },
     {
       "kind": "payment_flow",
@@ -54,7 +64,12 @@ $ node packages/x402/src/cli.js doctor --root examples/google-ap2-a2a-x402-proof
       "message": "stablecoin payment handling found",
       "rails": [
         "stablecoin"
-      ]
+      ],
+      "ruleId": "monarch.payment.stablecoin-payment-handling-found",
+      "location": {
+        "startLine": 2,
+        "startColumn": 7
+      }
     },
     {
       "kind": "payment_flow",
@@ -63,7 +78,12 @@ $ node packages/x402/src/cli.js doctor --root examples/google-ap2-a2a-x402-proof
       "rails": [
         "x402",
         "paid_mcp"
-      ]
+      ],
+      "ruleId": "monarch.payment.google-ap2-or-a2a-x402-payment-handling-found",
+      "location": {
+        "startLine": 1,
+        "startColumn": 7
+      }
     }
   ],
   "sandbox": [
@@ -154,7 +174,12 @@ $ node packages/x402/src/cli.js doctor --root examples/google-ap2-a2a-x402-proof
       "message": "x402 payment handling found",
       "rails": [
         "x402"
-      ]
+      ],
+      "ruleId": "monarch.payment.x402-payment-handling-found",
+      "location": {
+        "startLine": 3,
+        "startColumn": 7
+      }
     },
     {
       "kind": "payment_flow",
@@ -162,7 +187,12 @@ $ node packages/x402/src/cli.js doctor --root examples/google-ap2-a2a-x402-proof
       "message": "pay-to wallet handling found",
       "rails": [
         "wallet"
-      ]
+      ],
+      "ruleId": "monarch.payment.pay-to-wallet-handling-found",
+      "location": {
+        "startLine": 40,
+        "startColumn": 9
+      }
     },
     {
       "kind": "payment_flow",
@@ -170,7 +200,12 @@ $ node packages/x402/src/cli.js doctor --root examples/google-ap2-a2a-x402-proof
       "message": "stablecoin payment handling found",
       "rails": [
         "stablecoin"
-      ]
+      ],
+      "ruleId": "monarch.payment.stablecoin-payment-handling-found",
+      "location": {
+        "startLine": 4,
+        "startColumn": 7
+      }
     },
     {
       "kind": "payment_flow",
@@ -179,13 +214,23 @@ $ node packages/x402/src/cli.js doctor --root examples/google-ap2-a2a-x402-proof
       "rails": [
         "x402",
         "paid_mcp"
-      ]
+      ],
+      "ruleId": "monarch.payment.google-ap2-or-a2a-x402-payment-handling-found",
+      "location": {
+        "startLine": 3,
+        "startColumn": 7
+      }
     },
     {
       "kind": "monarch_check",
       "file": "ap2-a2a-x402-payment.js",
       "message": "Monarch pre-payment guard detected before payment execution",
-      "rails": []
+      "rails": [],
+      "ruleId": "monarch.guard.check-before-payment",
+      "location": {
+        "startLine": 56,
+        "startColumn": 10
+      }
     }
   ],
   "sandbox": [

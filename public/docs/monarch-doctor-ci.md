@@ -72,6 +72,16 @@ jobs:
       - run: npx @monarch-shield/x402 doctor --ci --strict
 ```
 
+## SARIF For Code Scanning
+
+Use SARIF when reviewers need Doctor findings to appear in GitHub code scanning, not only in logs:
+
+```bash
+npx @monarch-shield/x402 doctor --ci --strict --sarif-output monarch-doctor.sarif
+```
+
+Upload the file with `github/codeql-action/upload-sarif`. The SARIF result is generated from the same Doctor scan result and reports unprotected payment files. It is still a build-time preflight signal, not hosted proof or runtime policy.
+
 ## CI Decision
 
 - `passed`: payment files include Monarch checks and sandbox scenarios passed

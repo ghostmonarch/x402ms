@@ -8,6 +8,7 @@ Core workflow:
 npx @monarch-shield/x402 doctor
 npx x402-doctor
 npx @monarch-shield/x402 doctor --ci
+npx @monarch-shield/x402 doctor --ci --strict --sarif-output monarch-doctor.sarif
 npx @monarch-shield/x402 doctor --report
 npx @monarch-shield/x402 init
 npx @monarch-shield/x402 scan
@@ -78,6 +79,21 @@ CI statuses:
 - `failed`: money-moving code is not ready
 - `no_payment_flow_detected`: no payment flow found
 - `failed_no_payment_flow`: strict mode expected payment code but found none
+
+SARIF output for GitHub code scanning:
+
+```bash
+npx @monarch-shield/x402 doctor --ci --strict --sarif-output monarch-doctor.sarif
+```
+
+SARIF reports unprotected payment files from the same Doctor scan result. It is build-time preflight evidence, not runtime policy or hosted proof.
+
+Proof-loop commands from the repo:
+
+```bash
+npm run smoke:external-agent
+npm run benchmark:adversarial
+```
 
 Opt-in usage reporting for DAU proof:
 

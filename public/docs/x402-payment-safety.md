@@ -67,3 +67,20 @@ npx @monarch-shield/x402 doctor --ci
 ```
 
 Use `--strict` when the repository is expected to contain money-moving code.
+
+## Public Proof
+
+Run the public benchmark and external-agent smoke when evaluating whether Doctor is a credible launch gate:
+
+```bash
+npm run benchmark:adversarial
+npm run smoke:external-agent
+```
+
+The benchmark includes unsafe direct `wallet.send`, unused import, late guard, dead helper, patched guarded callback, and wrapper-only limitation cases. It proves static preflight coverage for detectable payment paths. It does not prove runtime policy, hosted proof, settlement safety, or wallet ownership.
+
+For GitHub code scanning output:
+
+```bash
+npx @monarch-shield/x402 doctor --ci --strict --sarif-output monarch-doctor.sarif
+```

@@ -33,6 +33,7 @@ const ignoredScanPaths = [
   'examples/google-ap2-a2a-x402-proof-pack/unsafe/',
   'examples/stripe-bridge-stablecoin-proof-pack/unsafe/',
   'examples/card-network-agent-pay-proof-pack/unsafe/',
+  'examples/adversarial-doctor-benchmark/cases/',
   'packages/x402/src/cli.js',
   'packages/x402/src/safety.js',
   'packages/x402/examples/',
@@ -40,6 +41,8 @@ const ignoredScanPaths = [
   'packages/x402/test/',
   'scripts/generate-doc-html.js',
   'scripts/monte-carlo-agent-discovery.js',
+  'scripts/external-agent-smoke.js',
+  'scripts/run-adversarial-benchmark.js',
   'scripts/record-base-x402-proof-pack.js',
   'scripts/record-doctor-demo.js',
   'workers/doctor-run/',
@@ -156,11 +159,14 @@ export function scanProject(root = process.cwd()) {
     addFinding(findings, rel, codeContent, /achDebit|wireTransfer|bankTransfer|rtpPayment|fedNow|openBanking|plaid|dwolla|zelle|sepa|payouts?\.create|transfers?\.create|wise|revolut|yapily|tink|finicity/i, 'bank payment rail handling found', ['bank']);
     addFinding(findings, rel, codeContent, /pixPayment|upiPayment|qris|promptPay|payNow|duitNow|vietQR|spei|ideal|blik|m-pesa|mpesa/i, 'regional payment rail handling found', ['regional_rail', 'bank']);
     if (hasEffectiveMonarchGuard(codeContent)) {
+      const location = locationForMatch(codeContent, /checkBeforePayment\s*\(/i);
       findings.push({
         kind: 'monarch_check',
         file: rel,
         message: 'Monarch pre-payment guard detected before payment execution',
         rails: [],
+        ruleId: 'monarch.guard.check-before-payment',
+        location,
       });
     }
   }
@@ -493,14 +499,41 @@ function collectFiles(root) {
 }
 
 function addFinding(findings, file, content, pattern, message, rails = []) {
-  if (!pattern.test(content)) return;
+  const match = firstMatch(content, pattern);
+  if (!match) return;
 
   findings.push({
     kind: message.includes('Monarch') ? 'monarch_check' : 'payment_flow',
     file,
     message,
     rails,
+    ruleId: ruleIdForMessage(message),
+    location: locationForIndex(content, match.index),
   });
+}
+
+function firstMatch(content, pattern) {
+  const flags = pattern.flags.includes('g') ? pattern.flags : `${pattern.flags}g`;
+  const globalPattern = new RegExp(pattern.source, flags);
+  return globalPattern.exec(content);
+}
+
+function locationForMatch(content, pattern) {
+  const match = firstMatch(content, pattern);
+  return match ? locationForIndex(content, match.index) : { startLine: 1, startColumn: 1 };
+}
+
+function locationForIndex(content, index) {
+  const before = content.slice(0, index);
+  const lines = before.split('\n');
+  return {
+    startLine: lines.length,
+    startColumn: lines.at(-1).length + 1,
+  };
+}
+
+function ruleIdForMessage(message) {
+  return `monarch.payment.${message.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`;
 }
 
 function findUnprotectedPaymentFiles(findings) {

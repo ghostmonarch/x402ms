@@ -31,6 +31,14 @@ inputs:
     description: Node.js version used by the Doctor command.
     required: false
     default: "24"
+  sarif:
+    description: Write SARIF output for GitHub code scanning upload.
+    required: false
+    default: "false"
+  sarif-output:
+    description: SARIF output path when sarif is true.
+    required: false
+    default: "monarch-doctor.sarif"
 
 runs:
   using: composite
@@ -48,6 +56,8 @@ runs:
         MONARCH_STRICT: ${{ inputs.strict }}
         MONARCH_REPORT: ${{ inputs.report }}
         MONARCH_PROOF_SOURCE: ${{ inputs.proof-source }}
+        MONARCH_SARIF: ${{ inputs.sarif }}
+        MONARCH_SARIF_OUTPUT: ${{ inputs.sarif-output }}
       run: |
         set -euo pipefail
 
@@ -63,6 +73,10 @@ runs:
 
         if [[ -n "$MONARCH_PROOF_SOURCE" ]]; then
           cmd+=(--proof-source "$MONARCH_PROOF_SOURCE")
+        fi
+
+        if [[ "$MONARCH_SARIF" == "true" ]]; then
+          cmd+=(--sarif-output "$MONARCH_SARIF_OUTPUT")
         fi
 
         "${cmd[@]}"

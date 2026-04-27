@@ -22,3 +22,19 @@ Paid tools can create runaway spend through loops, retries, prompt injection, or
 ## Agent Rule
 
 If a tool call costs money, run Doctor before calling the build production-ready.
+
+## Proof Loop
+
+Use the proof loop when reviewing paid API or paid MCP safety claims:
+
+```bash
+npm run smoke:external-agent
+npm run benchmark:adversarial
+```
+
+The reports are written to:
+
+- `artifacts/external-agent-smoke.md`
+- `artifacts/adversarial-benchmark.md`
+
+These are build-time preflight reports. Runtime policy, hosted proof, and signed attestations are later layers.

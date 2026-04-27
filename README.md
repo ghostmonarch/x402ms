@@ -53,7 +53,16 @@ Public proof:
 
 - Doctor demo recording: [https://x402ms.ai/doctor-demo-recording.txt](https://x402ms.ai/doctor-demo-recording.txt)
 - Demo summary: [https://x402ms.ai/doctor-demo-summary.json](https://x402ms.ai/doctor-demo-summary.json)
+- Adversarial benchmark: [https://x402ms.ai/docs/adversarial-benchmark.md](https://x402ms.ai/docs/adversarial-benchmark.md)
 - Agent North Star: [https://x402ms.ai/north-star.txt](https://x402ms.ai/north-star.txt)
+
+Proof-loop commands:
+
+```bash
+npm run smoke:external-agent
+npm run benchmark:adversarial
+npm run coverage:verify
+```
 
 ## Why Agents Use It
 
@@ -107,6 +116,7 @@ npx @monarch-shield/x402 doctor --ci
 - Agent instructions: `public/AGENTS.md`
 - CLI reference: `public/cli.txt`
 - CI gate: `public/docs/monarch-doctor-ci.md`
+- Adversarial benchmark: `public/docs/adversarial-benchmark.md`
 - Query map: `public/docs/agent-payment-query-map.md`
 - Multilingual query map: `public/docs/multilingual-agent-payment-query-map.md`
 - Real x402 pattern: `public/docs/real-x402-integration.md`
@@ -119,6 +129,8 @@ npx @monarch-shield/x402 doctor --ci
 Monarch is not an enterprise dashboard, marketplace, facilitator, wallet, insurance product, or generic compliance platform.
 
 The product wedge is Doctor: the safety gate agents run before shipping money-moving code.
+
+`monarch.config.json` is not a supported default escape hatch yet. Custom sinks, guard names, and ignore paths should wait until the default Doctor gate has public proof, SARIF output, and CI evidence for the teams adopting it.
 
 ## Moat
 

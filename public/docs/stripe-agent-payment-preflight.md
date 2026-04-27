@@ -19,3 +19,20 @@ Run `checkBeforePayment` before creating the charge, checkout, payout, refund, o
 ## Agent Rule
 
 If agent-generated code can charge, refund, or pay out through Stripe, Doctor must pass before go-live.
+
+## Proof And PR Output
+
+For credibility review, use the public proof loop:
+
+```bash
+npm run smoke:external-agent
+npm run benchmark:adversarial
+```
+
+For native GitHub review, emit SARIF from Doctor:
+
+```bash
+npx @monarch-shield/x402 doctor --ci --strict --sarif-output monarch-doctor.sarif
+```
+
+This is build-time static preflight evidence. It does not replace Stripe controls, fraud controls, runtime policy, or settlement checks.

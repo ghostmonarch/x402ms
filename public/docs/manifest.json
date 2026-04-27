@@ -1,6 +1,6 @@
 {
   "name": "Monarch Shield Docs",
-  "generatedAt": "2026-04-27T08:47:38.798Z",
+  "generatedAt": "2026-04-27T11:35:18.153Z",
   "canonical": "https://x402ms.ai/docs/",
   "docs": [
     {
@@ -10,6 +10,14 @@
       "description": "Index of reproducible Monarch proof packs across agent-payment ecosystems.",
       "html": "/docs/partner-proof-packs.html",
       "raw": "/docs/partner-proof-packs.md"
+    },
+    {
+      "slug": "adversarial-benchmark",
+      "title": "Adversarial Benchmark",
+      "group": "Proof Packs",
+      "description": "Public benchmark showing what Doctor catches and what it does not claim to prove.",
+      "html": "/docs/adversarial-benchmark.html",
+      "raw": "/docs/adversarial-benchmark.md"
     },
     {
       "slug": "grant-evidence",
