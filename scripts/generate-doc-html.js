@@ -375,7 +375,7 @@ function docsIndexBody() {
 <p class="lead">Official documentation for the local-first payment safety gate agents run before agent-controlled money moves.</p>
 <div class="exec-panel">
   <strong>Executive read:</strong>
-  Monarch is not a payment processor, wallet, marketplace, or fraud vendor. It is a preflight and runtime safety layer for code that can initiate payments across x402, wallets, stablecoins, cards, bank rails, paid APIs, and paid MCP tools.
+  Monarch is not a payment processor, wallet, marketplace, or fraud vendor. Today it is a local and CI preflight gate for code that can initiate payments across x402, wallets, stablecoins, cards, bank rails, paid APIs, and paid MCP tools.
 </div>
 ${groups}`;
 }

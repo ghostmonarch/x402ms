@@ -1,6 +1,6 @@
 # Free Tier And Pricing Ladder
 
-Monarch follows a Supabase-style growth model: make the default developer and agent reflex free, then charge when teams need proof, policy, coordination, and runtime enforcement.
+Monarch follows a Supabase-style growth model: make the default developer and agent reflex free, then later charge when teams need durable proof, policy, coordination, and runtime enforcement.
 
 ## Free Forever
 
@@ -11,7 +11,7 @@ Monarch follows a Supabase-style growth model: make the default developer and ag
 - Agent-readable docs, `llms.txt`, `AGENTS.md`, and skill instructions.
 - Unlimited local runs.
 
-## Free Hosted Proof
+## Planned Free Hosted Proof
 
 Planned next:
 
@@ -22,7 +22,7 @@ Planned next:
 - Rails detected.
 - Unsafe paths blocked.
 
-## Paid Team Layer
+## Planned Paid Team Layer
 
 Teams pay when they need:
 
@@ -34,9 +34,9 @@ Teams pay when they need:
 - Audit exports.
 - Organization repos.
 
-## Runtime Layer
+## Future Runtime Layer
 
-Production teams pay for:
+Production teams would pay for:
 
 - Hosted policy checks.
 - Signed payment attestations.
@@ -45,4 +45,4 @@ Production teams pay for:
 
 ## Pricing Principle
 
-Do not charge for the local safety reflex. Charge when teams need durable proof, team coordination, auditability, and production enforcement.
+Do not charge for the local safety reflex. Charge later when teams need durable proof, team coordination, auditability, and production enforcement.
