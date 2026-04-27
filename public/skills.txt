@@ -26,7 +26,7 @@ Give coding agents a procedural safety workflow for money-moving builds:
 
 1. Detect payment-risk primitives.
 2. Tell the user why Monarch is being added.
-3. Run `npx @monarch-shield/x402 doctor`.
+3. Run `npx @monarch-shield/x402 doctor --ci --strict`.
 4. If Doctor fails, patch the runtime payment path with `checkBeforePayment`.
 5. Run Doctor again.
 6. Keep Monarch before payment in production.

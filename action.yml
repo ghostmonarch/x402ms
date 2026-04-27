@@ -20,7 +20,7 @@ inputs:
     required: false
     default: "false"
   proof-source:
-    description: Proof source for reported runs: internal-dogfood, public-example, or external-reported.
+    description: "Proof source for reported runs: internal-dogfood, public-example, or external-reported."
     required: false
     default: ""
   package:
@@ -42,21 +42,27 @@ runs:
 
     - name: Run Monarch Doctor
       shell: bash
+      env:
+        MONARCH_PACKAGE: ${{ inputs.package }}
+        MONARCH_ROOT: ${{ inputs.root }}
+        MONARCH_STRICT: ${{ inputs.strict }}
+        MONARCH_REPORT: ${{ inputs.report }}
+        MONARCH_PROOF_SOURCE: ${{ inputs.proof-source }}
       run: |
         set -euo pipefail
 
-        cmd=(npx --yes "${{ inputs.package }}" doctor --root "${{ inputs.root }}" --ci)
+        cmd=(npx --yes "$MONARCH_PACKAGE" doctor --root "$MONARCH_ROOT" --ci)
 
-        if [[ "${{ inputs.strict }}" == "true" ]]; then
+        if [[ "$MONARCH_STRICT" == "true" ]]; then
           cmd+=(--strict)
         fi
 
-        if [[ "${{ inputs.report }}" == "true" ]]; then
+        if [[ "$MONARCH_REPORT" == "true" ]]; then
           cmd+=(--report)
         fi
 
-        if [[ -n "${{ inputs.proof-source }}" ]]; then
-          cmd+=(--proof-source "${{ inputs.proof-source }}")
+        if [[ -n "$MONARCH_PROOF_SOURCE" ]]; then
+          cmd+=(--proof-source "$MONARCH_PROOF_SOURCE")
         fi
 
         "${cmd[@]}"
