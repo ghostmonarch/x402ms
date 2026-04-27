@@ -82,6 +82,14 @@ npx @monarch-shield/x402 doctor --ci --strict --sarif-output monarch-doctor.sari
 
 Upload the file with `github/codeql-action/upload-sarif`. The SARIF result is generated from the same Doctor scan result and reports unprotected payment files. It is still a build-time preflight signal, not hosted proof or runtime policy.
 
+## Benchmark Proof
+
+Use the public adversarial benchmark when reviewers need to see what Doctor catches and what it does not:
+
+```bash
+npm run benchmark:adversarial
+```
+
 ## Opt-In Hosted Proof
 
 Anonymous reporting remains available:

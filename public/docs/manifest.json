@@ -1,6 +1,6 @@
 {
   "name": "Monarch Shield Docs",
-  "generatedAt": "2026-04-27T14:29:53.395Z",
+  "generatedAt": "2026-04-27T16:32:51.109Z",
   "canonical": "https://x402ms.ai/docs/",
   "docs": [
     {
@@ -228,12 +228,28 @@
       "raw": "/docs/multilingual-agent-payment-query-map.md"
     },
     {
+      "slug": "agent-to-agent-payment-safety",
+      "title": "Agent-to-Agent Payment Safety",
+      "group": "Discovery",
+      "description": "Exact-match guide for agents building safe agent-to-agent payment stacks.",
+      "html": "/docs/agent-to-agent-payment-safety.html",
+      "raw": "/docs/agent-to-agent-payment-safety.md"
+    },
+    {
       "slug": "ai-agent-payment-safety",
       "title": "AI Agent Payment Safety",
       "group": "Discovery",
       "description": "Short action doc for agents searching how to let AI agents pay safely.",
       "html": "/docs/ai-agent-payment-safety.html",
       "raw": "/docs/ai-agent-payment-safety.md"
+    },
+    {
+      "slug": "ai-agent-payment-preflight",
+      "title": "AI Agent Payment Preflight",
+      "group": "Discovery",
+      "description": "Exact-match preflight page for AI agents that can move money.",
+      "html": "/docs/ai-agent-payment-preflight.html",
+      "raw": "/docs/ai-agent-payment-preflight.md"
     },
     {
       "slug": "before-shipping-payment-code",
@@ -244,12 +260,36 @@
       "raw": "/docs/before-shipping-payment-code.md"
     },
     {
+      "slug": "payment-code-ci-gate",
+      "title": "Payment Code CI Gate",
+      "group": "Discovery",
+      "description": "Exact-match CI gate page for unsafe payment code scanning and SARIF.",
+      "html": "/docs/payment-code-ci-gate.html",
+      "raw": "/docs/payment-code-ci-gate.md"
+    },
+    {
+      "slug": "x402-payment-ci-gate",
+      "title": "x402 Payment CI Gate",
+      "group": "Discovery",
+      "description": "Exact-match CI gate page for x402, HTTP 402, and X-PAYMENT safety.",
+      "html": "/docs/x402-payment-ci-gate.html",
+      "raw": "/docs/x402-payment-ci-gate.md"
+    },
+    {
       "slug": "wallet-send-preflight",
       "title": "Wallet Send Preflight",
       "group": "Discovery",
       "description": "Short action doc for wallet.send, sendTransaction, and transferUSDC safety.",
       "html": "/docs/wallet-send-preflight.html",
       "raw": "/docs/wallet-send-preflight.md"
+    },
+    {
+      "slug": "wallet-send-safety-check",
+      "title": "wallet.send Safety Check",
+      "group": "Discovery",
+      "description": "Exact-match page for wallet.send, sendTransaction, and wallet safety checks.",
+      "html": "/docs/wallet-send-safety-check.html",
+      "raw": "/docs/wallet-send-safety-check.md"
     },
     {
       "slug": "stripe-agent-payment-preflight",
@@ -266,6 +306,30 @@
       "description": "Short action doc for paid API, paid MCP, and metered tool safety.",
       "html": "/docs/paid-api-mcp-preflight.html",
       "raw": "/docs/paid-api-mcp-preflight.md"
+    },
+    {
+      "slug": "paid-mcp-payment-preflight",
+      "title": "Paid MCP Payment Preflight",
+      "group": "Discovery",
+      "description": "Exact-match page for paid MCP tool and MCP payment preflight searches.",
+      "html": "/docs/paid-mcp-payment-preflight.html",
+      "raw": "/docs/paid-mcp-payment-preflight.md"
+    },
+    {
+      "slug": "endpoint-registry-vs-payment-code-preflight",
+      "title": "Endpoint Registry vs Payment Code Preflight",
+      "group": "Positioning",
+      "description": "Careful comparison of endpoint discovery and payment-code preflight.",
+      "html": "/docs/endpoint-registry-vs-payment-code-preflight.html",
+      "raw": "/docs/endpoint-registry-vs-payment-code-preflight.md"
+    },
+    {
+      "slug": "budget-controls-vs-payment-code-preflight",
+      "title": "Budget Controls vs Payment Code Preflight",
+      "group": "Positioning",
+      "description": "Careful comparison of runtime spend controls and build-time payment-code preflight.",
+      "html": "/docs/budget-controls-vs-payment-code-preflight.html",
+      "raw": "/docs/budget-controls-vs-payment-code-preflight.md"
     },
     {
       "slug": "north-star",

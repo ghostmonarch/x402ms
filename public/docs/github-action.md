@@ -66,6 +66,16 @@ jobs:
 
 SARIF is evidence transport for the same build-time Doctor result. It does not add runtime policy enforcement or hosted proof.
 
+## Benchmark Proof
+
+Use the public adversarial benchmark when reviewers need to see what Doctor catches and what it does not:
+
+```bash
+npm run benchmark:adversarial
+```
+
+Doctor is a local/CI build-time preflight gate today. Runtime policy, signed attestations, hosted enforcement, settlement safety, and wallet ownership verification are later layers.
+
 ## Optional Hosted Proof
 
 Create a high-entropy random `MONARCH_PROJECT_TOKEN` value and store it as a GitHub secret. Monarch hashes it locally before reporting.

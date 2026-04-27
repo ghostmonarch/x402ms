@@ -37,3 +37,17 @@ The external smoke installs Monarch like a third-party agent and verifies unsafe
 ```bash
 npm run smoke:external-agent
 ```
+
+For PR review, emit SARIF:
+
+```bash
+npx @monarch-shield/x402 doctor --ci --strict --sarif-output monarch-doctor.sarif
+```
+
+For hosted proof, create a high-entropy random `MONARCH_PROJECT_TOKEN` secret and run:
+
+```bash
+MONARCH_PROJECT_TOKEN=... npx @monarch-shield/x402 doctor --ci --strict --report
+```
+
+Doctor is a local/CI build-time preflight gate today. Runtime policy, signed attestations, hosted enforcement, settlement safety, and wallet ownership verification are later layers. Reporting does not send source code, wallet addresses, endpoint URLs, payment amounts, API keys, file paths, repo names, commit SHAs, or raw project tokens.

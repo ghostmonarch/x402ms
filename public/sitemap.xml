@@ -47,11 +47,19 @@
   <url><loc>https://x402ms.ai/docs/github-action.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/agent-payment-query-map.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/multilingual-agent-payment-query-map.html</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/agent-to-agent-payment-safety.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/ai-agent-payment-safety.html</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/ai-agent-payment-preflight.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/before-shipping-payment-code.html</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/payment-code-ci-gate.html</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/x402-payment-ci-gate.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/wallet-send-preflight.html</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/wallet-send-safety-check.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/stripe-agent-payment-preflight.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/paid-api-mcp-preflight.html</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/paid-mcp-payment-preflight.html</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/endpoint-registry-vs-payment-code-preflight.html</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/budget-controls-vs-payment-code-preflight.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/north-star.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/agents.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/llms.html</loc><lastmod>2026-04-27</lastmod></url>
@@ -86,11 +94,19 @@
   <url><loc>https://x402ms.ai/docs/github-action.md</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/agent-payment-query-map.md</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/multilingual-agent-payment-query-map.md</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/agent-to-agent-payment-safety.md</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/ai-agent-payment-safety.md</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/ai-agent-payment-preflight.md</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/before-shipping-payment-code.md</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/payment-code-ci-gate.md</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/x402-payment-ci-gate.md</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/wallet-send-preflight.md</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/wallet-send-safety-check.md</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/stripe-agent-payment-preflight.md</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/paid-api-mcp-preflight.md</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/paid-mcp-payment-preflight.md</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/endpoint-registry-vs-payment-code-preflight.md</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/budget-controls-vs-payment-code-preflight.md</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/north-star.txt</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/agent-skill.md</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/agent-discovery-build-plan.md</loc><lastmod>2026-04-27</lastmod></url>

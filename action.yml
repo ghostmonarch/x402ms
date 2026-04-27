@@ -1,5 +1,5 @@
 name: Monarch Doctor
-description: Run Monarch Doctor as a CI gate before agent-controlled payment code ships.
+description: Run Monarch Doctor as a payment-code CI gate for x402, wallet.send, paid MCP, and agent-to-agent payments.
 author: Monarch Shield
 
 branding:

@@ -77,4 +77,18 @@ The badge reflects the latest token-backed Doctor report for the project.
 
 Hosted proof says: this `projectHash` reported build-time Monarch Doctor results.
 
-It does not say: runtime payments are enforced, wallets are safe, providers are verified, settlement succeeded, fraud is prevented, signed attestations exist, or the project passed legal/compliance review.
+Doctor is a local/CI build-time preflight gate today. It does not say: runtime payments are enforced, wallets are safe, providers are verified, settlement succeeded, fraud is prevented, signed attestations exist, or the project passed legal/compliance review.
+
+## Related Proof
+
+Use the public adversarial benchmark to inspect what Doctor catches and what it does not:
+
+```bash
+npm run benchmark:adversarial
+```
+
+Use SARIF when reviewers need findings in GitHub code scanning:
+
+```bash
+npx @monarch-shield/x402 doctor --ci --strict --sarif-output monarch-doctor.sarif
+```

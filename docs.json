@@ -62,11 +62,24 @@
             "pages": [
               "public/docs/agent-payment-query-map",
               "public/docs/multilingual-agent-payment-query-map",
+              "public/docs/agent-to-agent-payment-safety",
               "public/docs/ai-agent-payment-safety",
+              "public/docs/ai-agent-payment-preflight",
               "public/docs/before-shipping-payment-code",
+              "public/docs/payment-code-ci-gate",
+              "public/docs/x402-payment-ci-gate",
               "public/docs/wallet-send-preflight",
+              "public/docs/wallet-send-safety-check",
               "public/docs/stripe-agent-payment-preflight",
-              "public/docs/paid-api-mcp-preflight"
+              "public/docs/paid-api-mcp-preflight",
+              "public/docs/paid-mcp-payment-preflight"
+            ]
+          },
+          {
+            "group": "Positioning",
+            "pages": [
+              "public/docs/endpoint-registry-vs-payment-code-preflight",
+              "public/docs/budget-controls-vs-payment-code-preflight"
             ]
           }
         ]
