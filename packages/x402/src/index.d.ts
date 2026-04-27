@@ -49,6 +49,7 @@ export interface ScanFinding {
   kind: 'payment_flow' | 'monarch_check';
   file: string;
   message: string;
+  rails: Array<'x402' | 'paid_mcp' | 'agentkit' | 'stripe' | 'stablecoin' | 'wallet' | 'card' | 'bank' | 'regional_rail'>;
 }
 
 export interface ScanProjectResult {

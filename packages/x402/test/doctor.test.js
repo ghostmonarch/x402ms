@@ -108,7 +108,22 @@ test('checkPayment uses hosted policy API when configured', async () => {
     return {
       ok: true,
       async json() {
-        return { decision: 'allow', status: 'hosted_policy_passed' };
+        return {
+          decision: 'allow',
+          risk: 'low',
+          status: 'hosted_policy_passed',
+          reason: 'Hosted policy allowed this payment.',
+          suggestedAction: 'continue_with_payment',
+          userMessage: 'Monarch allowed this payment. Hosted policy allowed this payment.',
+          checks: {
+            domainOwnership: 'verified',
+            payToWallet: 'present',
+            payToWalletChanged: false,
+            deliveryReliability: 'passing',
+            provenance: 'verified',
+            priceSanity: 'normal',
+          },
+        };
       },
     };
   };
@@ -116,11 +131,49 @@ test('checkPayment uses hosted policy API when configured', async () => {
   try {
     const result = await checkPayment({ amount: '1.00', asset: 'USDC' });
 
-    assert.deepEqual(result, { decision: 'allow', status: 'hosted_policy_passed' });
+    assert.equal(result.decision, 'allow');
+    assert.equal(result.status, 'hosted_policy_passed');
+    assert.equal(result.checks.domainOwnership, 'verified');
     assert.equal(calls[0].url, 'https://policy.example/check-payment');
     assert.equal(calls[0].options.headers.authorization, 'Bearer test-key');
     assert.equal(calls[0].options.headers['content-type'], 'application/json');
     assert.deepEqual(JSON.parse(calls[0].options.body), { amount: '1.00', asset: 'USDC' });
+  } finally {
+    if (originalUrl === undefined) {
+      delete process.env.MONARCH_API_URL;
+    } else {
+      process.env.MONARCH_API_URL = originalUrl;
+    }
+
+    if (originalKey === undefined) {
+      delete process.env.MONARCH_API_KEY;
+    } else {
+      process.env.MONARCH_API_KEY = originalKey;
+    }
+
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('checkPayment rejects malformed hosted policy responses', async () => {
+  const originalUrl = process.env.MONARCH_API_URL;
+  const originalKey = process.env.MONARCH_API_KEY;
+  const originalFetch = globalThis.fetch;
+
+  process.env.MONARCH_API_URL = 'https://policy.example';
+  process.env.MONARCH_API_KEY = 'test-key';
+  globalThis.fetch = async () => ({
+    ok: true,
+    async json() {
+      return { decision: 'allow' };
+    },
+  });
+
+  try {
+    await assert.rejects(
+      () => checkPayment({ amount: '1.00', asset: 'USDC' }),
+      /invalid decision|invalid risk|invalid status|invalid checks/,
+    );
   } finally {
     if (originalUrl === undefined) {
       delete process.env.MONARCH_API_URL;
@@ -201,6 +254,40 @@ test('Doctor passes payment files with in-file Monarch checks', () => {
     assert.equal(result.applicable, true);
     assert.equal(result.ready, true);
     assert.deepEqual(result.scan.unprotectedPaymentFiles, []);
+  });
+});
+
+test('Doctor ignores comment-only Monarch checks in payment files', () => {
+  withTempProject({
+    'pay.js': `
+      // checkBeforePayment should be added later
+      export async function unsafePay(wallet, payTo) {
+        return wallet.send(payTo);
+      }
+    `,
+  }, (root) => {
+    const result = validatePreprod(root);
+
+    assert.equal(result.applicable, true);
+    assert.equal(result.ready, false);
+    assert.deepEqual(result.scan.unprotectedPaymentFiles, ['pay.js']);
+  });
+});
+
+test('Doctor ignores string-only Monarch checks in payment files', () => {
+  withTempProject({
+    'pay.js': `
+      export const TODO = "call checkBeforePayment before launch";
+      export async function unsafePay(wallet, payTo) {
+        return wallet.send(payTo);
+      }
+    `,
+  }, (root) => {
+    const result = validatePreprod(root);
+
+    assert.equal(result.applicable, true);
+    assert.equal(result.ready, false);
+    assert.deepEqual(result.scan.unprotectedPaymentFiles, ['pay.js']);
   });
 });
 

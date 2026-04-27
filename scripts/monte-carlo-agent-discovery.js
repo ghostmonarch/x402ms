@@ -65,6 +65,7 @@ const ACTION_TERMS = [
 
 const DISCOVERY_SURFACES = new Set([
   'README.md',
+  'index.html',
   'packages/x402/README.md',
   'packages/x402-doctor/README.md',
   'public/north-star.txt',

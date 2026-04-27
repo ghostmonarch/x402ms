@@ -33,7 +33,11 @@ const ignoredScanPaths = [
   'examples/google-ap2-a2a-x402-proof-pack/unsafe/',
   'examples/stripe-bridge-stablecoin-proof-pack/unsafe/',
   'examples/card-network-agent-pay-proof-pack/unsafe/',
+  'packages/x402/src/cli.js',
   'scripts/generate-doc-html.js',
+  'scripts/monte-carlo-agent-discovery.js',
+  'scripts/record-base-x402-proof-pack.js',
+  'scripts/record-doctor-demo.js',
   'workers/doctor-run/',
 ];
 
@@ -124,11 +128,12 @@ export function scanProject(root = process.cwd()) {
   for (const file of files) {
     const content = readFileSync(file, 'utf8');
     const rel = relative(root, file);
-    const codeContent = stripStringLiterals(content);
+    const commentFreeContent = stripComments(content);
+    const codeContent = stripStringLiterals(commentFreeContent);
 
     if (isIgnoredScanPath(rel)) continue;
 
-    addFinding(findings, rel, content, /402 Payment Required|X-PAYMENT/i, 'x402 payment handling found', ['x402']);
+    addFinding(findings, rel, commentFreeContent, /402 Payment Required|X-PAYMENT/i, 'x402 payment handling found', ['x402']);
     addFinding(findings, rel, codeContent, /x402|paymentRequired|facilitator|X_A2A_Extensions/i, 'x402 payment handling found', ['x402']);
     addFinding(findings, rel, codeContent, /\bpayTo\b|\brecipient\b|\bmerchantWallet\b|settlementAddress|walletAddress|destinationWallet/i, 'pay-to wallet handling found', ['wallet']);
     addFinding(findings, rel, codeContent, /paid MCP|paid tool|mcp.*payment|payment.*mcp|tool.*price|price.*tool/i, 'paid MCP or tool payment reference found', ['paid_mcp']);
@@ -143,7 +148,7 @@ export function scanProject(root = process.cwd()) {
     addFinding(findings, rel, codeContent, /visa|mastercard|cardPayment|virtualCard|cardCharge|applePay|googlePay|Agent Pay|agentPay|agentic token|MDES|DSRP|DTVC|Digital Commerce Solution|Intelligent Commerce|Visa Token Service|Visa Payment Passkey|tokenized payment credential|purchaseIntent/i, 'card payment rail handling found', ['card']);
     addFinding(findings, rel, codeContent, /achDebit|wireTransfer|bankTransfer|rtpPayment|fedNow|openBanking|plaid|dwolla|zelle|sepa|payouts?\.create|transfers?\.create|wise|revolut|yapily|tink|finicity/i, 'bank payment rail handling found', ['bank']);
     addFinding(findings, rel, codeContent, /pixPayment|upiPayment|qris|promptPay|payNow|duitNow|vietQR|spei|ideal|blik|m-pesa|mpesa/i, 'regional payment rail handling found', ['regional_rail', 'bank']);
-    addFinding(findings, rel, content, /checkBeforePayment|checkPayment|safePayX402|check-payment|@monarch-shield\/x402/i, 'Monarch pre-payment check reference found');
+    addFinding(findings, rel, codeContent, /checkBeforePayment|checkPayment|safePayX402|check-payment|@monarch-shield\/x402/i, 'Monarch pre-payment check reference found');
   }
 
   const hasPaymentFlow = findings.some((finding) => finding.kind !== 'monarch_check');
@@ -204,6 +209,13 @@ function isIgnoredScanPath(file) {
 function stripStringLiterals(content) {
   // Search-intent docs often contain payment keywords inside strings; executable identifiers still matter.
   return content.replace(/(["'`])(?:\\.|(?!\1)[\s\S])*\1/g, '');
+}
+
+function stripComments(content) {
+  return content
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/(^|[^:])\/\/.*$/gm, '$1')
+    .replace(/^\s*#.*$/gm, '');
 }
 
 function normalizeInput(input) {
@@ -275,7 +287,32 @@ async function checkHosted(input) {
     throw new Error(`Monarch hosted check failed with ${response.status}`);
   }
 
-  return response.json();
+  return validateHostedResponse(await response.json());
+}
+
+function validateHostedResponse(value) {
+  const decisions = new Set(['allow', 'caution', 'block', 'route']);
+  const risks = new Set(['low', 'medium', 'high', 'unknown']);
+
+  if (!value || typeof value !== 'object') {
+    throw new Error('Monarch hosted check returned an invalid response');
+  }
+
+  if (!decisions.has(value.decision) || !risks.has(value.risk)) {
+    throw new Error('Monarch hosted check returned an invalid decision');
+  }
+
+  for (const field of ['status', 'reason', 'suggestedAction', 'userMessage']) {
+    if (typeof value[field] !== 'string' || value[field].length === 0) {
+      throw new Error(`Monarch hosted check returned an invalid ${field}`);
+    }
+  }
+
+  if (!value.checks || typeof value.checks !== 'object') {
+    throw new Error('Monarch hosted check returned invalid checks');
+  }
+
+  return value;
 }
 
 function collectFiles(root) {
@@ -291,7 +328,7 @@ function collectFiles(root) {
 
       if (stat.isDirectory()) {
         walk(path);
-      } else if (scanExtensions.has(extname(path))) {
+      } else if (scanExtensions.has(extname(path)) && !path.endsWith('.d.ts')) {
         files.push(path);
       }
     }
