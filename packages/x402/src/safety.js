@@ -133,7 +133,9 @@ export function scanProject(root = process.cwd()) {
 
     if (isIgnoredScanPath(rel)) continue;
 
-    addFinding(findings, rel, commentFreeContent, /402 Payment Required|X-PAYMENT/i, 'x402 payment handling found', ['x402']);
+    if (hasPaymentExecutionSignal(codeContent)) {
+      addFinding(findings, rel, commentFreeContent, /402 Payment Required|X-PAYMENT/i, 'x402 payment handling found', ['x402']);
+    }
     addFinding(findings, rel, codeContent, /x402|paymentRequired|facilitator|X_A2A_Extensions/i, 'x402 payment handling found', ['x402']);
     addFinding(findings, rel, codeContent, /\bpayTo\b|\brecipient\b|\bmerchantWallet\b|settlementAddress|walletAddress|destinationWallet/i, 'pay-to wallet handling found', ['wallet']);
     addFinding(findings, rel, codeContent, /paid MCP|paid tool|mcp.*payment|payment.*mcp|tool.*price|price.*tool/i, 'paid MCP or tool payment reference found', ['paid_mcp']);
@@ -216,6 +218,10 @@ function stripComments(content) {
     .replace(/\/\*[\s\S]*?\*\//g, '')
     .replace(/(^|[^:])\/\/.*$/gm, '$1')
     .replace(/^\s*#.*$/gm, '');
+}
+
+function hasPaymentExecutionSignal(content) {
+  return /fetch\s*\(|headers\s*:|wallet\.send|sendTransaction|paymentIntents\.create|checkout\.sessions\.create|charges\.create|transfers?\.create|payouts?\.create/i.test(content);
 }
 
 function normalizeInput(input) {

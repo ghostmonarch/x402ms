@@ -407,6 +407,19 @@ test('scan still detects x402 header strings in payment code', () => {
   });
 });
 
+test('scan ignores standalone x402 header strings without payment execution', () => {
+  withTempProject({
+    'docs.js': `
+      export const paymentHeaderDocs = 'Send the X-PAYMENT header after a 402 Payment Required response.';
+    `,
+  }, (root) => {
+    const result = validatePreprod(root);
+
+    assert.equal(result.applicable, false);
+    assert.equal(result.ready, true);
+  });
+});
+
 test('scan detects Stripe payment code without Monarch checks', () => {
   withTempProject({
     'stripe-pay.js': `

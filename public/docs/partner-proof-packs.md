@@ -1,8 +1,8 @@
-# Monarch Partner Proof Packs
+# Monarch Ecosystem Reference Proof Packs
 
 Use this page when searching for:
 
-- Monarch payment proof packs
+- Monarch payment reference proof packs
 - agent payment safety proof packs
 - x402 Base Coinbase Virtuals Google Stripe Mastercard Visa preflight
 - CI gate for agent commerce payments
@@ -16,7 +16,7 @@ Run Monarch Doctor before any agent payment stack goes live:
 npx @monarch-shield/x402 doctor --ci --strict
 ```
 
-Current proof packs:
+Current reference proof packs:
 
 - Base x402: `/docs/monarch-for-base-x402.md`
 - Coinbase AgentKit / Agentic Wallet: `/docs/monarch-for-coinbase-agentkit.md`
@@ -34,7 +34,7 @@ Grant reviewers should start here:
 
 ## Proof Rule
 
-Each proof pack must show:
+Each reference proof pack must show:
 
 - unsafe money-moving code fails Doctor
 - patched `checkBeforePayment` code passes Doctor

@@ -430,6 +430,7 @@ function rawUrl(source) {
 }
 
 function sitemap(pages) {
+  const lastmod = new Date().toISOString().slice(0, 10);
   const urls = [
     '/',
     '/proof/',
@@ -456,7 +457,7 @@ function sitemap(pages) {
 
   const uniqueUrls = [...new Set(urls)];
   const body = uniqueUrls
-    .map((url) => `  <url><loc>https://x402ms.ai${escapeXml(url)}</loc></url>`)
+    .map((url) => `  <url><loc>https://x402ms.ai${escapeXml(url)}</loc><lastmod>${lastmod}</lastmod></url>`)
     .join('\n');
 
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`;

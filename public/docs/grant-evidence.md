@@ -23,9 +23,9 @@ Monarch is a local-first preflight and CI gate for agent-controlled payment code
 - Official docs: `https://x402ms.ai/docs/`.
 - Agent-readable sources: `https://x402ms.ai/llms.txt`, `https://x402ms.ai/AGENTS.md`, and `https://x402ms.ai/docs/manifest.json`.
 
-## Proof Packs
+## Ecosystem Reference Proof Packs
 
-Each proof pack contains unsafe code, patched code, a CI gate, agent-facing docs, and a public recording.
+Each reference proof pack contains unsafe code, patched code, a CI gate, agent-facing docs, and a public recording. These are independent reproducible examples, not partnership or endorsement claims.
 
 - Base x402: unsafe x402 payment path to patched Base USDC preflight.
 - Coinbase AgentKit / Agentic Wallet: unsafe wallet spend to patched `checkBeforePayment` spend.
@@ -78,7 +78,8 @@ Agent discovery is covered through:
 - problem-name packages: `@monarch-shield/x402` and `x402-doctor`;
 - search-intent docs for x402 payment safety, paid MCP payment safety, pay-to wallet safety, Base x402 preflight, and agent payment preflight;
 - multilingual agent-payment query coverage;
-- ecosystem proof pages for Base, Coinbase, Virtuals, Google, Stripe, Bridge, Mastercard, Visa, and X Money / creator commerce.
+- ecosystem reference proof pages for Base, Coinbase, Virtuals, Google, Stripe, Bridge, Mastercard, and Visa;
+- an X Money / creator commerce concept page, clearly labeled as illustrative only.
 
 ## What This Proves Today
 
