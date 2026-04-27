@@ -1,0 +1,76 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Monarch Shield",
+  "description": "Local-first payment safety docs for agents building x402, wallet, stablecoin, card, bank, paid API, and paid MCP payment flows.",
+  "colors": {
+    "primary": "#080808",
+    "light": "#080808",
+    "dark": "#EDECE4"
+  },
+  "favicon": "/logo/monarch-shield-logo.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Docs",
+        "groups": [
+          {
+            "group": "Start",
+            "pages": [
+              "public/docs/partner-proof-packs",
+              "public/docs/grant-evidence",
+              "public/docs/agent-payment-preflight",
+              "public/docs/monarch-doctor-ci"
+            ]
+          },
+          {
+            "group": "Proof Packs",
+            "pages": [
+              "public/docs/monarch-for-base-x402",
+              "public/docs/monarch-for-coinbase-agentkit",
+              "public/docs/monarch-for-virtuals-acp",
+              "public/docs/monarch-for-google-ap2-a2a-x402",
+              "public/docs/monarch-for-stripe-bridge-stablecoin",
+              "public/docs/monarch-for-card-network-agent-pay"
+            ]
+          },
+          {
+            "group": "Discovery",
+            "pages": [
+              "public/docs/agent-payment-query-map",
+              "public/docs/multilingual-agent-payment-query-map"
+            ]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Website",
+          "href": "https://x402ms.ai"
+        },
+        {
+          "anchor": "Proof API",
+          "href": "https://monarch-doctor-run.ghostmonarchalerts.workers.dev/proof"
+        }
+      ]
+    }
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/ghostmonarch/x402ms"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Run Doctor",
+      "href": "https://x402ms.ai/docs/agent-payment-preflight.html"
+    }
+  },
+  "seo": {
+    "indexing": "all"
+  }
+}

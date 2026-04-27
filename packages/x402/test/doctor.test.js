@@ -269,6 +269,20 @@ test('scan ignores telemetry receiver validation fields', () => {
   });
 });
 
+test('scan ignores generated docs build script payment vocabulary', () => {
+  withTempProject({
+    'scripts/generate-doc-html.js': `
+      const docs = ['x402 payment safety', 'Base USDC', 'Stripe checkout', 'Visa Intelligent Commerce'];
+      console.log(docs.join('\\n'));
+    `,
+  }, (root) => {
+    const result = validatePreprod(root);
+
+    assert.equal(result.applicable, false);
+    assert.equal(result.ready, true);
+  });
+});
+
 test('scan ignores discovery intent strings without payment execution', () => {
   withTempProject({
     'src/main.js': `

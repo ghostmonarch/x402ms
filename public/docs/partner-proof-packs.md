@@ -25,6 +25,13 @@ Current proof packs:
 - Stripe ACP / Bridge stablecoin flows: `/docs/monarch-for-stripe-bridge-stablecoin.md`
 - Mastercard Agent Pay / Visa Intelligent Commerce: `/docs/monarch-for-card-network-agent-pay.md`
 
+Grant reviewers should start here:
+
+- Official HTML index: `https://x402ms.ai/docs/partner-proof-packs.html`
+- Grant evidence packet: `https://x402ms.ai/docs/grant-evidence.html`
+- Public proof page: `https://x402ms.ai/#proof`
+- Machine manifest: `https://x402ms.ai/docs/manifest.json`
+
 ## Proof Rule
 
 Each proof pack must show:
@@ -34,6 +41,16 @@ Each proof pack must show:
 - CI gate is copy-pasteable
 - public artifact is reproducible
 - public telemetry is aggregate-only
+
+## Moat Rule
+
+The moat is not one partner example. The moat is a repeatable, agent-discoverable pattern:
+
+- same Doctor command across rails;
+- same unsafe-to-patched proof shape across ecosystems;
+- same CI gate before merge;
+- same raw agent-readable docs and official HTML docs;
+- same public proof distinction between proof-of-function and proof-of-demand.
 
 ## Public Evidence
 

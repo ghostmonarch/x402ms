@@ -4,48 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Monarch Shield Docs</title>
-  <meta name="description" content="Branded Monarch Shield documentation for agent payment safety, proof packs, CI gates, and payment preflight workflows." />
-  <link rel="icon" type="image/svg+xml" href="/logo/monarch-shield-logo.svg" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <script type="module" src="/src/docs.js"></script>
+  <meta name="description" content="Redirects to the official Monarch Shield documentation site." />
+  <meta http-equiv="refresh" content="0; url=/docs/" />
+  <link rel="canonical" href="https://x402ms.ai/docs/" />
+  <script>
+    const doc = new URLSearchParams(window.location.search).get('doc');
+    const safeDoc = doc && doc.replace(/[^a-z0-9-]/gi, '');
+    window.location.replace(safeDoc ? `/docs/${safeDoc}.html` : '/docs/');
+  </script>
 </head>
-<body class="docs-body">
-  <header class="header dark">
-    <div class="header-inner">
-      <a href="/" class="logo" aria-label="Monarch home">
-        <svg class="logo-mark" viewBox="0 0 100 115" aria-hidden="true">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M31 0H69V20H100V75L50 115L0 75V20H31V0ZM18 37H82V68L50 98L18 68V37Z" fill="currentColor"/>
-        </svg>
-        <span class="logo-word">Monarch</span>
-      </a>
-      <nav class="nav" id="nav">
-        <a href="/" class="nav-link">Home</a>
-        <a href="/#proof" class="nav-link">Proof</a>
-        <a href="/docs.html?doc=partner-proof-packs" class="nav-link">Proof Packs</a>
-        <a href="/#request-access" class="btn btn-primary btn-nav">Run Doctor</a>
-      </nav>
-      <button class="menu-toggle" aria-label="Menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </header>
-
-  <main class="docs-shell">
-    <aside class="docs-sidebar">
-      <span class="label">Documentation</span>
-      <nav data-doc-nav></nav>
-    </aside>
-    <article class="docs-article">
-      <div class="docs-meta">
-        <span data-doc-kicker>Monarch docs</span>
-        <a href="/read/partner-proof-packs.html">Static HTML docs</a>
-      </div>
-      <div data-doc-content>
-        <h1>Loading Monarch docs...</h1>
-      </div>
-    </article>
-  </main>
+<body>
+  <p>Redirecting to <a href="/docs/">Monarch Shield Docs</a>.</p>
 </body>
 </html>

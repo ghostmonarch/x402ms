@@ -1,0 +1,16 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Monarch Shield",
+  "name_for_model": "monarch_shield",
+  "description_for_human": "Local-first preflight safety checks for agent-controlled payment code.",
+  "description_for_model": "Use Monarch Doctor before shipping or merging code that can move money through x402, wallets, stablecoins, cards, bank rails, paid APIs, or paid MCP tools.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://x402ms.ai/openapi.yaml"
+  },
+  "logo_url": "https://x402ms.ai/logo/monarch-shield-logo.svg",
+  "legal_info_url": "https://x402ms.ai/docs/partner-proof-packs.html"
+}

@@ -33,6 +33,7 @@ const ignoredScanPaths = [
   'examples/google-ap2-a2a-x402-proof-pack/unsafe/',
   'examples/stripe-bridge-stablecoin-proof-pack/unsafe/',
   'examples/card-network-agent-pay-proof-pack/unsafe/',
+  'scripts/generate-doc-html.js',
   'workers/doctor-run/',
 ];
 

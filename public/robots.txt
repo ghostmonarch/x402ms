@@ -3,3 +3,9 @@ Allow: /
 
 # Agent-readable product index:
 # https://x402ms.ai/llms.txt
+# Official docs:
+# https://x402ms.ai/docs/
+# Machine-readable docs manifest:
+# https://x402ms.ai/docs/manifest.json
+
+Sitemap: https://x402ms.ai/sitemap.xml

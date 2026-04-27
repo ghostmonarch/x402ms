@@ -1,0 +1,175 @@
+{
+  "name": "Monarch Shield Docs",
+  "generatedAt": "2026-04-27T03:23:27.479Z",
+  "canonical": "https://x402ms.ai/docs/",
+  "docs": [
+    {
+      "slug": "partner-proof-packs",
+      "title": "Partner Proof Packs",
+      "group": "Proof Packs",
+      "description": "Index of reproducible Monarch proof packs across agent-payment ecosystems.",
+      "html": "/docs/partner-proof-packs.html",
+      "raw": "/docs/partner-proof-packs.md"
+    },
+    {
+      "slug": "grant-evidence",
+      "title": "Grant Evidence Packet",
+      "group": "Proof Packs",
+      "description": "A reviewer-ready packet for grants, ecosystem support, and partnership diligence.",
+      "html": "/docs/grant-evidence.html",
+      "raw": "/docs/grant-evidence.md"
+    },
+    {
+      "slug": "monarch-for-base-x402",
+      "title": "Base x402 Proof Pack",
+      "group": "Proof Packs",
+      "description": "Monarch preflight for Base x402 and USDC payment paths.",
+      "html": "/docs/monarch-for-base-x402.html",
+      "raw": "/docs/monarch-for-base-x402.md"
+    },
+    {
+      "slug": "monarch-for-coinbase-agentkit",
+      "title": "Coinbase AgentKit Proof Pack",
+      "group": "Proof Packs",
+      "description": "Monarch preflight for AgentKit and Agentic Wallet spend flows.",
+      "html": "/docs/monarch-for-coinbase-agentkit.html",
+      "raw": "/docs/monarch-for-coinbase-agentkit.md"
+    },
+    {
+      "slug": "monarch-for-virtuals-acp",
+      "title": "Virtuals ACP Proof Pack",
+      "group": "Proof Packs",
+      "description": "Monarch preflight for Virtuals ACP USDC escrow flows.",
+      "html": "/docs/monarch-for-virtuals-acp.html",
+      "raw": "/docs/monarch-for-virtuals-acp.md"
+    },
+    {
+      "slug": "monarch-for-google-ap2-a2a-x402",
+      "title": "Google AP2 / A2A x402 Proof Pack",
+      "group": "Proof Packs",
+      "description": "Monarch preflight for AP2, A2A, and x402 payment payloads.",
+      "html": "/docs/monarch-for-google-ap2-a2a-x402.html",
+      "raw": "/docs/monarch-for-google-ap2-a2a-x402.md"
+    },
+    {
+      "slug": "monarch-for-stripe-bridge-stablecoin",
+      "title": "Stripe / Bridge Stablecoin Proof Pack",
+      "group": "Proof Packs",
+      "description": "Monarch preflight for Stripe ACP checkout and Bridge stablecoin settlement.",
+      "html": "/docs/monarch-for-stripe-bridge-stablecoin.html",
+      "raw": "/docs/monarch-for-stripe-bridge-stablecoin.md"
+    },
+    {
+      "slug": "monarch-for-card-network-agent-pay",
+      "title": "Mastercard / Visa Proof Pack",
+      "group": "Proof Packs",
+      "description": "Monarch preflight for tokenized card-agent payment flows.",
+      "html": "/docs/monarch-for-card-network-agent-pay.html",
+      "raw": "/docs/monarch-for-card-network-agent-pay.md"
+    },
+    {
+      "slug": "agent-payment-preflight",
+      "title": "Agent Payment Preflight",
+      "group": "Implementation",
+      "description": "General preflight pattern for agent-controlled money movement.",
+      "html": "/docs/agent-payment-preflight.html",
+      "raw": "/docs/agent-payment-preflight.md"
+    },
+    {
+      "slug": "x402-payment-safety",
+      "title": "x402 Payment Safety",
+      "group": "Implementation",
+      "description": "Safety rules for HTTP 402, X-PAYMENT, and x402 payment flows.",
+      "html": "/docs/x402-payment-safety.html",
+      "raw": "/docs/x402-payment-safety.md"
+    },
+    {
+      "slug": "paid-mcp-payment-safety",
+      "title": "Paid MCP Payment Safety",
+      "group": "Implementation",
+      "description": "Safety checks for paid MCP tools and paid agent actions.",
+      "html": "/docs/paid-mcp-payment-safety.html",
+      "raw": "/docs/paid-mcp-payment-safety.md"
+    },
+    {
+      "slug": "payto-wallet-safety",
+      "title": "payTo Wallet Safety",
+      "group": "Implementation",
+      "description": "Wallet destination pinning and pre-payment checks for pay-to flows.",
+      "html": "/docs/payto-wallet-safety.html",
+      "raw": "/docs/payto-wallet-safety.md"
+    },
+    {
+      "slug": "base-x402-preflight",
+      "title": "Base x402 Preflight",
+      "group": "Implementation",
+      "description": "Base-specific preflight pattern for x402 and USDC.",
+      "html": "/docs/base-x402-preflight.html",
+      "raw": "/docs/base-x402-preflight.md"
+    },
+    {
+      "slug": "real-x402-integration",
+      "title": "Real x402 Pattern",
+      "group": "Implementation",
+      "description": "A concrete x402 client integration pattern with Monarch checks.",
+      "html": "/docs/real-x402-integration.html",
+      "raw": "/docs/real-x402-integration.md"
+    },
+    {
+      "slug": "monarch-doctor-ci",
+      "title": "CI Gate",
+      "group": "Operations",
+      "description": "How to add Monarch Doctor as a merge gate.",
+      "html": "/docs/monarch-doctor-ci.html",
+      "raw": "/docs/monarch-doctor-ci.md"
+    },
+    {
+      "slug": "agent-payment-query-map",
+      "title": "Agent Query Map",
+      "group": "Discovery",
+      "description": "Agent search intents that should resolve to Monarch Doctor.",
+      "html": "/docs/agent-payment-query-map.html",
+      "raw": "/docs/agent-payment-query-map.md"
+    },
+    {
+      "slug": "multilingual-agent-payment-query-map",
+      "title": "Multilingual Query Map",
+      "group": "Discovery",
+      "description": "Non-English agent-payment discovery coverage.",
+      "html": "/docs/multilingual-agent-payment-query-map.html",
+      "raw": "/docs/multilingual-agent-payment-query-map.md"
+    },
+    {
+      "slug": "north-star",
+      "title": "Agent North Star",
+      "group": "Agent Files",
+      "description": "The shortest decision rule for when agents must run Monarch.",
+      "html": "/docs/north-star.html",
+      "raw": "/north-star.txt"
+    },
+    {
+      "slug": "agents",
+      "title": "Agent Instructions",
+      "group": "Agent Files",
+      "description": "Build-time instructions for coding agents.",
+      "html": "/docs/agents.html",
+      "raw": "/AGENTS.md"
+    },
+    {
+      "slug": "llms",
+      "title": "llms.txt",
+      "group": "Agent Files",
+      "description": "Canonical LLM-facing product index.",
+      "html": "/docs/llms.html",
+      "raw": "/llms.txt"
+    },
+    {
+      "slug": "openapi",
+      "title": "Proof API Contract",
+      "group": "Operations",
+      "description": "OpenAPI contract for proof and telemetry endpoints.",
+      "html": "/docs/openapi.html",
+      "raw": "/openapi.yaml"
+    }
+  ]
+}
