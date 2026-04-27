@@ -4,8 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggle = document.querySelector('.menu-toggle');
   const nav = document.querySelector('#nav');
   const discovery = initDiscovery();
-  initProof();
-  initDemo();
+  initInstallCopy();
 
   if (toggle && nav) {
     toggle.addEventListener('click', () => {
@@ -50,48 +49,19 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-function initDemo() {
-  const code = document.querySelector('[data-demo-code]');
-  const result = document.querySelector('[data-demo-result]');
-  const status = document.querySelector('[data-demo-status]');
-  const buttons = document.querySelectorAll('[data-demo-mode]');
-  if (!code || !result || !status || buttons.length === 0) return;
+function initInstallCopy() {
+  const button = document.querySelector('[data-copy-install]');
+  const command = document.querySelector('[data-install-command] code')?.textContent?.trim();
+  const feedback = document.querySelector('[data-copy-feedback]');
+  if (!button || !command) return;
 
-  const states = {
-    unsafe: {
-      status: 'Blocked',
-      decision: 'BLOCK',
-      detail: 'Payment flow has no Monarch check before funds move.',
-      code: `await wallet.send({
-  payTo: userProvidedAddress,
-  amount: "2500",
-  asset: "USDC"
-});`,
-    },
-    patched: {
-      status: 'Passed',
-      decision: 'PASS',
-      detail: 'Monarch check runs before signing or sending payment.',
-      code: `await checkBeforePayment({
-  payTo,
-  amount: "2500",
-  asset: "USDC",
-  intent: "creator payout"
-}, () => wallet.send(payment));`,
-    },
-  };
-
-  buttons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const mode = button.getAttribute('data-demo-mode');
-      const state = states[mode] ?? states.unsafe;
-
-      buttons.forEach((item) => item.classList.toggle('active', item === button));
-      code.textContent = state.code;
-      status.textContent = state.status;
-      result.innerHTML = `<strong>${state.decision}</strong><span>${state.detail}</span>`;
-      result.dataset.state = mode;
-    });
+  button.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(command);
+      if (feedback) feedback.textContent = 'Install command copied.';
+    } catch {
+      if (feedback) feedback.textContent = command;
+    }
   });
 }
 
@@ -198,78 +168,4 @@ function referrerHost() {
   } catch {
     return '';
   }
-}
-
-function initProof() {
-  const proofSection = document.querySelector('#proof');
-  if (!proofSection) return;
-
-  fetch('https://monarch-doctor-run.ghostmonarchalerts.workers.dev/proof', {
-    headers: { accept: 'application/json' },
-  })
-    .then((response) => {
-      if (!response.ok) throw new Error('proof_unavailable');
-      return response.json();
-    })
-    .then(renderProof)
-    .catch(() => {
-      const updated = document.querySelector('[data-proof-updated]');
-      if (updated) {
-        updated.textContent = 'Live counters are temporarily unavailable. Public examples remain reproducible from the links above.';
-      }
-    });
-}
-
-function renderProof(proof) {
-  const counters = proof.counters ?? {};
-  document.querySelectorAll('[data-proof-counter]').forEach((element) => {
-    const key = element.getAttribute('data-proof-counter');
-    element.textContent = formatCount(counters[key] ?? 0);
-  });
-
-  const rails = document.querySelector('[data-proof-rails]');
-  if (rails && Array.isArray(proof.byRail) && proof.byRail.length > 0) {
-    rails.replaceChildren(...proof.byRail.map((item) => {
-      const rail = document.createElement('span');
-      rail.textContent = `${railLabel(item.rail)} ${formatCount(item.runs)}`;
-      return rail;
-    }));
-  }
-
-  const examples = document.querySelector('[data-proof-examples]');
-  if (examples && Array.isArray(proof.examples) && proof.examples.length > 0) {
-    examples.replaceChildren(...proof.examples.map((example) => {
-      const item = document.createElement('li');
-      const link = document.createElement('a');
-      link.href = example.href;
-      link.textContent = example.title;
-      item.append(link);
-      return item;
-    }));
-  }
-
-  const updated = document.querySelector('[data-proof-updated]');
-  if (updated) {
-    updated.textContent = `Live aggregate proof updated ${new Date(proof.generatedAt).toLocaleString()}. Dogfood is labeled separately from external reported use.`;
-  }
-}
-
-function formatCount(value) {
-  return new Intl.NumberFormat('en-US').format(Number(value ?? 0));
-}
-
-function railLabel(rail) {
-  const labels = {
-    'x402': 'x402',
-    'paid_mcp': 'paid MCP',
-    'agentkit': 'AgentKit',
-    'stripe': 'Stripe',
-    'stablecoin': 'stablecoin',
-    'wallet': 'wallet',
-    'card': 'card',
-    'bank': 'bank',
-    'regional_rail': 'regional rail',
-  };
-
-  return labels[rail] ?? rail;
 }

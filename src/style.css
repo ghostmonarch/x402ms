@@ -415,6 +415,42 @@ button { font-family: inherit; }
   font-family: inherit;
 }
 
+.preflight-steps {
+  padding: 8px 28px;
+}
+
+.preflight-step {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 14px;
+  padding: 20px 0;
+}
+
+.preflight-step + .preflight-step {
+  border-top: 1px solid rgba(237, 236, 228, 0.06);
+}
+
+.preflight-step span {
+  color: rgba(237, 236, 228, 0.28);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.preflight-step strong {
+  display: block;
+  color: var(--cream);
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+
+.preflight-step p,
+.preflight-step code {
+  grid-column: 2;
+  color: rgba(237, 236, 228, 0.52);
+  font-size: 0.9rem;
+}
+
 .demo-result {
   display: flex;
   align-items: center;
@@ -460,6 +496,16 @@ button { font-family: inherit; }
 .demo-actions button:hover {
   color: var(--dark);
   background: var(--cream);
+}
+
+.demo-proof-link {
+  display: block;
+  padding: 16px 28px;
+  color: rgba(237, 236, 228, 0.68);
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .flow-stage {
@@ -669,6 +715,14 @@ button { font-family: inherit; }
   margin-bottom: 32px;
 }
 
+.section-title {
+  max-width: 760px;
+  margin-bottom: 48px;
+  font-size: clamp(2rem, 4.2vw, 3.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
 .proof-card {
   background: var(--cream);
   padding: 34px 28px;
@@ -774,8 +828,8 @@ button { font-family: inherit; }
 .logo-wall {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: rgba(237, 236, 228, 0.12);
+  gap: 0;
+  background: transparent;
   border: 1px solid rgba(237, 236, 228, 0.12);
 }
 
@@ -783,6 +837,8 @@ button { font-family: inherit; }
   min-height: 132px;
   padding: 28px;
   background: #0d0d0d;
+  border-right: 1px solid rgba(237, 236, 228, 0.12);
+  border-bottom: 1px solid rgba(237, 236, 228, 0.12);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -812,28 +868,24 @@ button { font-family: inherit; }
   color: rgba(8, 8, 8, 0.58);
 }
 
-.ecosystems-note {
-  margin-top: 18px;
-  color: rgba(237, 236, 228, 0.36);
-  font-size: 0.875rem;
-}
-
 .risk {
   padding: 104px 0;
   background: var(--cream-dim);
 }
 
-.risk > .container > .label { margin-bottom: 48px; }
-
 .risk-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: var(--border-light);
+  gap: 0;
+  background: transparent;
+  border-top: 1px solid var(--border-light);
+  border-left: 1px solid var(--border-light);
 }
 
 .risk-card {
   background: var(--cream-dim);
+  border-right: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
   padding: 44px 32px;
 }
 
@@ -911,7 +963,27 @@ button { font-family: inherit; }
   padding: 104px 0;
 }
 
-.agent-docs > .container > .label { margin-bottom: 48px; }
+.agent-docs-card {
+  padding: 44px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  background: rgba(8, 8, 8, 0.03);
+}
+
+.agent-docs-card .h2 {
+  max-width: 760px;
+  margin-bottom: 18px;
+}
+
+.agent-docs-card .body-lg {
+  max-width: 760px;
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+
+.agent-docs-card .label {
+  margin-bottom: 20px;
+}
 
 .agent-docs-list {
   border-top: 1px solid var(--border-light);

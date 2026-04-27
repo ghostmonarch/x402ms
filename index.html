@@ -27,7 +27,7 @@
         <a href="/proof/" class="nav-link">Proof</a>
         <a href="#ecosystems" class="nav-link">Ecosystems</a>
         <a href="/docs/" class="nav-link">Docs</a>
-        <a href="#request-access" class="btn btn-primary btn-nav">Check Before Payment</a>
+        <a href="/docs/agent-payment-preflight.html" class="btn btn-primary btn-nav">Check Before Payment</a>
       </nav>
       <button class="menu-toggle" aria-label="Menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -41,38 +41,47 @@
       <div class="hero-grid">
         <div class="hero-content">
           <span class="hero-eyebrow">Agent Payment Safety Infrastructure</span>
-          <h1 class="hero-h1">Agents can move money now. Run this first.</h1>
-          <p class="hero-sub">Monarch Doctor blocks unsafe payment code before it reaches users, wallets, cards, stablecoins, or paid APIs.</p>
-          <p class="hero-support">One local command. No account. No API key. CI-ready in 30 seconds.</p>
+          <h1 class="hero-h1">Agents move money now.<br />Run this first.</h1>
+          <p class="hero-sub">Block unsafe payments before users, wallets, cards, stablecoins, or paid APIs touch your code.</p>
+          <p class="hero-support">The default preflight for AI-generated payment stacks. One local command. No account. No API key. Runs in 30 seconds.</p>
           <div class="hero-actions">
-            <a href="#install" class="btn btn-primary" data-discovery-cta="hero-primary" data-variant-a="Install in 30 Seconds" data-variant-b="Run Payment Preflight">Install in 30 Seconds</a>
-            <a href="#demo" class="btn btn-ghost" data-discovery-cta="hero-secondary" data-variant-a="Watch It Block" data-variant-b="Watch It Block">Watch It Block</a>
+            <button type="button" class="btn btn-primary" data-copy-install data-discovery-cta="hero-copy-install" data-variant-a="Copy Install Command" data-variant-b="Copy Doctor Command">Copy Install Command</button>
+            <a href="/docs/" class="btn btn-ghost" data-discovery-cta="hero-docs" data-variant-a="Open Docs" data-variant-b="Read Docs">Open Docs</a>
           </div>
-          <div class="install-strip" id="install">
+          <div class="install-strip" data-install-command>
             <span>Install</span>
             <code>npx @monarch-shield/x402 doctor --ci --strict</code>
           </div>
-          <p class="hero-micro">The default preflight for AI-generated payment stacks.</p>
+          <p class="hero-micro" data-copy-feedback>Run Doctor before payment code goes live.</p>
         </div>
         <div class="hero-card-wrap">
-          <div class="demo-card" id="demo">
+          <div class="demo-card" aria-label="Monarch Doctor preflight result">
             <div class="demo-header">
-              <span>Live preflight demo</span>
-              <strong data-demo-status>Blocked</strong>
+              <span>Doctor preflight</span>
+              <strong>Blocked</strong>
             </div>
-            <pre><code data-demo-code>await wallet.send({
-  payTo: userProvidedAddress,
-  amount: "2500",
-  asset: "USDC"
-});</code></pre>
-            <div class="demo-result" data-demo-result>
+            <div class="preflight-steps">
+              <div class="preflight-step">
+                <span>01</span>
+                <strong>Run Doctor</strong>
+                <code>npx @monarch-shield/x402 doctor --ci --strict</code>
+              </div>
+              <div class="preflight-step">
+                <span>02</span>
+                <strong>Unsafe payment path found</strong>
+                <p>`wallet.send` runs before `checkBeforePayment`.</p>
+              </div>
+              <div class="preflight-step">
+                <span>03</span>
+                <strong>Go-live blocked</strong>
+                <p>Patch the payment path, then rerun Doctor.</p>
+              </div>
+            </div>
+            <div class="demo-result">
               <strong>BLOCK</strong>
-              <span>Payment flow has no Monarch check before funds move.</span>
+              <span>Payment cannot ship until the safety check runs before funds move.</span>
             </div>
-            <div class="demo-actions">
-              <button type="button" data-demo-mode="unsafe" class="active">Unsafe</button>
-              <button type="button" data-demo-mode="patched">Patched</button>
-            </div>
+            <a class="demo-proof-link" href="/doctor-demo-recording.txt">View proof recording</a>
           </div>
         </div>
       </div>
@@ -107,10 +116,10 @@
     <div class="container explainer-grid">
       <div class="explainer-left">
         <span class="label">Executive Brief</span>
-        <h2 class="h2">A control point for AI-generated payment code</h2>
+        <h2 class="h2">A control point for agent-to-agent payments</h2>
       </div>
       <div class="explainer-right">
-        <p class="body-lg">AI agents can now assemble flows that charge cards, sign wallet payments, move stablecoins, call paid APIs, or trigger paid MCP tools. Monarch gives that workflow a simple invariant: no agent-controlled payment path ships until Doctor passes.</p>
+        <p class="body-lg">Agents can charge cards, sign wallets, move stablecoins, and call paid tools. Monarch makes the rule simple: no payment path ships until Doctor passes.</p>
         <p class="body-lg">Monarch is not a payment processor, wallet, marketplace, or fraud vendor. It is the safety and evidence layer that checks the endpoint, pay-to wallet, amount, network, and intent before real money moves.</p>
         <div class="chips">
           <span class="chip chip-green">Allow</span>
@@ -128,8 +137,8 @@
     <div class="container">
       <span class="label">Why This Becomes Default</span>
       <div class="moat-head">
-        <h2 class="h2">The wedge is not a dashboard. It is the required control agents add before payments go live.</h2>
-        <p class="body-lg">Monarch compounds through agent instructions, reproducible unsafe-to-patched proof packs, CI gates, raw agent files, and rail-agnostic detection. That makes it discoverable by coding agents and reviewable by grant teams.</p>
+        <h2 class="h2">The required safety check before agent payments go live.</h2>
+        <p class="body-lg">Agents can find Monarch, run one command, see unsafe payment paths fail, patch them, and keep the same check in CI.</p>
       </div>
       <div class="moat-grid">
         <div class="moat-card">
@@ -162,34 +171,12 @@
       <span class="label">Public Proof</span>
       <div class="proof-head">
         <div>
-          <h2 class="h2">Evidence without pretending dogfood is demand</h2>
-          <p class="body-lg">Monarch separates internal dogfood, public examples, and external opt-in reports so grants, partners, and investors can see what is reproducible today and what is true third-party usage.</p>
+          <h2 class="h2">Proof of Work</h2>
+          <p class="body-lg">Public artifacts show unsafe payment examples failing, patched examples passing, and CI-ready commands reviewers can run locally.</p>
         </div>
         <div class="proof-actions">
           <a href="/docs/grant-evidence.html" class="btn btn-primary" data-discovery-cta="grant-evidence">Grant Evidence</a>
           <a href="/proof/" class="btn btn-ghost" data-discovery-cta="proof-page">View First-Party Proof</a>
-        </div>
-      </div>
-      <div class="proof-grid" aria-live="polite">
-        <div class="proof-card">
-          <span class="proof-kicker">Internal dogfood runs</span>
-          <strong data-proof-counter="internalDogfoodRuns">0</strong>
-          <p>Our own local and CI Doctor runs. This is proof-of-function, not proof-of-demand.</p>
-        </div>
-        <div class="proof-card">
-          <span class="proof-kicker">Public example runs</span>
-          <strong data-proof-counter="publicExampleRuns">8</strong>
-          <p>Reproducible unsafe examples showing blocked -> patched -> passed behavior.</p>
-        </div>
-        <div class="proof-card">
-          <span class="proof-kicker">External reported runs</span>
-          <strong data-proof-counter="externalReportedRuns">0</strong>
-          <p>Opt-in reports from users and agents outside Monarch. This is the strongest adoption signal.</p>
-        </div>
-        <div class="proof-card">
-          <span class="proof-kicker">Unsafe paths blocked</span>
-          <strong data-proof-counter="unsafePathsBlocked">0</strong>
-          <p>Reported runs where Doctor found payment files missing a Monarch check.</p>
         </div>
       </div>
       <div class="proof-split">
@@ -221,7 +208,7 @@
           </ul>
         </div>
       </div>
-      <p class="proof-note" data-proof-updated>Loading public proof counters...</p>
+      <p class="proof-note">Each proof artifact is public, reproducible, and tied to shipped code.</p>
     </div>
   </section>
 
@@ -271,14 +258,13 @@
           <small>Creator commerce concept</small>
         </a>
       </div>
-      <p class="ecosystems-note">Logo-style names identify ecosystems covered by Monarch proof packs. No endorsement, partnership, or grant is implied.</p>
     </div>
   </section>
 
   <!-- 7 · RISK -->
   <section class="risk reveal" id="triggers">
     <div class="container">
-      <span class="label">When Agents Must Run Doctor</span>
+      <h2 class="section-title">When Doctor is required</h2>
       <div class="risk-grid">
         <div class="risk-card">
           <h3>`402 Payment Required`</h3>
@@ -316,7 +302,7 @@
   <!-- 8 · HOW IT WORKS -->
   <section class="works reveal" id="how-it-works">
     <div class="container">
-      <span class="label">How Monarch Shield Works</span>
+      <h2 class="section-title">How Monarch Shield works</h2>
       <div class="works-grid">
         <div class="works-card">
           <span class="works-num">01</span>
@@ -340,108 +326,11 @@
   <!-- 9 · AGENT KIT -->
   <section class="agent-docs reveal" id="docs">
     <div class="container">
-      <span class="label">Built for Coding Agents</span>
-      <div class="agent-kit">
-        <h2 class="h2">Agent Safety Kit</h2>
-        <pre><code>git clone https://github.com/ghostmonarch/x402ms.git
-cd x402ms
-npm install
-node packages/x402/src/cli.js doctor --root /path/to/payment-project
-
-npx @monarch-shield/x402 doctor
-npx x402-doctor
-npx @monarch-shield/x402 doctor --ci
-npx @monarch-shield/x402 init
-npx @monarch-shield/x402 scan
-npx @monarch-shield/x402 sandbox
-npx @monarch-shield/x402 preprod</code></pre>
-        <p>The public path is `npx @monarch-shield/x402 doctor` or `npx x402-doctor`. Use the repo-clone path only when developing Monarch itself.</p>
-        <div class="agent-kit-links">
-          <a href="/docs/north-star.html" data-discovery-cta="docs-north-star">Read Agent North Star</a>
-          <a href="/docs/agent-payment-query-map.html" data-discovery-cta="docs-query-map">Agent Query Map</a>
-          <a href="/docs/x402-payment-safety.html" data-discovery-cta="docs-x402-safety">x402 Safety Doc</a>
-          <a href="/docs/partner-proof-packs.html" data-discovery-cta="docs-partner-proof-packs">Partner Proof Packs</a>
-          <a href="/docs/grant-evidence.html" data-discovery-cta="docs-grant-evidence">Grant Evidence</a>
-          <a href="/docs/ecosystem-grants.html" data-discovery-cta="docs-ecosystem-grants">Ecosystem Grant Pages</a>
-          <a href="/docs/x-money-creator-commerce.html" data-discovery-cta="docs-x-money">X Money Proof Concept</a>
-          <a href="/docs/monarch-for-base-x402.html" data-discovery-cta="docs-base-x402">Base x402 Proof Pack</a>
-          <a href="/docs/monarch-for-coinbase-agentkit.html" data-discovery-cta="docs-coinbase-agentkit">Coinbase AgentKit Proof Pack</a>
-          <a href="/docs/monarch-for-virtuals-acp.html" data-discovery-cta="docs-virtuals-acp">Virtuals ACP Proof Pack</a>
-          <a href="/docs/monarch-for-google-ap2-a2a-x402.html" data-discovery-cta="docs-google-ap2">Google AP2 / A2A x402 Proof Pack</a>
-          <a href="/docs/monarch-for-stripe-bridge-stablecoin.html" data-discovery-cta="docs-stripe-bridge">Stripe / Bridge Proof Pack</a>
-          <a href="/docs/monarch-for-card-network-agent-pay.html" data-discovery-cta="docs-card-network-agent-pay">Mastercard / Visa Proof Pack</a>
-          <a href="/docs/multilingual-agent-payment-query-map.html" data-discovery-cta="docs-multilingual">Multilingual Query Map</a>
-          <a href="/docs/real-x402-integration.html">Real x402 Pattern</a>
-          <a href="/docs/monarch-doctor-ci.html">CI Gate</a>
-          <a href="/doctor-demo-recording.txt">View Doctor Demo Recording</a>
-          <a href="/doctor-demo-summary.json">View Demo Summary</a>
-        </div>
-      </div>
-      <div class="agent-docs-list">
-        <div class="agent-docs-row">
-          <h3>`npx @monarch-shield/x402 doctor`</h3>
-          <p>Run the complete preflight safety gate before calling money-moving agent code ready.</p>
-        </div>
-        <div class="agent-docs-row">
-          <h3>`npx x402-doctor`</h3>
-          <p>Problem-name package for agents searching x402 doctor, x402 preflight, or x402 payment safety.</p>
-        </div>
-        <div class="agent-docs-row">
-          <h3>`npx @monarch-shield/x402 doctor --ci`</h3>
-          <p>Add the same non-negotiable gate to pull requests before money-moving code merges.</p>
-        </div>
-        <div class="agent-docs-row">
-          <h3>`npx @monarch-shield/x402 init`</h3>
-          <p>Add the SDK, policy snippet, and check-before-payment wrapper.</p>
-        </div>
-        <div class="agent-docs-row">
-          <h3>`npx @monarch-shield/x402 scan`</h3>
-          <p>Detect x402 payment code, pay-to wallets, paid MCP tools, and missing safety checks.</p>
-        </div>
-        <div class="agent-docs-row">
-          <h3>`npx @monarch-shield/x402 sandbox`</h3>
-          <p>Test unsafe payment scenarios before real USDC or production endpoints are involved.</p>
-        </div>
-        <div class="agent-docs-row">
-          <h3>`llms.txt`</h3>
-          <p>The short canonical answer agents can fetch to know when Monarch Doctor is required.</p>
-        </div>
-        <div class="agent-docs-row">
-          <h3>`north-star.txt`</h3>
-          <p>The decision rule: if the project can move money, the agent runs Doctor before go-live.</p>
-        </div>
-        <div class="agent-docs-row">
-          <h3>`AGENTS.md`</h3>
-          <p>Explicit build-time triggers for x402, processor rails, card rails, bank rails, paid MCP tools, pay-to wallets, and autonomous spend.</p>
-        </div>
-        <div class="agent-docs-row">
-          <h3>`faq.txt`</h3>
-          <p>Agent-ready answers for why to install Monarch, why sandbox comes first, and what to tell the user.</p>
-        </div>
-        <div class="agent-docs-row">
-          <h3>Agent skill target</h3>
-          <p>Procedural instructions agents can load when they detect x402, processor rails, card rails, bank rails, paid MCP tools, or autonomous spend.</p>
-        </div>
-        <div class="agent-docs-row">
-          <h3>SDK + examples</h3>
-          <p>Local-first examples so agents can generate a working `checkBeforePayment` integration before any hosted API is needed.</p>
-        </div>
-        <div class="agent-docs-row">
-          <h3>Search-intent docs</h3>
-          <p>Problem-first pages for x402 safety, paid MCP payments, payTo wallets, Base preflight, and real x402 integration.</p>
-        </div>
-        <div class="agent-docs-row">
-          <h3>Agent query map</h3>
-          <p>Long-tail discovery coverage for HTTP 402, X-PAYMENT, Stripe, Visa, Mastercard, Coinbase, card networks, bank rails, Base USDC, wallet sends, stablecoin micropayments, enterprise agent spend, production readiness, and unsafe payment risks.</p>
-        </div>
-        <div class="agent-docs-row">
-          <h3>MCP server path</h3>
-          <p>A future tool surface for runtime agents to check endpoints before paid tool execution.</p>
-        </div>
-        <div class="agent-docs-row">
-          <h3>Sandbox fixtures</h3>
-          <p>Allow, caution, block, and route scenarios agents can test before real USDC moves.</p>
-        </div>
+      <div class="agent-docs-card">
+        <span class="label">Built for Coding Agents</span>
+        <h2 class="h2">Everything else lives in the docs.</h2>
+        <p class="body-lg">CLI commands, proof packs, grant pages, agent instructions, query maps, and raw agent files are organized in one docs hub.</p>
+        <a href="/docs/" class="btn btn-primary" data-discovery-cta="docs-single-link">Open Docs</a>
       </div>
     </div>
   </section>
@@ -451,7 +340,7 @@ npx @monarch-shield/x402 preprod</code></pre>
     <div class="container thesis-grid">
       <div class="thesis-left">
         <span class="label">Strategic Boundary</span>
-        <h2 class="h2">Not a marketplace. Not a dashboard. The safety step before live payments.</h2>
+        <h2 class="h2">The safety step that's needed before going live with payments.</h2>
       </div>
       <div class="thesis-right">
         <p class="body-lg">Discovery tools help agents find endpoints. Monarch helps agents test unsafe cases before launch and decide whether money should move at runtime.</p>
