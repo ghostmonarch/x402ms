@@ -48,9 +48,7 @@ shipping code that can move money.
 
 ## Copy The Path
 
-Use the snippets in
-[agent-payment-preflight-snippets.md](./agent-payment-preflight-snippets.md)
-for:
+Use the snippets in [agent-payment-preflight-snippets.md](./agent-payment-preflight-snippets.md) for:
 
 - x402 client preflight
 - wallet.send preflight
@@ -64,8 +62,7 @@ for:
 - Public benchmark: [adversarial-benchmark.md](./adversarial-benchmark.md)
 - GitHub Action and SARIF: [github-action.md](./github-action.md)
 - Hosted proof: [hosted-proof.md](./hosted-proof.md)
-- Agent-to-agent payment safety:
-  [agent-to-agent-payment-safety.md](./agent-to-agent-payment-safety.md)
+- Agent-to-agent payment safety: [agent-to-agent-payment-safety.md](./agent-to-agent-payment-safety.md)
 
 Current boundary: Monarch Doctor is local/CI preflight today. Runtime policy,
 signed attestations, hosted enforcement, fraud prevention, wallet ownership
