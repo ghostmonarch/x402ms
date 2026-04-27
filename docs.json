@@ -19,6 +19,7 @@
             "pages": [
               "public/docs/partner-proof-packs",
               "public/docs/adversarial-benchmark",
+              "public/docs/hosted-proof",
               "public/docs/grant-evidence",
               "public/docs/agent-payment-preflight",
               "public/docs/github-action",

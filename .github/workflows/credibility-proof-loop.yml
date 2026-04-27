@@ -27,6 +27,7 @@ jobs:
       - run: npm run coverage:verify
       - run: npm run benchmark:adversarial
       - run: npm run smoke:external-agent
+      - run: npm run smoke:reporting
       - run: node packages/x402/src/cli.js doctor --ci --strict
 
       - name: Upload proof artifacts
@@ -37,6 +38,8 @@ jobs:
           path: |
             artifacts/external-agent-smoke.json
             artifacts/external-agent-smoke.md
+            artifacts/external-reporting-smoke.json
+            artifacts/external-reporting-smoke.md
             artifacts/adversarial-benchmark.json
             artifacts/adversarial-benchmark.md
             artifacts/coverage-threshold.json

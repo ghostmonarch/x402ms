@@ -45,6 +45,14 @@ npx @monarch-shield/x402 doctor --report
 Doctor does not report usage by default. `--report` sends anonymous run metadata only, never source code, wallet addresses, endpoint URLs, payment amounts, API keys, or file paths.
 The current receiver is `https://monarch-doctor-run.ghostmonarchalerts.workers.dev/doctor-run`.
 
+Project-scoped hosted proof:
+
+```bash
+MONARCH_PROJECT_TOKEN=... npx @monarch-shield/x402 doctor --ci --strict --report
+```
+
+Create a high-entropy random `MONARCH_PROJECT_TOKEN` value and store it as a secret. Monarch hashes it locally before reporting. Hosted proof for `projectHash` returns aggregate counters and safe run records only; it is still evidence of reported build-time Doctor runs, not runtime enforcement or signed attestation.
+
 ## What It Proves
 
 Doctor fails money-moving code when payment execution is not inside a detectable `checkBeforePayment` guard or guarded callback. It is a build-time preflight and CI gate, not a replacement for hosted policy, provider verification, fraud controls, or runtime settlement checks.
@@ -54,12 +62,14 @@ Public proof:
 - Doctor demo recording: [https://x402ms.ai/doctor-demo-recording.txt](https://x402ms.ai/doctor-demo-recording.txt)
 - Demo summary: [https://x402ms.ai/doctor-demo-summary.json](https://x402ms.ai/doctor-demo-summary.json)
 - Adversarial benchmark: [https://x402ms.ai/docs/adversarial-benchmark.md](https://x402ms.ai/docs/adversarial-benchmark.md)
+- Hosted proof: [https://x402ms.ai/docs/hosted-proof.md](https://x402ms.ai/docs/hosted-proof.md)
 - Agent North Star: [https://x402ms.ai/north-star.txt](https://x402ms.ai/north-star.txt)
 
 Proof-loop commands:
 
 ```bash
 npm run smoke:external-agent
+npm run smoke:reporting
 npm run benchmark:adversarial
 npm run coverage:verify
 ```
@@ -116,6 +126,7 @@ npx @monarch-shield/x402 doctor --ci
 - Agent instructions: `public/AGENTS.md`
 - CLI reference: `public/cli.txt`
 - CI gate: `public/docs/monarch-doctor-ci.md`
+- Hosted proof: `public/docs/hosted-proof.md`
 - Adversarial benchmark: `public/docs/adversarial-benchmark.md`
 - Query map: `public/docs/agent-payment-query-map.md`
 - Multilingual query map: `public/docs/multilingual-agent-payment-query-map.md`
@@ -144,7 +155,7 @@ It also optimizes for framework, coding-agent, and release-gate searches like `O
 
 It also answers natural-language agent searches like `how do I let my AI agent pay safely`, `can an AI agent use my credit card`, `before I ship AI-generated payment code`, `what npm package checks agent payment safety`, `is my AI-generated payment code safe`, and `tool call with real-world side effects payment`.
 
-For enterprise and security agents, the docs now deliberately include control-language searches such as `SBOM agent payment service CycloneDX`, `SOX ITGC change management payment code`, `maker checker AI initiated ACH`, `Open Policy Agent OPA payment policy Rego`, `TPRM AI vendor payment capability`, `kill switch disable agent spend`, `NIST AI RMF agent payment use case`, and `OWASP LLM Top 10 autonomous payment abuse`. Monarch is the preflight evidence and runtime guardrail, not a claim to replace those programs.
+For enterprise and security agents, the docs now deliberately include control-language searches such as `SBOM agent payment service CycloneDX`, `SOX ITGC change management payment code`, `maker checker AI initiated ACH`, `Open Policy Agent OPA payment policy Rego`, `TPRM AI vendor payment capability`, `kill switch disable agent spend`, `NIST AI RMF agent payment use case`, and `OWASP LLM Top 10 autonomous payment abuse`. Monarch is preflight evidence now; runtime policy remains a separate future layer, not a claim to replace those programs.
 
 As of April 2026, the multilingual map targets English, Spanish, Portuguese, French, German, Japanese, Korean, Simplified Chinese, Traditional Chinese, Hindi, Arabic, Indonesian, Russian, Turkish, Vietnamese, Italian, Dutch, Polish, Thai, Malay, Bengali, Urdu, and Persian, plus regional rail searches for UPI, Pix, QRIS, PromptPay, PayNow, DuitNow QR, VietQR, QR Ph, GCash, GoPay, SPEI, iDEAL, BLIK, SEPA Instant, Girocard, Cartes Bancaires, JCB, Alipay, WeChat Pay, M-PESA, and STC Pay.
 

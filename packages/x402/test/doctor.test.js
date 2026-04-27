@@ -672,6 +672,39 @@ test('Doctor report mode is non-blocking when telemetry endpoint is unavailable'
   });
 });
 
+test('Doctor project token reporting remains non-blocking when endpoint is unavailable', () => {
+  withTempProject({
+    'pay.js': `
+      import { checkBeforePayment } from '@monarch-shield/x402';
+      export async function safePayX402(payment) {
+        return checkBeforePayment(payment, () => fetch(payment.resourceUrl, {
+          headers: { 'X-PAYMENT': JSON.stringify({ payTo: payment.payTo }) }
+        }));
+      }
+    `,
+  }, (root) => {
+    const result = spawnSync(process.execPath, [
+      cliPath,
+      'doctor',
+      '--root',
+      root,
+      '--ci',
+      '--report',
+    ], {
+      cwd: packageRoot,
+      env: {
+        ...process.env,
+        MONARCH_TELEMETRY_URL: 'http://127.0.0.1:9/doctor-run',
+        MONARCH_PROJECT_TOKEN: 'test-project-token',
+      },
+      encoding: 'utf8',
+    });
+
+    assert.equal(result.status, 0);
+    assert.match(result.stdout, /"status": "passed"/);
+  });
+});
+
 test('CLI help and unknown command paths are explicit', () => {
   const help = runCli([]);
 

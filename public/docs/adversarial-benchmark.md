@@ -13,7 +13,7 @@ Use this page when searching for:
 
 The benchmark proves a narrow build-time claim: Monarch Doctor catches detectable agent-controlled payment paths when payment execution is not inside `checkBeforePayment` or a guarded callback.
 
-It does not prove runtime policy enforcement, hosted proof, wallet ownership verification, settlement safety, fraud prevention, or signed attestations. Those are later layers.
+It does not prove runtime policy enforcement, wallet ownership verification, settlement safety, fraud prevention, signed attestations, or whether a separate hosted proof endpoint has received a report for a project. Those remain separate surfaces.
 
 ## Run The Benchmark
 

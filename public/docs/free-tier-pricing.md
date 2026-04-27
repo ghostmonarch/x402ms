@@ -1,6 +1,6 @@
 # Free Tier And Pricing Ladder
 
-Monarch follows a Supabase-style growth model: make the default developer and agent reflex free, then later charge when teams need durable proof, policy, coordination, and runtime enforcement.
+Monarch follows a Supabase-style growth model: make the default developer and agent reflex free, then later charge when teams need longer proof history, policy coordination, team controls, and runtime enforcement.
 
 ## Free Forever
 
@@ -11,23 +11,25 @@ Monarch follows a Supabase-style growth model: make the default developer and ag
 - Agent-readable docs, `llms.txt`, `AGENTS.md`, and skill instructions.
 - Unlimited local runs.
 
-## Planned Free Hosted Proof
+## Free Hosted Proof
 
-Planned next:
+Included:
 
 - Project token.
-- Public or private proof page.
+- Public project proof endpoint.
 - Last 100 reported runs.
 - CI badge.
 - Rails detected.
 - Unsafe paths blocked.
+
+Create a high-entropy random `MONARCH_PROJECT_TOKEN` value and store it as a secret. Monarch hashes it locally before reporting. The public proof endpoint returns aggregate counters and safe run records only.
 
 ## Planned Paid Team Layer
 
 Teams pay when they need:
 
 - Longer run history.
-- Private projects.
+- Private project proof.
 - Slack and webhook alerts.
 - Shared policy packs.
 - Approval records.

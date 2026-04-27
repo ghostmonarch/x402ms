@@ -82,6 +82,27 @@ npx @monarch-shield/x402 doctor --ci --strict --sarif-output monarch-doctor.sari
 
 Upload the file with `github/codeql-action/upload-sarif`. The SARIF result is generated from the same Doctor scan result and reports unprotected payment files. It is still a build-time preflight signal, not hosted proof or runtime policy.
 
+## Opt-In Hosted Proof
+
+Anonymous reporting remains available:
+
+```bash
+npx @monarch-shield/x402 doctor --ci --strict --report
+```
+
+For project-scoped proof, create a high-entropy random `MONARCH_PROJECT_TOKEN` value and store it as a secret. Monarch hashes it locally before reporting.
+
+```yaml
+- uses: ghostmonarch/x402ms@main
+  env:
+    MONARCH_PROJECT_TOKEN: ${{ secrets.MONARCH_PROJECT_TOKEN }}
+  with:
+    strict: "true"
+    report: "true"
+```
+
+The hosted proof endpoint returns aggregate counters and safe run records for token-backed `projectHash` values only. It does not expose branch names, commit SHAs, repo names, file names, paths, URLs, package manager info, wallet addresses, amounts, source code, or raw project tokens.
+
 ## CI Decision
 
 - `passed`: payment files include Monarch checks and sandbox scenarios passed

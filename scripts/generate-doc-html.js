@@ -22,6 +22,13 @@ const docs = [
     description: 'Public benchmark showing what Doctor catches and what it does not claim to prove.',
   },
   {
+    slug: 'hosted-proof',
+    title: 'Hosted Proof',
+    group: 'Start',
+    source: 'public/docs/hosted-proof.md',
+    description: 'Opt-in project proof for reported Doctor runs with a strict privacy boundary.',
+  },
+  {
     slug: 'grant-evidence',
     title: 'Grant Evidence Packet',
     group: 'Proof Packs',

@@ -10,6 +10,7 @@ npx x402-doctor
 npx @monarch-shield/x402 doctor --ci
 npx @monarch-shield/x402 doctor --ci --strict --sarif-output monarch-doctor.sarif
 npx @monarch-shield/x402 doctor --report
+MONARCH_PROJECT_TOKEN=... npx @monarch-shield/x402 doctor --report
 npx @monarch-shield/x402 init
 npx @monarch-shield/x402 scan
 npx @monarch-shield/x402 sandbox
@@ -102,6 +103,14 @@ npx @monarch-shield/x402 doctor --report
 ```
 
 Doctor does not report usage by default. `--report` sends anonymous run metadata only: status, version, CI/strict flags, payment-flow presence, finding count, sandbox pass state, and anonymous project hash. It does not send source code, wallet addresses, endpoint URLs, payment amounts, API keys, or file paths. The current receiver is `https://monarch-doctor-run.ghostmonarchalerts.workers.dev/doctor-run`.
+
+Project-scoped proof:
+
+```bash
+MONARCH_PROJECT_TOKEN=... npx @monarch-shield/x402 doctor --ci --strict --report
+```
+
+Create a high-entropy random `MONARCH_PROJECT_TOKEN` value and store it as a secret. Monarch hashes it locally before reporting. Hosted proof for `projectHash` returns aggregate counters and safe run records only; it does not include package manager info, raw branch, commit SHA, repo name, file names, URLs, wallet addresses, amounts, source code, or raw project tokens.
 
 ## monarch init
 

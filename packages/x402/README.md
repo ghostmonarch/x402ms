@@ -22,6 +22,7 @@ npx x402-doctor
 npx @monarch-shield/x402 doctor --ci
 npx @monarch-shield/x402 doctor --ci --strict --sarif-output monarch-doctor.sarif
 npx @monarch-shield/x402 doctor --report
+MONARCH_PROJECT_TOKEN=... npx @monarch-shield/x402 doctor --report
 npx @monarch-shield/x402 init --template x402-client
 npx @monarch-shield/x402 scan
 npx @monarch-shield/x402 sandbox
@@ -61,6 +62,7 @@ Doctor is a build-time preflight and CI gate. It checks that detectable payment 
 - `monarch doctor --ci`: emit machine-readable output for CI gates.
 - `monarch doctor --sarif-output monarch-doctor.sarif`: emit GitHub code scanning output for unprotected payment files.
 - `monarch doctor --report`: opt in to anonymous Doctor run reporting for early DAU proof.
+- `MONARCH_PROJECT_TOKEN=... monarch doctor --report`: opt in to project-scoped hosted proof. Create a high-entropy random `MONARCH_PROJECT_TOKEN` value and store it as a secret; Monarch hashes it locally before reporting.
 - `monarch scan`: detect payment flows and missing Monarch checks.
 - `monarch sandbox`: run deterministic unsafe payment scenarios.
 - `monarch preprod`: validate readiness for controlled pre-production.
@@ -94,6 +96,8 @@ MONARCH_TELEMETRY=1 npx @monarch-shield/x402 doctor --ci --strict
 
 Reported fields are limited to Doctor status, package version, CI/strict flags, whether a payment flow was detected, finding counts, sandbox pass state, and an anonymous project hash. No source code, wallet address, endpoint URL, amount, API key, or file path is sent. The default receiver is `https://monarch-doctor-run.ghostmonarchalerts.workers.dev/doctor-run`.
 
+For project-scoped proof, create a high-entropy random `MONARCH_PROJECT_TOKEN` value and store it as a secret. Monarch hashes it locally before reporting. Hosted proof for `projectHash` exposes only aggregate counters and safe run records; it does not expose package manager info, raw branch, commit SHA, repo name, file names, URLs, or raw project tokens.
+
 ## Demo Recording
 
 From this repository root, run:
@@ -107,6 +111,7 @@ Public proof artifacts:
 - `https://x402ms.ai/doctor-demo-recording.txt`
 - `https://x402ms.ai/doctor-demo-summary.json`
 - `https://x402ms.ai/docs/adversarial-benchmark.md`
+- `https://x402ms.ai/docs/hosted-proof.md`
 
 The demo shows Doctor failing unsafe x402-style code, failing again when a wrapper exists but the original payment path is unpatched, then passing after payment execution is guarded by `checkBeforePayment`.
 
@@ -114,6 +119,7 @@ Proof-loop commands from the repo:
 
 ```bash
 npm run smoke:external-agent
+npm run smoke:reporting
 npm run benchmark:adversarial
 npm run coverage:verify
 ```
@@ -129,6 +135,7 @@ npm run coverage:verify
 - `https://x402ms.ai/docs/real-x402-integration.md`
 - `https://x402ms.ai/docs/monarch-doctor-ci.md`
 - `https://x402ms.ai/docs/adversarial-benchmark.md`
+- `https://x402ms.ai/docs/hosted-proof.md`
 
 ## User Notice
 

@@ -66,6 +66,21 @@ jobs:
 
 SARIF is evidence transport for the same build-time Doctor result. It does not add runtime policy enforcement or hosted proof.
 
+## Optional Hosted Proof
+
+Create a high-entropy random `MONARCH_PROJECT_TOKEN` value and store it as a GitHub secret. Monarch hashes it locally before reporting.
+
+```yaml
+- uses: ghostmonarch/x402ms@main
+  env:
+    MONARCH_PROJECT_TOKEN: ${{ secrets.MONARCH_PROJECT_TOKEN }}
+  with:
+    strict: "true"
+    report: "true"
+```
+
+Without `MONARCH_PROJECT_TOKEN`, `report: "true"` keeps sending anonymous aggregate reporting. With the token, the report becomes project-scoped proof under `projectHash`. The proof endpoint and badge expose only aggregate counters and safe run fields, not repo names, branch names, commit SHAs, file names, paths, URLs, wallet addresses, amounts, source code, package manager info, or raw project tokens.
+
 ## When Agents Should Add It
 
 Add this action when the project handles x402, wallets, Stripe, cards, bank rails, stablecoins, paid APIs, paid MCP tools, pay-to wallets, or agent-to-agent payments.

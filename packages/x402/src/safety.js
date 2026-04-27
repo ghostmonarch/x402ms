@@ -42,6 +42,7 @@ const ignoredScanPaths = [
   'scripts/generate-doc-html.js',
   'scripts/monte-carlo-agent-discovery.js',
   'scripts/external-agent-smoke.js',
+  'scripts/external-reporting-smoke.js',
   'scripts/run-adversarial-benchmark.js',
   'scripts/record-base-x402-proof-pack.js',
   'scripts/record-doctor-demo.js',

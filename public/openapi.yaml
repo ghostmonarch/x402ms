@@ -40,6 +40,44 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/DoctorRunResponse"
+  /projects/{projectHash}/proof:
+    get:
+      summary: Read token-backed project proof
+      description: Returns aggregate counters plus the last 100 privacy-preserving Doctor run records for a token-backed projectHash. It does not return package manager info, branch names, commit SHAs, repo names, file names, paths, URLs, wallet addresses, amounts, source code, or raw project tokens.
+      operationId: readProjectProof
+      parameters:
+        - name: projectHash
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: "^[a-f0-9]{24}$"
+      responses:
+        "200":
+          description: Project proof summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectProofResponse"
+  /projects/{projectHash}/badge.svg:
+    get:
+      summary: Read token-backed project proof badge
+      description: Returns an SVG badge reflecting the latest token-backed Doctor report for a projectHash.
+      operationId: readProjectBadge
+      parameters:
+        - name: projectHash
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: "^[a-f0-9]{24}$"
+      responses:
+        "200":
+          description: SVG badge
+          content:
+            image/svg+xml:
+              schema:
+                type: string
   /discovery-event:
     post:
       summary: Record an anonymous discovery event
@@ -117,6 +155,9 @@ components:
         projectHash:
           type: string
           pattern: "^[a-f0-9]{24}$"
+        projectScope:
+          type: boolean
+          description: True only when MONARCH_PROJECT_TOKEN was set and hashed locally before reporting.
         timestamp:
           type: string
           format: date-time
@@ -304,3 +345,75 @@ components:
                 type: string
               href:
                 type: string
+    ProjectProofResponse:
+      type: object
+      required:
+        - projectHash
+        - counters
+        - runs
+      properties:
+        projectHash:
+          type: string
+          pattern: "^[a-f0-9]{24}$"
+        generatedAt:
+          type: string
+          format: date-time
+        scope:
+          type: string
+          enum: [token-backed-project-proof]
+        counters:
+          type: object
+          properties:
+            totalRuns:
+              type: integer
+            passedRuns:
+              type: integer
+            failedRuns:
+              type: integer
+            ciRuns:
+              type: integer
+            localRuns:
+              type: integer
+            unsafePathsBlocked:
+              type: integer
+            sandboxPassedRuns:
+              type: integer
+        byRail:
+          type: array
+          items:
+            type: object
+            properties:
+              rail:
+                type: string
+              runs:
+                type: integer
+        runs:
+          type: array
+          maxItems: 100
+          items:
+            $ref: "#/components/schemas/ProjectProofRun"
+    ProjectProofRun:
+      type: object
+      properties:
+        receivedAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum: [passed, failed, no_payment_flow_detected, failed_no_payment_flow]
+        ci:
+          type: boolean
+        strict:
+          type: boolean
+        applicable:
+          type: boolean
+        rails:
+          type: array
+          items:
+            type: string
+        findingCount:
+          type: integer
+        sandboxPassed:
+          type: boolean
+        hasUnprotectedPaymentFiles:
+          type: boolean

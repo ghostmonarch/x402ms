@@ -16,7 +16,7 @@ inputs:
     required: false
     default: "true"
   report:
-    description: Report anonymous aggregate Doctor run metadata.
+    description: Report aggregate Doctor run metadata. Set MONARCH_PROJECT_TOKEN in env for project-scoped proof.
     required: false
     default: "false"
   proof-source:

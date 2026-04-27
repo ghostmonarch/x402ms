@@ -37,4 +37,4 @@ The reports are written to:
 - `artifacts/external-agent-smoke.md`
 - `artifacts/adversarial-benchmark.md`
 
-These are build-time preflight reports. Runtime policy, hosted proof, and signed attestations are later layers.
+These are build-time preflight reports. Runtime policy and signed attestations are later layers. Hosted proof is a separate opt-in reporting path for token-backed `projectHash` values.

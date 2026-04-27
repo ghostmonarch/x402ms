@@ -31,7 +31,7 @@ function jsonRequest(path, payload) {
   });
 }
 
-function mockDb({ totals = {}, byStatus = [], bySource = [], railRows = [] } = {}) {
+function mockDb({ totals = {}, byStatus = [], bySource = [], railRows = [], projectRuns = [], latest = null } = {}) {
   const calls = [];
 
   return {
@@ -46,12 +46,14 @@ function mockDb({ totals = {}, byStatus = [], bySource = [], railRows = [] } = {
             },
             async first() {
               calls.push({ type: 'first', sql, values });
+              if (sql.includes('ORDER BY received_at DESC')) return latest;
               return totals;
             },
             async all() {
               calls.push({ type: 'all', sql, values });
               if (sql.includes('GROUP BY status')) return { results: byStatus };
               if (sql.includes('GROUP BY source')) return { results: bySource };
+              if (sql.includes('ORDER BY received_at DESC')) return { results: projectRuns };
               return { results: railRows };
             },
           };
@@ -81,8 +83,9 @@ test('doctor run accepts aggregate proof source and detected rails', async () =>
 
   assert.equal(response.status, 202);
   assert.deepEqual(payload, { accepted: true, stored: true });
-  assert.equal(insert.values.at(-2), 'stripe,x402');
-  assert.equal(insert.values.at(-1), 'internal-dogfood');
+  assert.equal(insert.values.at(-3), 'stripe,x402');
+  assert.equal(insert.values.at(-2), 'internal-dogfood');
+  assert.equal(insert.values.at(-1), 0);
 });
 
 test('public proof endpoint aggregates runs, sources, and rails', async () => {
@@ -126,4 +129,94 @@ test('doctor run rejects invalid proof rails', async () => {
 
   assert.equal(response.status, 400);
   assert.equal(payload.error, 'invalid_detected_rail_raw_wallet_address');
+});
+
+test('doctor run stores token-backed project scope without raw token fields', async () => {
+  const DB = mockDb();
+  const response = await worker.fetch(jsonRequest('/doctor-run', doctorPayload({
+    projectScope: true,
+  })), { DB });
+  const insert = DB.calls.find((call) => call.type === 'run');
+
+  assert.equal(response.status, 202);
+  assert.equal(insert.values.at(-1), 1);
+});
+
+test('doctor run rejects token-shaped payload fields', async () => {
+  const response = await worker.fetch(jsonRequest('/doctor-run', doctorPayload({
+    projectToken: 'secret-token',
+  })), { DB: mockDb() });
+  const payload = await response.json();
+
+  assert.equal(response.status, 400);
+  assert.equal(payload.error, 'sensitive_field_projectToken');
+});
+
+test('project proof endpoint returns only privacy-safe fields for token-backed runs', async () => {
+  const DB = mockDb({
+    totals: {
+      total_runs: 2,
+      passed_runs: 1,
+      failed_runs: 1,
+      ci_runs: 1,
+      local_runs: 1,
+      unsafe_paths_blocked: 1,
+      sandbox_passed_runs: 1,
+    },
+    railRows: [{ detected_rails: 'x402,wallet' }],
+    projectRuns: [{
+      received_at: '2026-04-27T12:00:00.000Z',
+      status: 'failed',
+      ci: 1,
+      strict: 1,
+      applicable: 1,
+      detected_rails: 'x402,wallet',
+      finding_count: 2,
+      sandbox_passed: 1,
+      has_unprotected_payment_files: 1,
+    }],
+  });
+
+  const response = await worker.fetch(new Request('https://worker.example/projects/abcdefabcdefabcdefabcdef/proof'), { DB });
+  const payload = await response.json();
+  const run = payload.runs[0];
+
+  assert.equal(response.status, 200);
+  assert.equal(payload.scope, 'token-backed-project-proof');
+  assert.equal(payload.counters.totalRuns, 2);
+  assert.deepEqual(Object.keys(run), [
+    'receivedAt',
+    'status',
+    'ci',
+    'strict',
+    'applicable',
+    'rails',
+    'findingCount',
+    'sandboxPassed',
+    'hasUnprotectedPaymentFiles',
+  ]);
+  assert.equal(run.hasUnprotectedPaymentFiles, true);
+  assert.equal(Object.hasOwn(run, 'commitSha'), false);
+  assert.equal(Object.hasOwn(run, 'repoName'), false);
+  assert.equal(Object.hasOwn(run, 'fileNames'), false);
+  assert.equal(Object.hasOwn(run, 'urls'), false);
+});
+
+test('project badge reflects latest token-backed project state', async () => {
+  const passing = await worker.fetch(new Request('https://worker.example/projects/abcdefabcdefabcdefabcdef/badge.svg'), {
+    DB: mockDb({ latest: { status: 'passed', sandbox_passed: 1, has_unprotected_payment_files: 0 } }),
+  });
+  const passingSvg = await passing.text();
+
+  assert.equal(passing.status, 200);
+  assert.match(passingSvg, /monarch proof/);
+  assert.match(passingSvg, /passing/);
+
+  const missing = await worker.fetch(new Request('https://worker.example/projects/abcdefabcdefabcdefabcdef/badge.svg'), {
+    DB: mockDb({ latest: null }),
+  });
+  const missingSvg = await missing.text();
+
+  assert.equal(missing.status, 200);
+  assert.match(missingSvg, /no runs/);
 });

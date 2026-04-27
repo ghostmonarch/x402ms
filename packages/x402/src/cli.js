@@ -47,6 +47,7 @@ Usage:
 
 Proof reporting:
   npx @monarch-shield/x402 doctor --report [--proof-source internal-dogfood|public-example|external-reported]
+  MONARCH_PROJECT_TOKEN=... npx @monarch-shield/x402 doctor --report
 
 Core rule:
   Test before live. Check before pay.`);
@@ -386,6 +387,7 @@ async function reportDoctorRun(result, options) {
   if (!options.reportMode) return;
 
   const endpoint = process.env.MONARCH_TELEMETRY_URL ?? 'https://monarch-doctor-run.ghostmonarchalerts.workers.dev/doctor-run';
+  const projectToken = projectTokenOption(options);
   const payload = {
     event: 'doctor_run',
     tool: 'monarch-doctor',
@@ -400,7 +402,8 @@ async function reportDoctorRun(result, options) {
     detectedRails: detectedRails(result.scan.findings),
     sandboxPassed: result.sandbox.every((scenario) => scenario.passed),
     proofSource: proofSource(options),
-    projectHash: hashProject(options.root),
+    projectHash: projectToken ? hashProjectToken(projectToken) : hashAnonymousProject(options.root),
+    projectScope: Boolean(projectToken),
     timestamp: new Date().toISOString(),
   };
 
@@ -421,11 +424,24 @@ async function reportDoctorRun(result, options) {
   }
 }
 
-function hashProject(root) {
+function hashAnonymousProject(root) {
   return createHash('sha256')
     .update(`${root}:${packageJson.name}`)
     .digest('hex')
     .slice(0, 24);
+}
+
+function hashProjectToken(token) {
+  return createHash('sha256')
+    .update(`monarch-project-token:v1:${token}`)
+    .digest('hex')
+    .slice(0, 24);
+}
+
+function projectTokenOption(options) {
+  const token = options['project-token'] ?? process.env.MONARCH_PROJECT_TOKEN;
+  if (!token || token === 'true') return null;
+  return token;
 }
 
 function detectedRails(findings) {

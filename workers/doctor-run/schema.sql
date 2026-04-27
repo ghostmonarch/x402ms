@@ -13,7 +13,8 @@ CREATE TABLE IF NOT EXISTS doctor_runs (
   finding_count INTEGER NOT NULL,
   sandbox_passed INTEGER NOT NULL,
   detected_rails TEXT NOT NULL DEFAULT '',
-  proof_source TEXT NOT NULL DEFAULT 'external-reported'
+  proof_source TEXT NOT NULL DEFAULT 'external-reported',
+  project_scope INTEGER NOT NULL DEFAULT 0
 );
 
 CREATE INDEX IF NOT EXISTS doctor_runs_event_date_idx
@@ -24,6 +25,9 @@ ON doctor_runs (project_hash, event_date);
 
 CREATE INDEX IF NOT EXISTS doctor_runs_proof_source_idx
 ON doctor_runs (proof_source, event_date);
+
+CREATE INDEX IF NOT EXISTS doctor_runs_project_scope_idx
+ON doctor_runs (project_hash, project_scope, received_at);
 
 CREATE TABLE IF NOT EXISTS discovery_events (
   id TEXT PRIMARY KEY,

@@ -1,15 +1,17 @@
 # Monarch Doctor Run Receiver
 
-Cloudflare Worker for opt-in `doctor --report` DAU proof.
+Cloudflare Worker for opt-in `doctor --report` DAU proof and token-backed hosted proof.
 
-It accepts anonymous Doctor run metadata only. It rejects payload keys that look like source code, file paths, wallet addresses, endpoint URLs, payment amounts, API keys, tokens, or secrets.
+It accepts aggregate Doctor run metadata only. Anonymous `--report` remains supported. When `MONARCH_PROJECT_TOKEN` is set, the CLI hashes it locally and sends project-scoped proof using `projectHash`. The worker rejects payload keys that look like source code, file paths, wallet addresses, endpoint URLs, payment amounts, API keys, raw tokens, or secrets.
 
 ## Endpoints
 
-- `POST /doctor-run`: accepts anonymous Doctor run metadata
+- `POST /doctor-run`: accepts anonymous or token-backed aggregate Doctor run metadata
 - `POST /discovery-event`: accepts anonymous discovery/A-B metadata
 - `GET /health`: public health check
 - `GET /proof`: public aggregate proof counters and example evidence
+- `GET /projects/:projectHash/proof`: public token-backed project proof
+- `GET /projects/:projectHash/badge.svg`: badge for the latest token-backed project state
 - `GET /summary?date=YYYY-MM-DD`: admin-only summary, requires `Authorization: Bearer $MONARCH_ADMIN_TOKEN`
 
 ## Deploy
@@ -31,6 +33,7 @@ For an existing D1 database, apply the public proof migration before deploy:
 
 ```bash
 npx wrangler d1 execute monarch_doctor_runs --file=migrations/0001_public_proof_columns.sql
+npx wrangler d1 execute monarch_doctor_runs --file=migrations/0002_project_proof_scope.sql
 ```
 
 The intended public endpoint is:
@@ -57,9 +60,10 @@ Allowed payload fields:
 - `sandboxPassed`
 - `proofSource`
 - `projectHash`
+- `projectScope`
 - `timestamp`
 
-Never send source code, wallet addresses, endpoint URLs, payment amounts, API keys, file names, or file paths.
+Never send source code, wallet addresses, endpoint URLs, payment amounts, API keys, file names, file paths, raw branch names, commit SHAs, repo names, package manager info, or raw project tokens.
 
 Allowed `proofSource` values:
 

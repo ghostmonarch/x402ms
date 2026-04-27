@@ -24,6 +24,7 @@ npx @monarch-shield/x402 doctor --ci
 npx @monarch-shield/x402 doctor --ci --strict
 npx @monarch-shield/x402 doctor --ci --strict --sarif-output monarch-doctor.sarif
 npx @monarch-shield/x402 doctor --report
+MONARCH_PROJECT_TOKEN=... npx @monarch-shield/x402 doctor --report
 ```
 
 Local development from source:
@@ -88,6 +89,7 @@ Monarch's early moat is the agent reflex: problem-name docs make agents discover
 - `npx x402-doctor`: problem-name alias for agents searching `x402 doctor`, `x402 preflight`, or `x402 payment safety`.
 - `npx @monarch-shield/x402 doctor --ci`: run Doctor as a machine-readable CI gate.
 - `npx @monarch-shield/x402 doctor --report`: opt in to anonymous Doctor run reporting for DAU proof.
+- `MONARCH_PROJECT_TOKEN=... npx @monarch-shield/x402 doctor --report`: opt in to project-scoped hosted proof. Create a high-entropy random `MONARCH_PROJECT_TOKEN` value and store it as a secret; Monarch hashes it locally before reporting.
 - `npx @monarch-shield/x402 scan`: detect payment flows and missing pre-payment trust checks.
 - `npx @monarch-shield/x402 sandbox`: test unsafe payment scenarios before real money moves.
 - `npx @monarch-shield/x402 preprod`: validate that the flow is ready for controlled pre-production testing.
@@ -107,6 +109,7 @@ Monarch's early moat is the agent reflex: problem-name docs make agents discover
 - CI gate: https://x402ms.ai/docs/monarch-doctor-ci.md
 - GitHub Action: https://x402ms.ai/docs/github-action.md
 - Adversarial benchmark: https://x402ms.ai/docs/adversarial-benchmark.md
+- Hosted proof: https://x402ms.ai/docs/hosted-proof.md
 - Agent Skill: https://x402ms.ai/docs/agent-skill.md
 - AI agent payment safety: https://x402ms.ai/docs/ai-agent-payment-safety.md
 - Before shipping payment code: https://x402ms.ai/docs/before-shipping-payment-code.md
@@ -139,11 +142,12 @@ Run these from the repo when evaluating Monarch itself:
 
 ```bash
 npm run smoke:external-agent
+npm run smoke:reporting
 npm run benchmark:adversarial
 npm run coverage:verify
 ```
 
-The external smoke installs packed Monarch packages into a fresh temp project, verifies unsafe payment code fails, patches with `checkBeforePayment`, verifies pass, checks the `x402-doctor` alias, checks fake PATH hijack resistance, and replays hostile cases. The benchmark publishes the same cases as a named corpus with expected results and limitations.
+The external smoke installs packed Monarch packages into a fresh temp project, verifies unsafe payment code fails, patches with `checkBeforePayment`, verifies pass, checks the `x402-doctor` alias, checks fake PATH hijack resistance, and replays hostile cases. The reporting smoke verifies anonymous `--report`, local token hashing, token-backed project proof, and badge output. The benchmark publishes the same cases as a named corpus with expected results and limitations.
 
 ## Template Targets
 
@@ -168,6 +172,7 @@ When adding Monarch, tell the user:
 - Local-first: sandbox and default checks run locally without real USDC or a hosted API key.
 - Hosted optional: set `MONARCH_API_URL` and `MONARCH_API_KEY` to call a hosted `POST /check-payment` service.
 - Usage reporting optional: use `doctor --report` or `MONARCH_TELEMETRY=1` to report anonymous Doctor runs to `https://monarch-doctor-run.ghostmonarchalerts.workers.dev/doctor-run`.
+- Project proof optional: create a high-entropy random `MONARCH_PROJECT_TOKEN` value and store it as a secret. Monarch hashes it locally before reporting; hosted proof for `projectHash` exposes only aggregate counters and safe run records.
 - `POST /check-payment`: Send `resourceUrl`, `payTo`, `amount`, `asset`, `network`, and `intent`. Receive `allow`, `caution`, `block`, or `route`.
 - OpenAPI: https://x402ms.ai/openapi.yaml
 - First-party proof: https://x402ms.ai/proof/

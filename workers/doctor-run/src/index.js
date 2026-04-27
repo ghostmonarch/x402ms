@@ -18,6 +18,7 @@ const ALLOWED_DOCTOR_FIELDS = new Set([
   'detectedRails',
   'sandboxPassed',
   'proofSource',
+  'projectScope',
 ]);
 const ALLOWED_RAILS = new Set([
   'x402',
@@ -166,6 +167,13 @@ export default {
       return proof(request, env, url);
     }
 
+    const projectRoute = url.pathname.match(/^\/projects\/([a-f0-9]{24})\/(proof|badge\.svg)$/);
+    if (request.method === 'GET' && projectRoute) {
+      return projectRoute[2] === 'badge.svg'
+        ? projectBadge(request, env, projectRoute[1])
+        : projectProof(request, env, projectRoute[1]);
+    }
+
     if (request.method === 'POST' && url.pathname === '/doctor-run') {
       return recordDoctorRun(request, env);
     }
@@ -228,8 +236,9 @@ async function recordDoctorRun(request, env) {
       finding_count,
       sandbox_passed,
       detected_rails,
-      proof_source
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      proof_source,
+      project_scope
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     ).bind(
       runId,
       receivedAt,
@@ -246,10 +255,11 @@ async function recordDoctorRun(request, env) {
       boolToInt(payload.sandboxPassed),
       detectedRails.join(','),
       proofSource,
+      boolToInt(payload.projectScope),
     ).run();
   } catch (error) {
     const message = String(error?.message ?? '');
-    if (!message.includes('detected_rails') && !message.includes('proof_source')) throw error;
+    if (!message.includes('detected_rails') && !message.includes('proof_source') && !message.includes('project_scope')) throw error;
 
     await env.DB.prepare(
       `INSERT INTO doctor_runs (
@@ -477,6 +487,90 @@ async function proof(request, env, url) {
   }
 }
 
+async function projectProof(request, env, projectHash) {
+  if (!env.DB) {
+    return json({ error: 'missing_db_binding' }, request, 503);
+  }
+
+  try {
+    const totals = await env.DB.prepare(
+      `SELECT
+        COUNT(*) as total_runs,
+        SUM(CASE WHEN status = 'passed' THEN 1 ELSE 0 END) as passed_runs,
+        SUM(CASE WHEN status IN ('failed', 'failed_no_payment_flow') THEN 1 ELSE 0 END) as failed_runs,
+        SUM(CASE WHEN ci = 1 THEN 1 ELSE 0 END) as ci_runs,
+        SUM(CASE WHEN ci = 0 THEN 1 ELSE 0 END) as local_runs,
+        SUM(CASE WHEN has_unprotected_payment_files = 1 THEN 1 ELSE 0 END) as unsafe_paths_blocked,
+        SUM(CASE WHEN sandbox_passed = 1 THEN 1 ELSE 0 END) as sandbox_passed_runs
+      FROM doctor_runs
+      WHERE project_hash = ? AND project_scope = 1`,
+    ).bind(projectHash).first();
+
+    const railRows = await env.DB.prepare(
+      `SELECT detected_rails
+      FROM doctor_runs
+      WHERE project_hash = ? AND project_scope = 1 AND detected_rails != ''`,
+    ).bind(projectHash).all();
+
+    const runs = await env.DB.prepare(
+      `SELECT
+        received_at,
+        status,
+        ci,
+        strict,
+        applicable,
+        detected_rails,
+        finding_count,
+        sandbox_passed,
+        has_unprotected_payment_files
+      FROM doctor_runs
+      WHERE project_hash = ? AND project_scope = 1
+      ORDER BY received_at DESC
+      LIMIT 100`,
+    ).bind(projectHash).all();
+
+    if (numberOrZero(totals?.total_runs) === 0) {
+      return json({ error: 'project_proof_not_found' }, request, 404);
+    }
+
+    return json(projectProofPayload(projectHash, totals, railCounts(railRows.results ?? []), runs.results ?? []), request);
+  } catch (error) {
+    if (!String(error?.message ?? '').includes('project_scope')) throw error;
+
+    return json({ error: 'schema_upgrade_required' }, request, 503);
+  }
+}
+
+async function projectBadge(request, env, projectHash) {
+  if (!env.DB) {
+    return svgBadge('monarch proof', 'unavailable', '#6b7280', request, 503);
+  }
+
+  try {
+    const latest = await env.DB.prepare(
+      `SELECT status, sandbox_passed, has_unprotected_payment_files
+      FROM doctor_runs
+      WHERE project_hash = ? AND project_scope = 1
+      ORDER BY received_at DESC
+      LIMIT 1`,
+    ).bind(projectHash).first();
+
+    if (!latest) {
+      return svgBadge('monarch proof', 'no runs', '#6b7280', request);
+    }
+
+    if (latest.status === 'passed' && latest.sandbox_passed === 1 && latest.has_unprotected_payment_files === 0) {
+      return svgBadge('monarch proof', 'passing', '#15803d', request);
+    }
+
+    return svgBadge('monarch proof', 'attention', '#b45309', request);
+  } catch (error) {
+    if (!String(error?.message ?? '').includes('project_scope')) throw error;
+
+    return svgBadge('monarch proof', 'upgrade required', '#6b7280', request, 503);
+  }
+}
+
 function validatePayload(payload) {
   if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
     return 'payload_must_be_object';
@@ -489,7 +583,12 @@ function validatePayload(payload) {
   }
 
   for (const key of Object.keys(payload)) {
-    if (!ALLOWED_DOCTOR_FIELDS.has(key)) {
+    const allowed = ALLOWED_DOCTOR_FIELDS.has(key);
+    if (!allowed && SENSITIVE_KEYS.some((sensitive) => key.toLowerCase().includes(sensitive.toLowerCase()))) {
+      return `sensitive_field_${key}`;
+    }
+
+    if (!allowed) {
       return `unexpected_field_${key}`;
     }
 
@@ -524,6 +623,10 @@ function validatePayload(payload) {
     for (const rail of payload.detectedRails) {
       if (!ALLOWED_RAILS.has(rail)) return `invalid_detected_rail_${rail}`;
     }
+  }
+
+  if (payload.projectScope !== undefined && typeof payload.projectScope !== 'boolean') {
+    return 'invalid_project_scope';
   }
 
   return null;
@@ -578,6 +681,34 @@ function json(body, request, status = 200) {
     status,
     headers: {
       'content-type': 'application/json; charset=utf-8',
+      ...corsHeaders(request),
+    },
+  });
+}
+
+function svgBadge(label, value, color, request, status = 200) {
+  const labelWidth = Math.max(72, label.length * 7 + 12);
+  const valueWidth = Math.max(64, value.length * 7 + 12);
+  const width = labelWidth + valueWidth;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="20" role="img" aria-label="${escapeXml(label)}: ${escapeXml(value)}">
+  <linearGradient id="s" x2="0" y2="100%">
+    <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
+    <stop offset="1" stop-opacity=".1"/>
+  </linearGradient>
+  <rect width="${labelWidth}" height="20" fill="#555"/>
+  <rect x="${labelWidth}" width="${valueWidth}" height="20" fill="${color}"/>
+  <rect width="${width}" height="20" fill="url(#s)"/>
+  <g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,sans-serif" font-size="11">
+    <text x="${labelWidth / 2}" y="14">${escapeXml(label)}</text>
+    <text x="${labelWidth + valueWidth / 2}" y="14">${escapeXml(value)}</text>
+  </g>
+</svg>`;
+
+  return new Response(svg, {
+    status,
+    headers: {
+      'content-type': 'image/svg+xml; charset=utf-8',
+      'cache-control': 'no-store',
       ...corsHeaders(request),
     },
   });
@@ -641,6 +772,44 @@ function publicProofPayload(date, totals = {}, byStatus = [], bySource = [], byR
   };
 }
 
+function projectProofPayload(projectHash, totals = {}, byRail = [], runs = []) {
+  return {
+    projectHash,
+    generatedAt: new Date().toISOString(),
+    scope: 'token-backed-project-proof',
+    interpretation: 'Hosted proof shows that Monarch Doctor reported aggregate build-time preflight results for this project token. It does not prove runtime payment safety, fraud prevention, provider verification, settlement success, signed attestations, or enforcement.',
+    counters: {
+      totalRuns: numberOrZero(totals.total_runs),
+      passedRuns: numberOrZero(totals.passed_runs),
+      failedRuns: numberOrZero(totals.failed_runs),
+      ciRuns: numberOrZero(totals.ci_runs),
+      localRuns: numberOrZero(totals.local_runs),
+      unsafePathsBlocked: numberOrZero(totals.unsafe_paths_blocked),
+      sandboxPassedRuns: numberOrZero(totals.sandbox_passed_runs),
+    },
+    byRail,
+    runs: runs.slice(0, 100).map((run) => ({
+      receivedAt: run.received_at,
+      status: run.status,
+      ci: run.ci === 1,
+      strict: run.strict === 1,
+      applicable: run.applicable === 1,
+      rails: String(run.detected_rails ?? '').split(',').filter(Boolean),
+      findingCount: numberOrZero(run.finding_count),
+      sandboxPassed: run.sandbox_passed === 1,
+      hasUnprotectedPaymentFiles: run.has_unprotected_payment_files === 1,
+    })),
+    privacy: {
+      storesSourceCode: false,
+      storesFilePaths: false,
+      storesWalletAddresses: false,
+      storesEndpoints: false,
+      storesAmounts: false,
+      storesRawProjectToken: false,
+    },
+  };
+}
+
 function numberOrZero(value) {
   return Number(value ?? 0);
 }
@@ -649,4 +818,12 @@ async function sha256(value) {
   const data = new TextEncoder().encode(value);
   const digest = await crypto.subtle.digest('SHA-256', data);
   return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
+}
+
+function escapeXml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;');
 }

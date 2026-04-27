@@ -1,6 +1,6 @@
 {
   "name": "Monarch Shield Docs",
-  "generatedAt": "2026-04-27T11:44:23.351Z",
+  "generatedAt": "2026-04-27T12:48:43.350Z",
   "canonical": "https://x402ms.ai/docs/",
   "docs": [
     {
@@ -18,6 +18,14 @@
       "description": "Public benchmark showing what Doctor catches and what it does not claim to prove.",
       "html": "/docs/adversarial-benchmark.html",
       "raw": "/docs/adversarial-benchmark.md"
+    },
+    {
+      "slug": "hosted-proof",
+      "title": "Hosted Proof",
+      "group": "Start",
+      "description": "Opt-in project proof for reported Doctor runs with a strict privacy boundary.",
+      "html": "/docs/hosted-proof.html",
+      "raw": "/docs/hosted-proof.md"
     },
     {
       "slug": "grant-evidence",
