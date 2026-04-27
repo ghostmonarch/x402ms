@@ -1,6 +1,6 @@
 {
   "name": "Monarch Shield Docs",
-  "generatedAt": "2026-04-27T03:23:27.479Z",
+  "generatedAt": "2026-04-27T03:59:53.376Z",
   "canonical": "https://x402ms.ai/docs/",
   "docs": [
     {
@@ -18,6 +18,62 @@
       "description": "A reviewer-ready packet for grants, ecosystem support, and partnership diligence.",
       "html": "/docs/grant-evidence.html",
       "raw": "/docs/grant-evidence.md"
+    },
+    {
+      "slug": "ecosystem-grants",
+      "title": "Ecosystem Grant Pages",
+      "group": "Grant Pages",
+      "description": "Reviewer entry point for ecosystem-specific grant and support pages.",
+      "html": "/docs/ecosystem-grants.html",
+      "raw": "/docs/ecosystem-grants.md"
+    },
+    {
+      "slug": "grant-base-coinbase",
+      "title": "Base / Coinbase Grant Page",
+      "group": "Grant Pages",
+      "description": "Grant support page for Base x402, Coinbase AgentKit, and agentic wallet safety.",
+      "html": "/docs/grant-base-coinbase.html",
+      "raw": "/docs/grant-base-coinbase.md"
+    },
+    {
+      "slug": "grant-virtuals-acp",
+      "title": "Virtuals ACP Grant Page",
+      "group": "Grant Pages",
+      "description": "Grant support page for Virtuals ACP agent-to-agent payment safety.",
+      "html": "/docs/grant-virtuals-acp.html",
+      "raw": "/docs/grant-virtuals-acp.md"
+    },
+    {
+      "slug": "grant-google-ap2-a2a",
+      "title": "Google AP2 / A2A Grant Page",
+      "group": "Grant Pages",
+      "description": "Grant support page for AP2, A2A, and x402-style agent payment payload safety.",
+      "html": "/docs/grant-google-ap2-a2a.html",
+      "raw": "/docs/grant-google-ap2-a2a.md"
+    },
+    {
+      "slug": "grant-stripe-bridge",
+      "title": "Stripe / Bridge Grant Page",
+      "group": "Grant Pages",
+      "description": "Grant support page for Stripe checkout and Bridge stablecoin payment safety.",
+      "html": "/docs/grant-stripe-bridge.html",
+      "raw": "/docs/grant-stripe-bridge.md"
+    },
+    {
+      "slug": "grant-mastercard-visa",
+      "title": "Mastercard / Visa Grant Page",
+      "group": "Grant Pages",
+      "description": "Grant support page for tokenized card-agent and delegated commerce safety.",
+      "html": "/docs/grant-mastercard-visa.html",
+      "raw": "/docs/grant-mastercard-visa.md"
+    },
+    {
+      "slug": "x-money-creator-commerce",
+      "title": "X Money / Creator Commerce",
+      "group": "Grant Pages",
+      "description": "Proof concept for X Money, creator payouts, and agent-controlled commerce.",
+      "html": "/docs/x-money-creator-commerce.html",
+      "raw": "/docs/x-money-creator-commerce.md"
     },
     {
       "slug": "monarch-for-base-x402",

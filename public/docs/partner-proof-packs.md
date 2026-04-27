@@ -29,7 +29,7 @@ Grant reviewers should start here:
 
 - Official HTML index: `https://x402ms.ai/docs/partner-proof-packs.html`
 - Grant evidence packet: `https://x402ms.ai/docs/grant-evidence.html`
-- Public proof page: `https://x402ms.ai/#proof`
+- Public proof page: `https://x402ms.ai/proof/`
 - Machine manifest: `https://x402ms.ai/docs/manifest.json`
 
 ## Proof Rule
@@ -55,8 +55,8 @@ The moat is not one partner example. The moat is a repeatable, agent-discoverabl
 ## Public Evidence
 
 ```txt
-https://x402ms.ai/#proof
-https://monarch-doctor-run.ghostmonarchalerts.workers.dev/proof
+https://x402ms.ai/proof/
+https://x402ms.ai/proof/proof.json
 ```
 
 ## Grant Rule

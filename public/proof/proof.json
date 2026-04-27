@@ -1,0 +1,35 @@
+{
+  "name": "Monarch Shield Proof",
+  "canonical": "https://x402ms.ai/proof/",
+  "generatedAt": "2026-04-26T00:00:00.000Z",
+  "classification": "proof-of-function",
+  "counters": {
+    "internalDogfoodRuns": 0,
+    "publicExampleRuns": 8,
+    "externalReportedRuns": 0,
+    "unsafePathsBlocked": 0
+  },
+  "note": "Static fallback proof. Live aggregate counters are fetched by the first-party proof page from the current telemetry worker.",
+  "examples": [
+    {
+      "title": "Coinbase AgentKit proof pack",
+      "href": "/coinbase-agentkit-proof-pack-recording.txt"
+    },
+    {
+      "title": "Virtuals ACP proof pack",
+      "href": "/virtuals-acp-proof-pack-recording.txt"
+    },
+    {
+      "title": "Google AP2 / A2A x402 proof pack",
+      "href": "/google-ap2-a2a-x402-proof-pack-recording.txt"
+    },
+    {
+      "title": "Stripe / Bridge stablecoin proof pack",
+      "href": "/stripe-bridge-stablecoin-proof-pack-recording.txt"
+    },
+    {
+      "title": "Mastercard / Visa agent pay proof pack",
+      "href": "/card-network-agent-pay-proof-pack-recording.txt"
+    }
+  ]
+}

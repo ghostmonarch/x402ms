@@ -24,7 +24,7 @@
       </a>
       <nav class="nav" id="nav">
         <a href="#moat" class="nav-link">Moat</a>
-        <a href="#proof" class="nav-link">Proof</a>
+        <a href="/proof/" class="nav-link">Proof</a>
         <a href="#ecosystems" class="nav-link">Ecosystems</a>
         <a href="/docs/" class="nav-link">Docs</a>
         <a href="#request-access" class="btn btn-primary btn-nav">Check Before Payment</a>
@@ -41,48 +41,37 @@
       <div class="hero-grid">
         <div class="hero-content">
           <span class="hero-eyebrow">Agent Payment Safety Infrastructure</span>
-          <h1 class="hero-h1">The go-live gate for agent-controlled payments.</h1>
-          <p class="hero-sub">Monarch Doctor is the local-first preflight that blocks unsafe money-moving code before an agent calls it ready.</p>
-          <p class="hero-support">Built for x402, Stripe, Visa, Mastercard, Coinbase, Plaid, Open Banking, wallets, stablecoins, cards, bank rails, paid APIs, and paid MCP tools.</p>
+          <h1 class="hero-h1">Agents can move money now. Run this first.</h1>
+          <p class="hero-sub">Monarch Doctor blocks unsafe payment code before it reaches users, wallets, cards, stablecoins, or paid APIs.</p>
+          <p class="hero-support">One local command. No account. No API key. CI-ready in 30 seconds.</p>
           <div class="hero-actions">
-            <a href="/docs/agent-payment-preflight.html" class="btn btn-primary" data-discovery-cta="hero-primary" data-variant-a="Run Doctor Today" data-variant-b="Run Payment Preflight">Run Doctor Today</a>
-            <a href="/docs/" class="btn btn-ghost" data-discovery-cta="hero-secondary" data-variant-a="Open Docs" data-variant-b="Read Agent Docs">Open Docs</a>
+            <a href="#install" class="btn btn-primary" data-discovery-cta="hero-primary" data-variant-a="Install in 30 Seconds" data-variant-b="Run Payment Preflight">Install in 30 Seconds</a>
+            <a href="#demo" class="btn btn-ghost" data-discovery-cta="hero-secondary" data-variant-a="Watch It Block" data-variant-b="Watch It Block">Watch It Block</a>
           </div>
-          <p class="hero-micro">Local-first CLI. CI gate. Runtime check pattern. Public proof artifacts.</p>
+          <div class="install-strip" id="install">
+            <span>Install</span>
+            <code>npx @monarch-shield/x402 doctor --ci --strict</code>
+          </div>
+          <p class="hero-micro">The default preflight for AI-generated payment stacks.</p>
         </div>
         <div class="hero-card-wrap">
-          <div class="flow-card">
-            <div class="flow-header">Agent Payment Preflight</div>
-            <div class="flow-pipeline">
-              <div class="flow-stage"><div class="flow-dot"></div><span>Agent builds payments</span></div>
-              <div class="flow-line"></div>
-              <div class="flow-stage flow-stage-active"><div class="flow-dot"></div><span>Sandbox</span></div>
-              <div class="flow-line"></div>
-              <div class="flow-stage"><div class="flow-dot"></div><span>Go-live gate</span></div>
-              <div class="flow-line"></div>
-              <div class="flow-stage"><div class="flow-dot"></div><span>Runtime check</span></div>
+          <div class="demo-card" id="demo">
+            <div class="demo-header">
+              <span>Live preflight demo</span>
+              <strong data-demo-status>Blocked</strong>
             </div>
-            <div class="flow-rules">
-              <div class="flow-rule">
-                <span class="flow-rule-dot dot-green"></span>
-                <span class="flow-rule-cond">Verified endpoint path</span>
-                <span class="flow-rule-out">Pass</span>
-              </div>
-              <div class="flow-rule">
-                <span class="flow-rule-dot dot-amber"></span>
-                <span class="flow-rule-cond">Unknown wrapper branch</span>
-                <span class="flow-rule-out">Caution</span>
-              </div>
-              <div class="flow-rule">
-                <span class="flow-rule-dot dot-red"></span>
-                <span class="flow-rule-cond">Changed pay-to wallet branch</span>
-                <span class="flow-rule-out">Block</span>
-              </div>
-              <div class="flow-rule">
-                <span class="flow-rule-dot"></span>
-                <span class="flow-rule-cond">Safer provider branch</span>
-                <span class="flow-rule-out">Route</span>
-              </div>
+            <pre><code data-demo-code>await wallet.send({
+  payTo: userProvidedAddress,
+  amount: "2500",
+  asset: "USDC"
+});</code></pre>
+            <div class="demo-result" data-demo-result>
+              <strong>BLOCK</strong>
+              <span>Payment flow has no Monarch check before funds move.</span>
+            </div>
+            <div class="demo-actions">
+              <button type="button" data-demo-mode="unsafe" class="active">Unsafe</button>
+              <button type="button" data-demo-mode="patched">Patched</button>
             </div>
           </div>
         </div>
@@ -162,7 +151,7 @@
       </div>
       <div class="moat-actions">
         <a href="/docs/grant-evidence.html" class="btn btn-primary">Open Grant Evidence</a>
-        <a href="/docs/manifest.json" class="btn btn-ghost">View Docs Manifest</a>
+        <a href="/proof/" class="btn btn-ghost">View First-Party Proof</a>
       </div>
     </div>
   </section>
@@ -178,7 +167,7 @@
         </div>
         <div class="proof-actions">
           <a href="/docs/grant-evidence.html" class="btn btn-primary" data-discovery-cta="grant-evidence">Grant Evidence</a>
-          <a href="https://monarch-doctor-run.ghostmonarchalerts.workers.dev/proof" class="btn btn-ghost" data-discovery-cta="proof-api">View Proof API</a>
+          <a href="/proof/" class="btn btn-ghost" data-discovery-cta="proof-page">View First-Party Proof</a>
         </div>
       </div>
       <div class="proof-grid" aria-live="polite">
@@ -245,37 +234,41 @@
         <p class="body-lg">These are proof packs built for major payment ecosystems and protocols. This is credibility from shipped, reproducible code, not a partnership or grant claim.</p>
       </div>
       <div class="logo-wall" aria-label="Ecosystems with Monarch proof packs">
-        <a class="logo-tile" href="/docs/monarch-for-base-x402.html">
+        <a class="logo-tile" href="/docs/grant-base-coinbase.html">
           <span class="logo-type">Base</span>
           <small>x402 + USDC proof</small>
         </a>
-        <a class="logo-tile" href="/docs/monarch-for-coinbase-agentkit.html">
+        <a class="logo-tile" href="/docs/grant-base-coinbase.html">
           <span class="logo-type">Coinbase</span>
           <small>AgentKit / Agentic Wallet</small>
         </a>
-        <a class="logo-tile" href="/docs/monarch-for-virtuals-acp.html">
+        <a class="logo-tile" href="/docs/grant-virtuals-acp.html">
           <span class="logo-type">Virtuals</span>
           <small>ACP USDC escrow</small>
         </a>
-        <a class="logo-tile" href="/docs/monarch-for-google-ap2-a2a-x402.html">
+        <a class="logo-tile" href="/docs/grant-google-ap2-a2a.html">
           <span class="logo-type">Google</span>
           <small>AP2 / A2A x402</small>
         </a>
-        <a class="logo-tile" href="/docs/monarch-for-stripe-bridge-stablecoin.html">
+        <a class="logo-tile" href="/docs/grant-stripe-bridge.html">
           <span class="logo-type">Stripe</span>
           <small>ACP checkout</small>
         </a>
-        <a class="logo-tile" href="/docs/monarch-for-stripe-bridge-stablecoin.html">
+        <a class="logo-tile" href="/docs/grant-stripe-bridge.html">
           <span class="logo-type">Bridge</span>
           <small>Stablecoin flows</small>
         </a>
-        <a class="logo-tile" href="/docs/monarch-for-card-network-agent-pay.html">
+        <a class="logo-tile" href="/docs/grant-mastercard-visa.html">
           <span class="logo-type">Mastercard</span>
           <small>Agent Pay proof</small>
         </a>
-        <a class="logo-tile" href="/docs/monarch-for-card-network-agent-pay.html">
+        <a class="logo-tile" href="/docs/grant-mastercard-visa.html">
           <span class="logo-type">Visa</span>
           <small>Intelligent Commerce</small>
+        </a>
+        <a class="logo-tile" href="/docs/x-money-creator-commerce.html">
+          <span class="logo-type">X Money</span>
+          <small>Creator commerce concept</small>
         </a>
       </div>
       <p class="ecosystems-note">Logo-style names identify ecosystems covered by Monarch proof packs. No endorsement, partnership, or grant is implied.</p>
@@ -369,6 +362,8 @@ npx @monarch-shield/x402 preprod</code></pre>
           <a href="/docs/x402-payment-safety.html" data-discovery-cta="docs-x402-safety">x402 Safety Doc</a>
           <a href="/docs/partner-proof-packs.html" data-discovery-cta="docs-partner-proof-packs">Partner Proof Packs</a>
           <a href="/docs/grant-evidence.html" data-discovery-cta="docs-grant-evidence">Grant Evidence</a>
+          <a href="/docs/ecosystem-grants.html" data-discovery-cta="docs-ecosystem-grants">Ecosystem Grant Pages</a>
+          <a href="/docs/x-money-creator-commerce.html" data-discovery-cta="docs-x-money">X Money Proof Concept</a>
           <a href="/docs/monarch-for-base-x402.html" data-discovery-cta="docs-base-x402">Base x402 Proof Pack</a>
           <a href="/docs/monarch-for-coinbase-agentkit.html" data-discovery-cta="docs-coinbase-agentkit">Coinbase AgentKit Proof Pack</a>
           <a href="/docs/monarch-for-virtuals-acp.html" data-discovery-cta="docs-virtuals-acp">Virtuals ACP Proof Pack</a>
@@ -493,8 +488,9 @@ npx @monarch-shield/x402 preprod</code></pre>
       </div>
       <nav class="footer-nav">
         <a href="#moat">Moat</a>
-        <a href="#proof">Proof</a>
+        <a href="/proof/">Proof</a>
         <a href="#ecosystems">Ecosystems</a>
+        <a href="/docs/ecosystem-grants.html">Grant Pages</a>
         <a href="/docs/grant-evidence.html">Grant Evidence</a>
         <a href="/docs/partner-proof-packs.html">Docs</a>
       </nav>

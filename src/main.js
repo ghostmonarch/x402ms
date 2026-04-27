@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const nav = document.querySelector('#nav');
   const discovery = initDiscovery();
   initProof();
+  initDemo();
 
   if (toggle && nav) {
     toggle.addEventListener('click', () => {
@@ -48,6 +49,51 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+function initDemo() {
+  const code = document.querySelector('[data-demo-code]');
+  const result = document.querySelector('[data-demo-result]');
+  const status = document.querySelector('[data-demo-status]');
+  const buttons = document.querySelectorAll('[data-demo-mode]');
+  if (!code || !result || !status || buttons.length === 0) return;
+
+  const states = {
+    unsafe: {
+      status: 'Blocked',
+      decision: 'BLOCK',
+      detail: 'Payment flow has no Monarch check before funds move.',
+      code: `await wallet.send({
+  payTo: userProvidedAddress,
+  amount: "2500",
+  asset: "USDC"
+});`,
+    },
+    patched: {
+      status: 'Passed',
+      decision: 'PASS',
+      detail: 'Monarch check runs before signing or sending payment.',
+      code: `await checkBeforePayment({
+  payTo,
+  amount: "2500",
+  asset: "USDC",
+  intent: "creator payout"
+}, () => wallet.send(payment));`,
+    },
+  };
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const mode = button.getAttribute('data-demo-mode');
+      const state = states[mode] ?? states.unsafe;
+
+      buttons.forEach((item) => item.classList.toggle('active', item === button));
+      code.textContent = state.code;
+      status.textContent = state.status;
+      result.innerHTML = `<strong>${state.decision}</strong><span>${state.detail}</span>`;
+      result.dataset.state = mode;
+    });
+  });
+}
 
 function initDiscovery() {
   const variant = discoveryVariant();

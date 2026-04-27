@@ -20,8 +20,8 @@ The grant thesis is simple:
 - NPM packages: `@monarch-shield/x402` and `x402-doctor`.
 - CI gate: `npx @monarch-shield/x402 doctor --ci --strict`.
 - Runtime pattern: `checkBeforePayment(...)` before signing, charging, funding escrow, or submitting a payment payload.
-- Public proof page: `https://x402ms.ai/#proof`.
-- Proof API: `https://monarch-doctor-run.ghostmonarchalerts.workers.dev/proof`.
+- Public proof page: `https://x402ms.ai/proof/`.
+- Static proof JSON: `https://x402ms.ai/proof/proof.json`.
 - Official docs: `https://x402ms.ai/docs/`.
 - Agent-readable sources: `https://x402ms.ai/llms.txt`, `https://x402ms.ai/AGENTS.md`, and `https://x402ms.ai/docs/manifest.json`.
 
@@ -88,5 +88,5 @@ For ecosystem grants, Monarch creates direct utility:
 - Run `npm run qa:proof-packs`.
 - Inspect unsafe and patched examples in `examples/*-proof-pack/`.
 - Confirm CI gate snippets in each proof pack.
-- Open `https://x402ms.ai/#proof`.
+- Open `https://x402ms.ai/proof/`.
 - Confirm the official docs manifest at `https://x402ms.ai/docs/manifest.json`.

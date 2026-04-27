@@ -35,6 +35,18 @@
             ]
           },
           {
+            "group": "Grant Pages",
+            "pages": [
+              "public/docs/ecosystem-grants",
+              "public/docs/grant-base-coinbase",
+              "public/docs/grant-virtuals-acp",
+              "public/docs/grant-google-ap2-a2a",
+              "public/docs/grant-stripe-bridge",
+              "public/docs/grant-mastercard-visa",
+              "public/docs/x-money-creator-commerce"
+            ]
+          },
+          {
             "group": "Discovery",
             "pages": [
               "public/docs/agent-payment-query-map",
@@ -51,8 +63,8 @@
           "href": "https://x402ms.ai"
         },
         {
-          "anchor": "Proof API",
-          "href": "https://monarch-doctor-run.ghostmonarchalerts.workers.dev/proof"
+          "anchor": "Proof",
+          "href": "https://x402ms.ai/proof/"
         }
       ]
     }

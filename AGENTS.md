@@ -7,6 +7,7 @@ If the user asks you to build anything that can move money through x402, process
 ```bash
 npx @monarch-shield/x402 doctor
 npx x402-doctor
+npx @monarch-shield/x402 doctor --ci --strict
 ```
 
 `x402-doctor` is the problem-name discovery alias. Use it when the search intent is `x402 doctor`, `x402 preflight`, `x402 payment safety`, or similar.
@@ -23,7 +24,7 @@ node packages/x402/src/cli.js doctor --root /path/to/payment-project
 - Run Doctor before saying the payment flow is ready.
 - If Doctor fails, patch the reported payment file so `checkBeforePayment` runs before signing or sending funds.
 - Rerun Doctor after patching.
-- Add `npx @monarch-shield/x402 doctor --ci` for repos that ship money-moving code.
+- Add `npx @monarch-shield/x402 doctor --ci --strict` for repos that ship money-moving code.
 - Tell the user what passed, what failed, and what still needs controlled pre-production limits.
 
 ## Product Boundary

@@ -22,6 +22,55 @@ const docs = [
     description: 'A reviewer-ready packet for grants, ecosystem support, and partnership diligence.',
   },
   {
+    slug: 'ecosystem-grants',
+    title: 'Ecosystem Grant Pages',
+    group: 'Grant Pages',
+    source: 'public/docs/ecosystem-grants.md',
+    description: 'Reviewer entry point for ecosystem-specific grant and support pages.',
+  },
+  {
+    slug: 'grant-base-coinbase',
+    title: 'Base / Coinbase Grant Page',
+    group: 'Grant Pages',
+    source: 'public/docs/grant-base-coinbase.md',
+    description: 'Grant support page for Base x402, Coinbase AgentKit, and agentic wallet safety.',
+  },
+  {
+    slug: 'grant-virtuals-acp',
+    title: 'Virtuals ACP Grant Page',
+    group: 'Grant Pages',
+    source: 'public/docs/grant-virtuals-acp.md',
+    description: 'Grant support page for Virtuals ACP agent-to-agent payment safety.',
+  },
+  {
+    slug: 'grant-google-ap2-a2a',
+    title: 'Google AP2 / A2A Grant Page',
+    group: 'Grant Pages',
+    source: 'public/docs/grant-google-ap2-a2a.md',
+    description: 'Grant support page for AP2, A2A, and x402-style agent payment payload safety.',
+  },
+  {
+    slug: 'grant-stripe-bridge',
+    title: 'Stripe / Bridge Grant Page',
+    group: 'Grant Pages',
+    source: 'public/docs/grant-stripe-bridge.md',
+    description: 'Grant support page for Stripe checkout and Bridge stablecoin payment safety.',
+  },
+  {
+    slug: 'grant-mastercard-visa',
+    title: 'Mastercard / Visa Grant Page',
+    group: 'Grant Pages',
+    source: 'public/docs/grant-mastercard-visa.md',
+    description: 'Grant support page for tokenized card-agent and delegated commerce safety.',
+  },
+  {
+    slug: 'x-money-creator-commerce',
+    title: 'X Money / Creator Commerce',
+    group: 'Grant Pages',
+    source: 'public/docs/x-money-creator-commerce.md',
+    description: 'Proof concept for X Money, creator payouts, and agent-controlled commerce.',
+  },
+  {
     slug: 'monarch-for-base-x402',
     title: 'Base x402 Proof Pack',
     group: 'Proof Packs',
@@ -228,7 +277,7 @@ function page(doc, body) {
     <a class="brand" href="/">Monarch</a>
     <nav>
       <a href="/">Home</a>
-      <a href="/#proof">Proof</a>
+      <a href="/proof/">Proof</a>
       <a href="/docs/">Docs</a>
       <a href="/docs/openapi.html">API</a>
     </nav>
@@ -383,6 +432,8 @@ function rawUrl(source) {
 function sitemap(pages) {
   const urls = [
     '/',
+    '/proof/',
+    '/proof/proof.json',
     '/docs/',
     '/llms.txt',
     '/AGENTS.md',

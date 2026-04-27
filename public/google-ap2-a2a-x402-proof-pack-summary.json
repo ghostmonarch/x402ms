@@ -1,7 +1,7 @@
 {
   "demo": "monarch-for-google-ap2-a2a-x402-proof-pack",
   "status": "passed",
-  "publicProofUrl": "https://x402ms.ai/#proof",
+  "publicProofUrl": "https://x402ms.ai/proof/",
   "recordingPath": "public/google-ap2-a2a-x402-proof-pack-recording.txt",
   "examples": {
     "unsafe": "examples/google-ap2-a2a-x402-proof-pack/unsafe",

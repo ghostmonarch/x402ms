@@ -1,7 +1,7 @@
 {
   "demo": "monarch-for-virtuals-acp-proof-pack",
   "status": "passed",
-  "publicProofUrl": "https://x402ms.ai/#proof",
+  "publicProofUrl": "https://x402ms.ai/proof/",
   "recordingPath": "public/virtuals-acp-proof-pack-recording.txt",
   "examples": {
     "unsafe": "examples/virtuals-acp-proof-pack/unsafe",

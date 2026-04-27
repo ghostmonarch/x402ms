@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stripe / Bridge Grant Page | Monarch Shield Docs</title>
+  <meta name="description" content="Grant support page for Stripe checkout and Bridge stablecoin payment safety." />
+  <link rel="icon" type="image/svg+xml" href="/logo/monarch-shield-logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{--dark:#080808;--cream:#EDECE4;--cream-2:#E3E2DA;--muted:rgba(8,8,8,.6);--border:rgba(8,8,8,.1);font-family:Outfit,-apple-system,BlinkMacSystemFont,sans-serif}
+    *{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--dark);line-height:1.7}
+    header{height:72px;background:var(--dark);color:var(--cream);display:flex;align-items:center;justify-content:space-between;padding:0 48px;position:sticky;top:0;z-index:10;border-bottom:1px solid rgba(237,236,228,.1)}
+    .brand{font-weight:800;font-size:1.35rem;letter-spacing:-.02em;color:inherit;text-decoration:none}header nav{display:flex;gap:28px}header nav a{color:rgba(237,236,228,.64);text-decoration:none;font-weight:650}
+    main{max-width:1480px;margin:0 auto;padding:56px 48px 104px;display:grid;grid-template-columns:340px minmax(0,860px);gap:72px;align-items:start}
+    aside{position:sticky;top:104px;border:1px solid var(--border);background:rgba(8,8,8,.03);padding:22px;max-height:calc(100vh - 128px);overflow:auto}.docs-home{display:block;font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:20px;color:var(--dark);text-decoration:none}
+    aside section+section{margin-top:22px}aside h2{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}aside a:not(.docs-home){display:block;color:var(--muted);text-decoration:none;padding:10px;border-radius:6px}aside a strong{display:block;color:inherit;font-size:.94rem;line-height:1.25}aside a span{display:block;font-size:.78rem;line-height:1.35;margin-top:3px;color:rgba(8,8,8,.46)}aside a:hover,aside a.active{background:var(--dark);color:var(--cream)}aside a:hover span,aside a.active span{color:rgba(237,236,228,.58)}
+    article{min-width:0}.meta{display:flex;justify-content:space-between;gap:24px;padding-bottom:20px;margin-bottom:32px;border-bottom:1px solid var(--border);color:var(--muted);font-weight:650;font-size:.9rem}.meta a{color:inherit;text-underline-offset:4px}
+    h1{font-size:clamp(2.6rem,5vw,4.5rem);line-height:1.01;letter-spacing:-.05em;margin:0 0 28px}h2{font-size:clamp(1.65rem,3vw,2.35rem);line-height:1.12;letter-spacing:-.03em;margin:48px 0 18px}h3{font-size:1.25rem;margin:34px 0 12px}h4{font-size:1.05rem;margin:28px 0 10px}
+    p,li{font-size:1.0625rem;color:rgba(8,8,8,.74)}.lead{font-size:1.28rem;color:rgba(8,8,8,.68);max-width:760px}ul,ol{margin:14px 0 28px 22px}a{color:inherit;text-underline-offset:4px}code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:.92em;padding:.1em .35em;border-radius:4px;background:rgba(8,8,8,.08)}
+    pre{overflow:auto;margin:22px 0 32px;padding:22px;border-radius:6px;background:var(--dark);color:var(--cream);line-height:1.7}pre code{padding:0;background:transparent;color:inherit}.exec-panel{border:1px solid var(--border);background:var(--cream-2);padding:22px 24px;margin:30px 0 34px;font-size:1.06rem;color:rgba(8,8,8,.72)}.exec-panel strong{color:var(--dark)}
+    .doc-cards{margin-top:38px}.doc-cards h2{margin-bottom:14px}.doc-card{display:block;border:1px solid var(--border);padding:18px 20px;text-decoration:none;background:rgba(8,8,8,.025)}.doc-card+.doc-card{border-top:0}.doc-card strong{display:block;font-size:1.05rem}.doc-card span{display:block;color:var(--muted);margin-top:4px}
+    @media(max-width:980px){header{padding:0 24px}header nav{gap:14px}main{grid-template-columns:1fr;padding:36px 24px 80px}aside{position:static;max-height:none}.meta{flex-direction:column}}
+  </style>
+</head>
+<body>
+  <header>
+    <a class="brand" href="/">Monarch</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/proof/">Proof</a>
+      <a href="/docs/">Docs</a>
+      <a href="/docs/openapi.html">API</a>
+    </nav>
+  </header>
+  <main>
+    <aside>
+      <a class="docs-home" href="/docs/">Monarch Docs</a>
+      <section><h2>Proof Packs</h2><a  href="/docs/partner-proof-packs.html"><strong>Partner Proof Packs</strong><span>Index of reproducible Monarch proof packs across agent-payment ecosystems.</span></a><a  href="/docs/grant-evidence.html"><strong>Grant Evidence Packet</strong><span>A reviewer-ready packet for grants, ecosystem support, and partnership diligence.</span></a><a  href="/docs/monarch-for-base-x402.html"><strong>Base x402 Proof Pack</strong><span>Monarch preflight for Base x402 and USDC payment paths.</span></a><a  href="/docs/monarch-for-coinbase-agentkit.html"><strong>Coinbase AgentKit Proof Pack</strong><span>Monarch preflight for AgentKit and Agentic Wallet spend flows.</span></a><a  href="/docs/monarch-for-virtuals-acp.html"><strong>Virtuals ACP Proof Pack</strong><span>Monarch preflight for Virtuals ACP USDC escrow flows.</span></a><a  href="/docs/monarch-for-google-ap2-a2a-x402.html"><strong>Google AP2 / A2A x402 Proof Pack</strong><span>Monarch preflight for AP2, A2A, and x402 payment payloads.</span></a><a  href="/docs/monarch-for-stripe-bridge-stablecoin.html"><strong>Stripe / Bridge Stablecoin Proof Pack</strong><span>Monarch preflight for Stripe ACP checkout and Bridge stablecoin settlement.</span></a><a  href="/docs/monarch-for-card-network-agent-pay.html"><strong>Mastercard / Visa Proof Pack</strong><span>Monarch preflight for tokenized card-agent payment flows.</span></a></section><section><h2>Grant Pages</h2><a  href="/docs/ecosystem-grants.html"><strong>Ecosystem Grant Pages</strong><span>Reviewer entry point for ecosystem-specific grant and support pages.</span></a><a  href="/docs/grant-base-coinbase.html"><strong>Base / Coinbase Grant Page</strong><span>Grant support page for Base x402, Coinbase AgentKit, and agentic wallet safety.</span></a><a  href="/docs/grant-virtuals-acp.html"><strong>Virtuals ACP Grant Page</strong><span>Grant support page for Virtuals ACP agent-to-agent payment safety.</span></a><a  href="/docs/grant-google-ap2-a2a.html"><strong>Google AP2 / A2A Grant Page</strong><span>Grant support page for AP2, A2A, and x402-style agent payment payload safety.</span></a><a class="active" href="/docs/grant-stripe-bridge.html"><strong>Stripe / Bridge Grant Page</strong><span>Grant support page for Stripe checkout and Bridge stablecoin payment safety.</span></a><a  href="/docs/grant-mastercard-visa.html"><strong>Mastercard / Visa Grant Page</strong><span>Grant support page for tokenized card-agent and delegated commerce safety.</span></a><a  href="/docs/x-money-creator-commerce.html"><strong>X Money / Creator Commerce</strong><span>Proof concept for X Money, creator payouts, and agent-controlled commerce.</span></a></section><section><h2>Implementation</h2><a  href="/docs/agent-payment-preflight.html"><strong>Agent Payment Preflight</strong><span>General preflight pattern for agent-controlled money movement.</span></a><a  href="/docs/x402-payment-safety.html"><strong>x402 Payment Safety</strong><span>Safety rules for HTTP 402, X-PAYMENT, and x402 payment flows.</span></a><a  href="/docs/paid-mcp-payment-safety.html"><strong>Paid MCP Payment Safety</strong><span>Safety checks for paid MCP tools and paid agent actions.</span></a><a  href="/docs/payto-wallet-safety.html"><strong>payTo Wallet Safety</strong><span>Wallet destination pinning and pre-payment checks for pay-to flows.</span></a><a  href="/docs/base-x402-preflight.html"><strong>Base x402 Preflight</strong><span>Base-specific preflight pattern for x402 and USDC.</span></a><a  href="/docs/real-x402-integration.html"><strong>Real x402 Pattern</strong><span>A concrete x402 client integration pattern with Monarch checks.</span></a></section><section><h2>Operations</h2><a  href="/docs/monarch-doctor-ci.html"><strong>CI Gate</strong><span>How to add Monarch Doctor as a merge gate.</span></a><a  href="/docs/openapi.html"><strong>Proof API Contract</strong><span>OpenAPI contract for proof and telemetry endpoints.</span></a></section><section><h2>Discovery</h2><a  href="/docs/agent-payment-query-map.html"><strong>Agent Query Map</strong><span>Agent search intents that should resolve to Monarch Doctor.</span></a><a  href="/docs/multilingual-agent-payment-query-map.html"><strong>Multilingual Query Map</strong><span>Non-English agent-payment discovery coverage.</span></a></section><section><h2>Agent Files</h2><a  href="/docs/north-star.html"><strong>Agent North Star</strong><span>The shortest decision rule for when agents must run Monarch.</span></a><a  href="/docs/agents.html"><strong>Agent Instructions</strong><span>Build-time instructions for coding agents.</span></a><a  href="/docs/llms.html"><strong>llms.txt</strong><span>Canonical LLM-facing product index.</span></a></section>
+    </aside>
+    <article>
+      <div class="meta"><span>Grant Pages</span><span>Raw agent sources are listed in /docs/manifest.json</span></div>
+      <h1>Stripe / Bridge Grant Page</h1>
+<p>Monarch Shield gives agent-commerce builders a preflight gate before AI-generated code creates checkouts, charges cards, initiates payouts, or settles with stablecoins.</p>
+<h2>Why It Matters</h2>
+<p>Stripe and Bridge represent two sides of the same agent-commerce problem: agents can now assemble fiat checkout and stablecoin settlement flows quickly. Monarch makes the safety step explicit before that code goes live.</p>
+<h2>Shipped Proof</h2>
+<ul>
+<li>Stripe ACP / Bridge proof pack: unsafe checkout and settlement flow to patched preflight.</li>
+<li>Rail detection for Stripe, stablecoin, wallet, card, and paid API patterns.</li>
+<li>CI gate: <code>npx @monarch-shield/x402 doctor --ci --strict</code>.</li>
+<li>Public recording: <code>/stripe-bridge-stablecoin-proof-pack-recording.txt</code>.</li>
+<li>Public proof page: <code>https://x402ms.ai/proof/</code>.</li>
+</ul>
+<h2>Support Ask</h2>
+<p>Monarch can help Stripe/Bridge-style builders reduce unsafe demo and production patterns by making Doctor the standard local gate before payment code merges.</p>
+<p>Requested support:</p>
+<ul>
+<li>startup credits or partner feedback for hosted proof infrastructure;</li>
+<li>review of stablecoin settlement risk cases;</li>
+<li>marketing support around safe agent checkout examples.</li>
+</ul>
+<h2>Reviewer Command</h2>
+<pre><code>
+npm run qa:proof-packs
+
+npx @monarch-shield/x402 doctor --ci --strict
+
+</code></pre>
+    </article>
+  </main>
+</body>
+</html>

@@ -636,7 +636,7 @@ function publicProofPayload(date, totals = {}, byStatus = [], bySource = [], byR
     bySource,
     byRail,
     examples: PUBLIC_PROOF_EXAMPLES,
-    shareableProofUrl: 'https://x402ms.ai/#proof',
+    shareableProofUrl: 'https://x402ms.ai/proof/',
     installCommand: 'npx @monarch-shield/x402 doctor',
   };
 }

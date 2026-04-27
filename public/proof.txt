@@ -1,10 +1,10 @@
 Monarch Shield public proof surface
 
 Canonical URL:
-https://x402ms.ai/#proof
+https://x402ms.ai/proof/
 
-Public aggregate API:
-https://monarch-doctor-run.ghostmonarchalerts.workers.dev/proof
+Static proof JSON:
+https://x402ms.ai/proof/proof.json
 
 Interpretation:
 - Internal dogfood runs are Monarch-run proof-of-function, not proof-of-demand.

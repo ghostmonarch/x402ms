@@ -78,7 +78,7 @@ const recording = `${transcript.join('\n')}\n`;
 const summary = JSON.stringify({
   demo: 'monarch-for-x402-on-base-proof-pack',
   status: 'passed',
-  publicProofUrl: 'https://x402ms.ai/#proof',
+  publicProofUrl: 'https://x402ms.ai/proof/',
   recordingPath: 'public/base-x402-proof-pack-recording.txt',
   examples: {
     unsafe: 'examples/base-x402-proof-pack/unsafe',

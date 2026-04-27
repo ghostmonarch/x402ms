@@ -157,7 +157,7 @@ const recording = `${transcript.join('\n')}\n`;
 const summary = JSON.stringify({
   demo: pack.demo,
   status: 'passed',
-  publicProofUrl: 'https://x402ms.ai/#proof',
+  publicProofUrl: 'https://x402ms.ai/proof/',
   recordingPath: `public/${pack.recording}`,
   examples: {
     unsafe: `${pack.root}/unsafe`,

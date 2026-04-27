@@ -78,7 +78,7 @@ const recording = `${transcript.join('\n')}\n`;
 const summary = JSON.stringify({
   demo: 'monarch-for-coinbase-agentkit-agentic-wallet-proof-pack',
   status: 'passed',
-  publicProofUrl: 'https://x402ms.ai/#proof',
+  publicProofUrl: 'https://x402ms.ai/proof/',
   recordingPath: 'public/coinbase-agentkit-proof-pack-recording.txt',
   examples: {
     unsafe: 'examples/coinbase-agentkit-proof-pack/unsafe',

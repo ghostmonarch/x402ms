@@ -57,13 +57,13 @@ await checkBeforePayment({
 Use the public proof page when applying for Base or Coinbase ecosystem support:
 
 ```txt
-https://x402ms.ai/#proof
+https://x402ms.ai/proof/
 ```
 
-Use the live aggregate API when reviewers want machine-readable proof:
+Use the static proof JSON when reviewers want machine-readable first-party proof:
 
 ```txt
-https://monarch-doctor-run.ghostmonarchalerts.workers.dev/proof
+https://x402ms.ai/proof/proof.json
 ```
 
 ## Agent Rule

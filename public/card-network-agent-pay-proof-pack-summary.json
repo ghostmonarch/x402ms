@@ -1,7 +1,7 @@
 {
   "demo": "monarch-for-mastercard-agent-pay-visa-intelligent-commerce-proof-pack",
   "status": "passed",
-  "publicProofUrl": "https://x402ms.ai/#proof",
+  "publicProofUrl": "https://x402ms.ai/proof/",
   "recordingPath": "public/card-network-agent-pay-proof-pack-recording.txt",
   "examples": {
     "unsafe": "examples/card-network-agent-pay-proof-pack/unsafe",

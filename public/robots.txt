@@ -5,6 +5,8 @@ Allow: /
 # https://x402ms.ai/llms.txt
 # Official docs:
 # https://x402ms.ai/docs/
+# First-party proof:
+# https://x402ms.ai/proof/
 # Machine-readable docs manifest:
 # https://x402ms.ai/docs/manifest.json
 

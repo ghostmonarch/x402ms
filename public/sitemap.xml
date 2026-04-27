@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://x402ms.ai/</loc></url>
+  <url><loc>https://x402ms.ai/proof/</loc></url>
+  <url><loc>https://x402ms.ai/proof/proof.json</loc></url>
   <url><loc>https://x402ms.ai/docs/</loc></url>
   <url><loc>https://x402ms.ai/llms.txt</loc></url>
   <url><loc>https://x402ms.ai/AGENTS.md</loc></url>
@@ -15,6 +17,13 @@
   <url><loc>https://x402ms.ai/card-network-agent-pay-proof-pack-recording.txt</loc></url>
   <url><loc>https://x402ms.ai/docs/partner-proof-packs.html</loc></url>
   <url><loc>https://x402ms.ai/docs/grant-evidence.html</loc></url>
+  <url><loc>https://x402ms.ai/docs/ecosystem-grants.html</loc></url>
+  <url><loc>https://x402ms.ai/docs/grant-base-coinbase.html</loc></url>
+  <url><loc>https://x402ms.ai/docs/grant-virtuals-acp.html</loc></url>
+  <url><loc>https://x402ms.ai/docs/grant-google-ap2-a2a.html</loc></url>
+  <url><loc>https://x402ms.ai/docs/grant-stripe-bridge.html</loc></url>
+  <url><loc>https://x402ms.ai/docs/grant-mastercard-visa.html</loc></url>
+  <url><loc>https://x402ms.ai/docs/x-money-creator-commerce.html</loc></url>
   <url><loc>https://x402ms.ai/docs/monarch-for-base-x402.html</loc></url>
   <url><loc>https://x402ms.ai/docs/monarch-for-coinbase-agentkit.html</loc></url>
   <url><loc>https://x402ms.ai/docs/monarch-for-virtuals-acp.html</loc></url>
@@ -36,6 +45,13 @@
   <url><loc>https://x402ms.ai/docs/openapi.html</loc></url>
   <url><loc>https://x402ms.ai/docs/partner-proof-packs.md</loc></url>
   <url><loc>https://x402ms.ai/docs/grant-evidence.md</loc></url>
+  <url><loc>https://x402ms.ai/docs/ecosystem-grants.md</loc></url>
+  <url><loc>https://x402ms.ai/docs/grant-base-coinbase.md</loc></url>
+  <url><loc>https://x402ms.ai/docs/grant-virtuals-acp.md</loc></url>
+  <url><loc>https://x402ms.ai/docs/grant-google-ap2-a2a.md</loc></url>
+  <url><loc>https://x402ms.ai/docs/grant-stripe-bridge.md</loc></url>
+  <url><loc>https://x402ms.ai/docs/grant-mastercard-visa.md</loc></url>
+  <url><loc>https://x402ms.ai/docs/x-money-creator-commerce.md</loc></url>
   <url><loc>https://x402ms.ai/docs/monarch-for-base-x402.md</loc></url>
   <url><loc>https://x402ms.ai/docs/monarch-for-coinbase-agentkit.md</loc></url>
   <url><loc>https://x402ms.ai/docs/monarch-for-virtuals-acp.md</loc></url>

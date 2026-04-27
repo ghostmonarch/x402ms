@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monarch Proof | First-Party Payment Safety Evidence</title>
+  <meta name="description" content="First-party Monarch Shield proof page showing internal dogfood, public examples, external reported runs, unsafe paths blocked, and reproducible proof artifacts." />
+  <link rel="icon" type="image/svg+xml" href="/logo/monarch-shield-logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root { --dark: #080808; --cream: #EDECE4; --muted: rgba(237, 236, 228, 0.58); --border: rgba(237, 236, 228, 0.12); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Outfit, -apple-system, BlinkMacSystemFont, sans-serif; background: var(--dark); color: var(--cream); line-height: 1.65; }
+    a { color: inherit; }
+    header, main, footer { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    header { min-height: 76px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+    header a { text-decoration: none; font-weight: 750; }
+    nav { display: flex; gap: 22px; color: var(--muted); font-size: 0.92rem; }
+    .hero { padding: 88px 0 60px; max-width: 840px; }
+    .eyebrow { color: var(--muted); font-size: 0.78rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 18px; }
+    h1 { font-size: clamp(2.7rem, 7vw, 5.4rem); line-height: 0.98; letter-spacing: -0.05em; margin-bottom: 24px; }
+    .lead { color: rgba(237, 236, 228, 0.72); font-size: clamp(1.1rem, 2vw, 1.35rem); max-width: 720px; }
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin: 32px 0; }
+    .card { background: var(--dark); padding: 28px; }
+    .kicker { display: block; color: var(--muted); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }
+    .card strong { display: block; font-size: clamp(2.1rem, 5vw, 4rem); line-height: 1; letter-spacing: -0.05em; margin-bottom: 12px; }
+    .card p, .note, li { color: var(--muted); }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 32px; }
+    .panel { background: var(--dark); padding: 28px; }
+    h2 { font-size: 1.35rem; margin-bottom: 16px; }
+    ul { padding-left: 20px; }
+    li + li { margin-top: 10px; }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; margin: 28px 0 48px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 14px 20px; border-radius: 6px; text-decoration: none; font-weight: 750; }
+    .btn-primary { background: var(--cream); color: var(--dark); }
+    .btn-ghost { box-shadow: inset 0 0 0 1px var(--border); color: var(--cream); }
+    code { color: var(--cream); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    footer { padding-bottom: 48px; color: rgba(237, 236, 228, 0.35); font-size: 0.9rem; }
+    @media (max-width: 820px) { header, main, footer { padding: 0 20px; } nav { display: none; } .grid, .split { grid-template-columns: 1fr; } .hero { padding-top: 60px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/">Monarch</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/docs/grant-evidence.html">Grant Evidence</a>
+      <a href="/docs/partner-proof-packs.html">Proof Packs</a>
+      <a href="/docs/openapi.html">API</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="eyebrow">First-Party Proof</div>
+      <h1>Evidence that payment agents can run before go-live.</h1>
+      <p class="lead">This page separates internal dogfood, public examples, and external opt-in runs. Dogfood proves function. External reported runs prove demand.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="/docs/grant-evidence.html">Open Grant Evidence</a>
+        <a class="btn btn-ghost" href="/proof/proof.json">Static Proof JSON</a>
+      </div>
+    </section>
+    <section class="grid" aria-live="polite">
+      <div class="card"><span class="kicker">Internal dogfood runs</span><strong data-proof-counter="internalDogfoodRuns">0</strong><p>Monarch's own local and CI runs.</p></div>
+      <div class="card"><span class="kicker">Public example runs</span><strong data-proof-counter="publicExampleRuns">8</strong><p>Unsafe to patched examples anyone can reproduce.</p></div>
+      <div class="card"><span class="kicker">External reported runs</span><strong data-proof-counter="externalReportedRuns">0</strong><p>Opt-in usage outside Monarch.</p></div>
+      <div class="card"><span class="kicker">Unsafe paths blocked</span><strong data-proof-counter="unsafePathsBlocked">0</strong><p>Reported runs where Doctor blocked unsafe payment paths.</p></div>
+    </section>
+    <section class="split">
+      <div class="panel">
+        <h2>What Reviewers Can Verify</h2>
+        <ul>
+          <li><code>npx @monarch-shield/x402 doctor --ci --strict</code> runs locally.</li>
+          <li>Proof packs show unsafe code failing and patched code passing.</li>
+          <li>CI snippets turn Monarch into a merge gate before money-moving code ships.</li>
+          <li>Telemetry is opt-in and aggregate-only.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h2>Public Artifacts</h2>
+        <ul data-proof-examples>
+          <li><a href="/coinbase-agentkit-proof-pack-recording.txt">Coinbase AgentKit unsafe spend proof</a></li>
+          <li><a href="/virtuals-acp-proof-pack-recording.txt">Virtuals ACP escrow proof</a></li>
+          <li><a href="/google-ap2-a2a-x402-proof-pack-recording.txt">Google AP2 / A2A x402 proof</a></li>
+          <li><a href="/stripe-bridge-stablecoin-proof-pack-recording.txt">Stripe / Bridge stablecoin proof</a></li>
+          <li><a href="/card-network-agent-pay-proof-pack-recording.txt">Mastercard / Visa agent pay proof</a></li>
+        </ul>
+      </div>
+    </section>
+    <p class="note" data-proof-updated>Loading live aggregate proof counters...</p>
+  </main>
+  <footer>
+    <p>Live counters are fetched from the current proof worker. This first-party page is the canonical public proof destination at <code>https://x402ms.ai/proof/</code>.</p>
+  </footer>
+  <script>
+    fetch('https://monarch-doctor-run.ghostmonarchalerts.workers.dev/proof', { headers: { accept: 'application/json' } })
+      .then((response) => {
+        if (!response.ok) throw new Error('proof_unavailable');
+        return response.json();
+      })
+      .then((proof) => {
+        const counters = proof.counters || {};
+        document.querySelectorAll('[data-proof-counter]').forEach((element) => {
+          const key = element.getAttribute('data-proof-counter');
+          element.textContent = new Intl.NumberFormat('en-US').format(Number(counters[key] || 0));
+        });
+        const examples = document.querySelector('[data-proof-examples]');
+        if (examples && Array.isArray(proof.examples) && proof.examples.length) {
+          examples.replaceChildren(...proof.examples.map((example) => {
+            const item = document.createElement('li');
+            const link = document.createElement('a');
+            link.href = example.href;
+            link.textContent = example.title;
+            item.append(link);
+            return item;
+          }));
+        }
+        const updated = document.querySelector('[data-proof-updated]');
+        updated.textContent = `Live aggregate proof updated ${new Date(proof.generatedAt).toLocaleString()}. Internal dogfood is labeled separately from external opt-in usage.`;
+      })
+      .catch(() => {
+        document.querySelector('[data-proof-updated]').textContent = 'Live counters are temporarily unavailable. Static proof artifacts and JSON remain available.';
+      });
+  </script>
+</body>
+</html>

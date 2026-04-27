@@ -5,7 +5,23 @@ info:
   description: Sandbox and pre-payment trust checks for x402, processor, card, bank, wallet, stablecoin, paid MCP, paid API, and agent-controlled payments.
 servers:
   - url: https://monarch-doctor-run.ghostmonarchalerts.workers.dev
+    description: Current telemetry worker for opt-in run reporting and runtime checks
 paths:
+  /proof/proof.json:
+    get:
+      servers:
+        - url: https://x402ms.ai
+          description: First-party public proof and docs surface
+      summary: Read static Monarch proof fallback
+      description: Returns the first-party static proof fallback used when live aggregate counters are unavailable. The canonical human proof page is /proof/.
+      operationId: readStaticProof
+      responses:
+        "200":
+          description: Static proof fallback
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProofResponse"
   /doctor-run:
     post:
       summary: Record an opt-in Monarch Doctor run
@@ -241,3 +257,50 @@ components:
           type: string
         priceSanity:
           type: string
+    ProofResponse:
+      type: object
+      required:
+        - name
+        - canonical
+        - generatedAt
+        - counters
+        - examples
+      properties:
+        name:
+          type: string
+        canonical:
+          type: string
+          format: uri
+        generatedAt:
+          type: string
+          format: date-time
+        classification:
+          type: string
+          enum: [proof-of-function, proof-of-demand]
+        counters:
+          type: object
+          properties:
+            internalDogfoodRuns:
+              type: integer
+              minimum: 0
+            publicExampleRuns:
+              type: integer
+              minimum: 0
+            externalReportedRuns:
+              type: integer
+              minimum: 0
+            unsafePathsBlocked:
+              type: integer
+              minimum: 0
+        examples:
+          type: array
+          items:
+            type: object
+            required:
+              - title
+              - href
+            properties:
+              title:
+                type: string
+              href:
+                type: string
