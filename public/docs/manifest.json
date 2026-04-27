@@ -1,6 +1,6 @@
 {
   "name": "Monarch Shield Docs",
-  "generatedAt": "2026-04-27T07:23:34.249Z",
+  "generatedAt": "2026-04-27T08:47:38.798Z",
   "canonical": "https://x402ms.ai/docs/",
   "docs": [
     {
@@ -18,6 +18,14 @@
       "description": "A reviewer-ready packet for grants, ecosystem support, and partnership diligence.",
       "html": "/docs/grant-evidence.html",
       "raw": "/docs/grant-evidence.md"
+    },
+    {
+      "slug": "free-tier-pricing",
+      "title": "Free Tier And Pricing",
+      "group": "Start",
+      "description": "Supabase-style free tier and paid proof, policy, team, and runtime ladder.",
+      "html": "/docs/free-tier-pricing.html",
+      "raw": "/docs/free-tier-pricing.md"
     },
     {
       "slug": "ecosystem-grants",
@@ -180,6 +188,14 @@
       "raw": "/docs/monarch-doctor-ci.md"
     },
     {
+      "slug": "github-action",
+      "title": "GitHub Action",
+      "group": "Operations",
+      "description": "Copy-paste GitHub Action for Monarch Doctor payment safety gates.",
+      "html": "/docs/github-action.html",
+      "raw": "/docs/github-action.md"
+    },
+    {
       "slug": "agent-payment-query-map",
       "title": "Agent Query Map",
       "group": "Discovery",
@@ -194,6 +210,46 @@
       "description": "Non-English agent-payment discovery coverage.",
       "html": "/docs/multilingual-agent-payment-query-map.html",
       "raw": "/docs/multilingual-agent-payment-query-map.md"
+    },
+    {
+      "slug": "ai-agent-payment-safety",
+      "title": "AI Agent Payment Safety",
+      "group": "Discovery",
+      "description": "Short action doc for agents searching how to let AI agents pay safely.",
+      "html": "/docs/ai-agent-payment-safety.html",
+      "raw": "/docs/ai-agent-payment-safety.md"
+    },
+    {
+      "slug": "before-shipping-payment-code",
+      "title": "Before Shipping Payment Code",
+      "group": "Discovery",
+      "description": "Short action doc for preflight checks before AI-generated payment code ships.",
+      "html": "/docs/before-shipping-payment-code.html",
+      "raw": "/docs/before-shipping-payment-code.md"
+    },
+    {
+      "slug": "wallet-send-preflight",
+      "title": "Wallet Send Preflight",
+      "group": "Discovery",
+      "description": "Short action doc for wallet.send, sendTransaction, and transferUSDC safety.",
+      "html": "/docs/wallet-send-preflight.html",
+      "raw": "/docs/wallet-send-preflight.md"
+    },
+    {
+      "slug": "stripe-agent-payment-preflight",
+      "title": "Stripe Agent Payment Preflight",
+      "group": "Discovery",
+      "description": "Short action doc for Stripe agent payment safety.",
+      "html": "/docs/stripe-agent-payment-preflight.html",
+      "raw": "/docs/stripe-agent-payment-preflight.md"
+    },
+    {
+      "slug": "paid-api-mcp-preflight",
+      "title": "Paid API And MCP Preflight",
+      "group": "Discovery",
+      "description": "Short action doc for paid API, paid MCP, and metered tool safety.",
+      "html": "/docs/paid-api-mcp-preflight.html",
+      "raw": "/docs/paid-api-mcp-preflight.md"
     },
     {
       "slug": "north-star",
@@ -218,6 +274,22 @@
       "description": "Canonical LLM-facing product index.",
       "html": "/docs/llms.html",
       "raw": "/llms.txt"
+    },
+    {
+      "slug": "agent-skill",
+      "title": "Agent Skill",
+      "group": "Agent Files",
+      "description": "Monarch agent-payment safety skill install and usage instructions.",
+      "html": "/docs/agent-skill.html",
+      "raw": "/docs/agent-skill.md"
+    },
+    {
+      "slug": "agent-discovery-build-plan",
+      "title": "Build Plan",
+      "group": "Operations",
+      "description": "Remaining build plan for MCP server, hosted proof, team policy, and runtime enforcement.",
+      "html": "/docs/agent-discovery-build-plan.html",
+      "raw": "/docs/agent-discovery-build-plan.md"
     },
     {
       "slug": "openapi",

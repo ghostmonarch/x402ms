@@ -1,0 +1,62 @@
+name: Monarch Doctor
+description: Run Monarch Doctor as a CI gate before agent-controlled payment code ships.
+author: Monarch Shield
+
+branding:
+  icon: shield
+  color: gray-dark
+
+inputs:
+  root:
+    description: Project directory to scan.
+    required: false
+    default: "."
+  strict:
+    description: Fail when no payment flow is detected.
+    required: false
+    default: "true"
+  report:
+    description: Report anonymous aggregate Doctor run metadata.
+    required: false
+    default: "false"
+  proof-source:
+    description: Proof source for reported runs: internal-dogfood, public-example, or external-reported.
+    required: false
+    default: ""
+  package:
+    description: npm package spec to run.
+    required: false
+    default: "@monarch-shield/x402@latest"
+  node-version:
+    description: Node.js version used by the Doctor command.
+    required: false
+    default: "24"
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Run Monarch Doctor
+      shell: bash
+      run: |
+        set -euo pipefail
+
+        cmd=(npx --yes "${{ inputs.package }}" doctor --root "${{ inputs.root }}" --ci)
+
+        if [[ "${{ inputs.strict }}" == "true" ]]; then
+          cmd+=(--strict)
+        fi
+
+        if [[ "${{ inputs.report }}" == "true" ]]; then
+          cmd+=(--report)
+        fi
+
+        if [[ -n "${{ inputs.proof-source }}" ]]; then
+          cmd+=(--proof-source "${{ inputs.proof-source }}")
+        fi
+
+        "${cmd[@]}"

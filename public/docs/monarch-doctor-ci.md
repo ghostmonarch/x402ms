@@ -22,7 +22,7 @@ Strict mode fails if no payment flow is found.
 
 ## GitHub Actions
 
-Create `.github/workflows/monarch-doctor.yml`:
+Fast path: use the official reusable Monarch Doctor action.
 
 ```yaml
 name: Monarch Doctor
@@ -38,16 +38,36 @@ jobs:
     name: Agent payment safety gate
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: ghostmonarch/x402ms@main
         with:
-          node-version: 20
+          strict: "true"
+```
 
-      - name: Run Monarch Doctor
-        run: npx @monarch-shield/x402 doctor --ci
+The action runs:
+
+```bash
+npx @monarch-shield/x402 doctor --root . --ci --strict
+```
+
+Manual workflow fallback:
+
+```yaml
+name: Monarch Doctor
+
+on:
+  pull_request:
+
+jobs:
+  monarch-doctor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npx @monarch-shield/x402 doctor --ci --strict
 ```
 
 ## CI Decision

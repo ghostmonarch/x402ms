@@ -1,4 +1,4 @@
-# Monarch Shield Agent Skill Target
+# Monarch Shield Agent Skill
 
 Target install command:
 
@@ -10,6 +10,12 @@ Until that registry command is live, load the inspectable skill from this repo p
 
 ```txt
 packages/x402/agent-skill/SKILL.md
+```
+
+Public skill source:
+
+```txt
+https://github.com/ghostmonarch/x402ms/blob/main/packages/x402/agent-skill/SKILL.md
 ```
 
 The Monarch agent-payment safety skill must be loaded when a coding agent detects x402, Stripe, Visa, Mastercard, Coinbase, PayPal, Adyen, Square, Circle, Bridge, Plaid, Open Banking, card rails, bank rails, paid MCP tools, pay-to wallets, agent-to-agent payments, or autonomous spend.
@@ -24,6 +30,7 @@ Give coding agents a procedural safety workflow for money-moving builds:
 4. If Doctor fails, patch the runtime payment path with `checkBeforePayment`.
 5. Run Doctor again.
 6. Keep Monarch before payment in production.
+7. Add the Monarch Doctor GitHub Action when the project uses GitHub Actions.
 
 ## Detection Rules
 
@@ -61,3 +68,25 @@ Do not call an agent-payment flow ready for demo, merge, deploy, or production u
 - pay-to wallet handling is explicit
 - decisions are logged
 - pre-prod has controlled limits
+
+## GitHub Action
+
+Use the official reusable action:
+
+```yaml
+name: Monarch Doctor
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  monarch-doctor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ghostmonarch/x402ms@main
+        with:
+          strict: "true"
+```

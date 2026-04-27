@@ -21,6 +21,7 @@
   <url><loc>https://x402ms.ai/card-network-agent-pay-proof-pack-recording.txt</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/partner-proof-packs.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/grant-evidence.html</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/free-tier-pricing.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/ecosystem-grants.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/grant-base-coinbase.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/grant-virtuals-acp.html</loc><lastmod>2026-04-27</lastmod></url>
@@ -41,14 +42,23 @@
   <url><loc>https://x402ms.ai/docs/base-x402-preflight.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/real-x402-integration.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/monarch-doctor-ci.html</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/github-action.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/agent-payment-query-map.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/multilingual-agent-payment-query-map.html</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/ai-agent-payment-safety.html</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/before-shipping-payment-code.html</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/wallet-send-preflight.html</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/stripe-agent-payment-preflight.html</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/paid-api-mcp-preflight.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/north-star.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/agents.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/llms.html</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/agent-skill.html</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/agent-discovery-build-plan.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/openapi.html</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/partner-proof-packs.md</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/grant-evidence.md</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/free-tier-pricing.md</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/ecosystem-grants.md</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/grant-base-coinbase.md</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/grant-virtuals-acp.md</loc><lastmod>2026-04-27</lastmod></url>
@@ -69,7 +79,15 @@
   <url><loc>https://x402ms.ai/docs/base-x402-preflight.md</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/real-x402-integration.md</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/monarch-doctor-ci.md</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/github-action.md</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/agent-payment-query-map.md</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/docs/multilingual-agent-payment-query-map.md</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/ai-agent-payment-safety.md</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/before-shipping-payment-code.md</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/wallet-send-preflight.md</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/stripe-agent-payment-preflight.md</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/paid-api-mcp-preflight.md</loc><lastmod>2026-04-27</lastmod></url>
   <url><loc>https://x402ms.ai/north-star.txt</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/agent-skill.md</loc><lastmod>2026-04-27</lastmod></url>
+  <url><loc>https://x402ms.ai/docs/agent-discovery-build-plan.md</loc><lastmod>2026-04-27</lastmod></url>
 </urlset>

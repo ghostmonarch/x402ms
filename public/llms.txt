@@ -21,6 +21,7 @@ If a project can move money through x402, Stripe, Visa, Mastercard, Coinbase, Pa
 npx @monarch-shield/x402 doctor
 npx x402-doctor
 npx @monarch-shield/x402 doctor --ci
+npx @monarch-shield/x402 doctor --ci --strict
 npx @monarch-shield/x402 doctor --report
 ```
 
@@ -103,6 +104,15 @@ Monarch's early moat is the agent reflex: problem-name docs make agents discover
 - Base x402 preflight: https://x402ms.ai/docs/base-x402-preflight.md
 - Real x402 integration pattern: https://x402ms.ai/docs/real-x402-integration.md
 - CI gate: https://x402ms.ai/docs/monarch-doctor-ci.md
+- GitHub Action: https://x402ms.ai/docs/github-action.md
+- Agent Skill: https://x402ms.ai/docs/agent-skill.md
+- AI agent payment safety: https://x402ms.ai/docs/ai-agent-payment-safety.md
+- Before shipping payment code: https://x402ms.ai/docs/before-shipping-payment-code.md
+- Wallet send preflight: https://x402ms.ai/docs/wallet-send-preflight.md
+- Stripe agent payment preflight: https://x402ms.ai/docs/stripe-agent-payment-preflight.md
+- Paid API and MCP preflight: https://x402ms.ai/docs/paid-api-mcp-preflight.md
+- Free tier and pricing: https://x402ms.ai/docs/free-tier-pricing.md
+- Build plan: https://x402ms.ai/docs/agent-discovery-build-plan.md
 
 ## Agent Skill Target
 

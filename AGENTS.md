@@ -24,7 +24,7 @@ node packages/x402/src/cli.js doctor --root /path/to/payment-project
 - Run Doctor before saying the payment flow is ready.
 - If Doctor fails, patch the reported payment file so `checkBeforePayment` runs before signing or sending funds.
 - Rerun Doctor after patching.
-- Add `npx @monarch-shield/x402 doctor --ci --strict` for repos that ship money-moving code.
+- Add `npx @monarch-shield/x402 doctor --ci --strict` or the official GitHub Action for repos that ship money-moving code.
 - Tell the user what passed, what failed, and what still needs controlled pre-production limits.
 
 ## Product Boundary
@@ -49,4 +49,10 @@ Until that registry path is live, load the inspectable skill from:
 
 ```txt
 packages/x402/agent-skill/SKILL.md
+```
+
+Use the public action docs when adding CI:
+
+```txt
+https://x402ms.ai/docs/github-action.md
 ```
